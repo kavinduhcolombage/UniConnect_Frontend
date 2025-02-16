@@ -1,14 +1,16 @@
 
-import { Settings , Bell , UserCircle} from 'tabler-icons-react';
+import { Avatar, Indicator } from '@mantine/core';
+import { Settings , Bell } from 'tabler-icons-react';
+import avatarImage from '../assets/avatar.png';
 
 const Header = () => {
     return <div className="w-full bg-gray-800 px-6 h-25 text-white p-4 flex justify-between items-center">
         
         <div className='flex items-center gap-2'>
-            <div className='text-1xl font-semibold'>logo</div>
+            <div className='text-2xl font-semibold'>Uni Connect</div>
         </div>
 
-        <div className='flex gap-4 items-center font-'>
+        <div className='flex gap-4 items-center'>
             <a href="">Find Job</a>
             <a href="">About US</a>
             <a href="">Hiring</a>
@@ -16,14 +18,30 @@ const Header = () => {
             <a href="">FAQ</a>
         </div>
 
-        <div className='flex gap-7 items-center justify-around'>
-            <Bell />
+        <div className='flex gap-5 items-center justify-around'>           
             <div className='flex items-center gap-2'>
-                <div>Name</div>
-                <UserCircle />
+                <div>Kavindu Hansana</div>
+                <Indicator inline size={11} offset={4} position="bottom-end" color="green" withBorder>
+                    <Avatar
+                        size={35}
+                        src={avatarImage}
+                        alt="profile photo"
+                    />
+                </Indicator>
+            </div>
+            <div className='bg-gray-900 p-1.5 rounded-full'>
+                <Settings size={25}/>
+            </div>
+            <div className='bg-gray-900 p-1.5 rounded-full flex items-center justify-center'>
+                <Indicator inline processing color="blue">
+                    <Bell
+                        size={25}
+                        strokeWidth={1.8}
+                    />
+                </Indicator>
+
             </div>
             
-            <Settings />
         </div>
 
     </div>
