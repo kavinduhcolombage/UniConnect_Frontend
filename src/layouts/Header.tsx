@@ -2,21 +2,16 @@
 import { Avatar, Indicator } from '@mantine/core';
 import { Settings , Bell } from 'tabler-icons-react';
 import avatarImage from '../assets/avatar.png';
+import NavLinks from './NavLinks';
 
 const Header = () => {
-    return <div className="w-full bg-gray-800 px-6 h-25 text-white p-4 flex justify-between items-center">
+    return <div className="w-full bg-gray-900 px-6 h-25 text-white p-4 flex justify-between items-center">
         
         <div className='flex items-center gap-2'>
-            <div className='text-2xl font-semibold'>Uni Connect</div>
+            <div className='text-2xl font-semibold text-blue-500'>Uni Connect</div>
         </div>
 
-        <div className='flex gap-4 items-center'>
-            <a href="">Find Job</a>
-            <a href="">About US</a>
-            <a href="">Hiring</a>
-            <a href="">Community</a>
-            <a href="">FAQ</a>
-        </div>
+        {NavLinks()}
 
         <div className='flex gap-5 items-center justify-around'>           
             <div className='flex items-center gap-2'>
