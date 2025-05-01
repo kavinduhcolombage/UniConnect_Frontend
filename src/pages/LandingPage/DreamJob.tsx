@@ -3,8 +3,7 @@ import { IconSearch } from '@tabler/icons-react';
 
 
 const DreamJob = () => {
-    return (
-        <div className="flex items-center p-20">
+    return ( <div className="flex items-center p-20">
             <div className="flex flex-col w-[45%] justify-center">
                 <div className="text-6xl font-semibold">Find Your Internship</div>
                 <div>good life good company</div>

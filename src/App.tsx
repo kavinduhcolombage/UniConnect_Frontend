@@ -3,6 +3,9 @@ import { createTheme, MantineProvider } from '@mantine/core'
 import '@mantine/core/styles.css';
 import HomePage from './pages/HomePage';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import FindJob from './pages/FindJob';
+import SignUpPage from './pages/SignUpPage';
+
 
 function App() {
   const theme = createTheme({
@@ -27,6 +30,9 @@ function App() {
     <MantineProvider>
       <BrowserRouter>
       <Routes>
+        <Route path='/find-job' element={<FindJob/>}/>
+        <Route path='/signup' element={<SignUpPage/>}/>
+        <Route path='/login' element={<SignUpPage/>}/>
         <Route path='*' element={<HomePage/>}/>
       </Routes>
       </BrowserRouter>
