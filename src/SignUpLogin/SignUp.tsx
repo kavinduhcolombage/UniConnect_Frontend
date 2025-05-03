@@ -17,7 +17,7 @@ const form = {
 
 const SignUp = () => {
 
-    const [value, setValue] = useState('react');
+    // const [value, setValue] = useState('react');
 
     const [data, setData] = useState<{ [key: string]: string }>(form);
     const [formError, setformError] = useState<{ [key: string]: string }>(form); // State for error message

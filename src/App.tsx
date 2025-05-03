@@ -1,5 +1,5 @@
 import './App.css'
-import { createTheme, MantineProvider } from '@mantine/core'
+import {  MantineProvider } from '@mantine/core'
 import '@mantine/core/styles.css';
 import '@mantine/notifications/styles.css';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';

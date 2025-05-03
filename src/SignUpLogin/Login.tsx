@@ -13,7 +13,7 @@ const form = {
 }
 
 const Login = () => {
-    const [value, setValue] = useState('react');
+    // const [value, setValue] = useState('react');
     const [formError, setformError] = useState<{ [key: string]: string }>(form);
     const [data, setData] = useState<{ [key: string]: string }>(form);
     const navigate = useNavigate();
