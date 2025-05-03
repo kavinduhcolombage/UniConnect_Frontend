@@ -1,8 +1,10 @@
-import { TextInput , PasswordInput , Button } from '@mantine/core';
-import { IconAt, IconLock } from '@tabler/icons-react';
+import { TextInput, PasswordInput, Button } from '@mantine/core';
+import { IconAt, IconCheck, IconLock, IconX } from '@tabler/icons-react';
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { loginUser } from '../Services/UserService';
+import { loginValidation } from '../Services/FormValidation';
+import { notifications } from '@mantine/notifications';
 
 const form = {
     email: "",
@@ -12,26 +14,50 @@ const form = {
 
 const Login = () => {
     const [value, setValue] = useState('react');
-    const [error, setError] = useState(""); // State for error message
-
-    const [data, setData] = useState(form);
-
+    const [formError, setformError] = useState<{ [key: string]: string }>(form);
+    const [data, setData] = useState<{ [key: string]: string }>(form);
+    const navigate = useNavigate();
     const handleChange = (event: any) => {
         console.log(event.target);
         setData({ ...data, [event.target.name]: event.target.value })
     }
 
     const handleSubmit = () => {
-        loginUser(data).then((res) => {
-            console.log(res);
-        }).catch((err) => {
-            console.log(err);
-            if (err.response && err.response.data) {
-                setError(err.response.data); // Set error message from response
-            } else {
-                setError("An unexpected error occurred."); // Fallback error message
-            }
-        });
+        let valid = true, newFormErrror: { [key: string]: string } = {};
+        for (let key in data) {
+            newFormErrror[key] = loginValidation(key, data[key]);
+            if (newFormErrror[key] !== "" && newFormErrror[key] !== undefined) valid = false;
+        }
+        setformError(newFormErrror);
+        if (valid === true) {
+            loginUser(data).then((res) => {
+                console.log(res);
+                notifications.show({
+                    title: 'Login Succesfully.',
+                    message: 'Redirecting to home page...',
+                    withCloseButton: true,
+                    icon: <IconCheck />,
+                    color: 'teal',
+                    withBorder: true,
+                    className: "!border-blue-500 !bg-blue-50 !text-blue-800 !shadow-lg !rounded-lg !p-4 !w-[400px]",
+                })
+                setTimeout(() => {
+                    navigate("/");
+                }, 3000)
+            }).catch((err) => {
+                console.log(err);
+                notifications.show({
+                    title: 'Login Failed',
+                    message: err.response.data.errorMessage,
+                    withCloseButton: true,
+                    icon: <IconX />,
+                    color: 'red',
+                    withBorder: true,
+                    className: "!border-red-500 !bg-blue-50 !text-blue-800 !shadow-lg !rounded-lg !p-4 !w-[400px]",
+                })
+            });
+        }
+
     }
 
 
@@ -43,6 +69,7 @@ const Login = () => {
                     value={data.email}
                     name='email'
                     onChange={handleChange}
+                    error={formError.email}
                     withAsterisk
                     leftSection={<IconAt size={16} />}
                     label="Email"
@@ -51,9 +78,8 @@ const Login = () => {
                 />
             </div>
             <div>
-                <PasswordInput value={data.password} name='password' onChange={handleChange} withAsterisk leftSection={<IconLock size={18} stroke={1.5} />} label="Password" placeholder="Password" />
+                <PasswordInput value={data.password} name='password' error={formError.password} onChange={handleChange} withAsterisk leftSection={<IconLock size={18} stroke={1.5} />} label="Password" placeholder="Password" />
             </div>
-            {error && <div className="text-red-500">{error}</div>}
             <Button variant="filled" size="md" radius="md" onClick={handleSubmit}>Log In</Button>
 
             <div className='mx-auto'>Don't have an account ? <Link to="/signup" className='text-blue-500 hover:underline'>Sign Up</Link></div>

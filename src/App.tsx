@@ -1,8 +1,10 @@
 import './App.css'
 import { createTheme, MantineProvider } from '@mantine/core'
 import '@mantine/core/styles.css';
+import '@mantine/notifications/styles.css';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import React, { Suspense, lazy } from 'react';
+import { Notifications } from '@mantine/notifications';
 // import HomePage from './pages/HomePage';
 // import FindJob from './pages/FindJob';
 // import SignUpPage from './pages/SignUpPage';
@@ -33,6 +35,7 @@ function App() {
   return (
 
     <MantineProvider>
+      <Notifications position="top-center" zIndex={1000} />
       <BrowserRouter>
       <Suspense fallback={<div>Loading...</div>}>
           <Routes>

@@ -1,16 +1,17 @@
 import { TextInput, Checkbox, PasswordInput, Anchor, Button, Radio, Group } from '@mantine/core';
-import { IconAt, IconLock } from '@tabler/icons-react';
+import { IconAt, IconCheck, IconLock, IconX } from '@tabler/icons-react';
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { registerUser } from '../Services/UserService';
 import { signupValidation } from '../Services/FormValidation';
+import { notifications } from '@mantine/notifications';
 
 const form = {
     name: "",
     email: "",
     password: "",
     confirmPassword: "",
-    role:"STUDENT",
+    role: "STUDENT",
 
 }
 
@@ -18,12 +19,12 @@ const SignUp = () => {
 
     const [value, setValue] = useState('react');
 
-    const [data, setData] = useState<{[key:string]:string}>(form);
-    const [formError, setformError] = useState<{[key:string]:string}>(form); // State for error message
-
+    const [data, setData] = useState<{ [key: string]: string }>(form);
+    const [formError, setformError] = useState<{ [key: string]: string }>(form); // State for error message
+    const navigate=useNavigate();
     const handleChange = (event: any) => {
-        if(typeof(event)=="string"){
-            setData({...data, role:event});
+        if (typeof (event) == "string") {
+            setData({ ...data, role: event });
             return;
         }
         let name = event.target.name;
@@ -37,29 +38,49 @@ const SignUp = () => {
                 setformError({ ...formError, [name]: "" });
             }
         }
-        
+
     }
 
     const handleSubmit = () => {
-        let valid=true , newFormErrror:{[key:string]:string}={};
-        for(let key in data){
-            if(key==="role") continue;
-            if(key!=="confirmPassword")newFormErrror[key]=signupValidation(key, data[key]);
-            else if(data[key]!==data["password"]) newFormErrror[key]="passwords do not match";
-            if(newFormErrror[key]!=="" && newFormErrror[key]!==undefined) valid=false;
+        let valid = true, newFormErrror: { [key: string]: string } = {};
+        for (let key in data) {
+            if (key === "role") continue;
+            if (key !== "confirmPassword") newFormErrror[key] = signupValidation(key, data[key]);
+            else if (data[key] !== data["password"]) newFormErrror[key] = "passwords do not match";
+            if (newFormErrror[key] !== "" && newFormErrror[key] !== undefined) valid = false;
         }
         setformError(newFormErrror);
-        console.log('helooooo')
         console.log(valid);
-        if(valid===true){
-            registerUser(data).then((res)=>{
+        if (valid === true) {
+            registerUser(data).then((res) => {
                 console.log(res)
-                
-            }).catch((err)=>{
+                setData(form);
+                notifications.show({
+                    title: 'Registration Successful',
+                    message: 'Redirecting to login page...',
+                    withCloseButton: true,
+                    icon: <IconCheck />,
+                    color: 'teal',
+                    withBorder: true,
+                    className: "!border-blue-500 !bg-blue-50 !text-blue-800 !shadow-lg !rounded-lg !p-4 !w-[400px]",
+                })
+                setTimeout(()=>{
+                    navigate("/login");
+                }, 3000)
+            }).catch((err) => {
                 console.log(err);
+                notifications.show({
+                    title: 'Registration Failed',
+                    message: err.response.data.errorMessage,
+                    withCloseButton: true,
+                    icon: <IconX />,
+                    color: 'red',
+                    withBorder: true,
+                    className: "!border-red-500 !bg-blue-50 !text-blue-800 !shadow-lg !rounded-lg !p-4 !w-[400px]",
+                })
             })
         }
-        
+
     }
 
 
