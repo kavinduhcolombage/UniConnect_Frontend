@@ -104,8 +104,8 @@ const SignUp = () => {
                 withAsterisk
             >
                 <Group mt="xs">
-                    <Radio className='py-4 px-6 hover:bg-blue-50 has-[:checked]:border-blue-600 border-blue-300 rounded-lg' autoContrast value="STUDENT" label="Student" />
-                    <Radio className='py-4 px-6 hover:bg-blue-50 has-[:checked]:border-blue-600 border-blue-300 rounded-lg' value="COMPANY" label="Company" />
+                    <Radio className='py-4 px-6' value="STUDENT" label="Student" />
+                    <Radio className='py-4 px-6' value="COMPANY" label="Company" />
                 </Group>
             </Radio.Group>
             <div>
