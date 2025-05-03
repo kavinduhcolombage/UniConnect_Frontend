@@ -27,8 +27,8 @@ const SignUp = () => {
             setData({ ...data, role: event });
             return;
         }
-        let name = event.target.name;
-        let value = event.target.value;
+        const name = event.target.name;
+        const value = event.target.value;
         setData({ ...data, [name]: value });
         setformError({ ...formError, [name]: signupValidation(name, value) }); // Reset error message for the field being changed
         if (name === "confirmPassword") {
@@ -42,8 +42,9 @@ const SignUp = () => {
     }
 
     const handleSubmit = () => {
-        let valid = true, newFormErrror: { [key: string]: string } = {};
-        for (let key in data) {
+        let valid = true;
+        const newFormErrror: { [key: string]: string } = {};
+        for (const key in data) {
             if (key === "role") continue;
             if (key !== "confirmPassword") newFormErrror[key] = signupValidation(key, data[key]);
             else if (data[key] !== data["password"]) newFormErrror[key] = "passwords do not match";

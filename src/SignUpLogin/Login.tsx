@@ -23,8 +23,9 @@ const Login = () => {
     }
 
     const handleSubmit = () => {
-        let valid = true, newFormErrror: { [key: string]: string } = {};
-        for (let key in data) {
+        let valid = true;
+        const newFormErrror: { [key: string]: string } = {};
+        for (const key in data) {
             newFormErrror[key] = loginValidation(key, data[key]);
             if (newFormErrror[key] !== "" && newFormErrror[key] !== undefined) valid = false;
         }
