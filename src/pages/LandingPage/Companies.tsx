@@ -1,4 +1,4 @@
-import { Box, Group, Stack } from "@mantine/core";
+import { Box } from "@mantine/core";
 
 const logos = [
     '/google.png',
@@ -9,8 +9,6 @@ const logos = [
 ];
 
 const Companies = () => {
-
-    const repeatedLogos = [...logos, ...logos];
     return <div className="mt-20 pb-5">
         <div className="text-4xl text-center font-semibold mb-10">Trusted by <span className="text-blue-500">1000+</span> Companies</div>
 
