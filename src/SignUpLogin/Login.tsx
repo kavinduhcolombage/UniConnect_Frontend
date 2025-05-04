@@ -5,6 +5,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { loginUser } from '../Services/UserService';
 import { loginValidation } from '../Services/FormValidation';
 import { notifications } from '@mantine/notifications';
+import { User } from '../types/User';
 
 const form = {
     email: "",
@@ -15,9 +16,13 @@ const form = {
 const Login = () => {
     // const [value, setValue] = useState('react');
     const [formError, setformError] = useState<{ [key: string]: string }>(form);
-    const [data, setData] = useState<{ [key: string]: string }>(form);
+    const [data, setData] = useState<Pick<User, "email" | "password">>({
+        email: "",
+        password: "",
+    });
     const navigate = useNavigate();
-    const handleChange = (event: any) => {
+
+    const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         console.log(event.target);
         setData({ ...data, [event.target.name]: event.target.value })
     }
@@ -26,8 +31,11 @@ const Login = () => {
         let valid = true;
         const newFormErrror: { [key: string]: string } = {};
         for (const key in data) {
-            newFormErrror[key] = loginValidation(key, data[key]);
-            if (newFormErrror[key] !== "" && newFormErrror[key] !== undefined) valid = false;
+            if (key === "email" || key === "password") {
+                newFormErrror[key] = loginValidation(key, data[key]);
+                if (newFormErrror[key] !== "" && newFormErrror[key] !== undefined) valid = false
+            }
+            ;
         }
         setformError(newFormErrror);
         if (valid === true) {

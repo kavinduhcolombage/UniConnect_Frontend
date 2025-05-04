@@ -5,6 +5,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { registerUser } from '../Services/UserService';
 import { signupValidation } from '../Services/FormValidation';
 import { notifications } from '@mantine/notifications';
+import { User } from '../types/User';
 
 const form = {
     name: "",
@@ -19,10 +20,10 @@ const SignUp = () => {
 
     // const [value, setValue] = useState('react');
 
-    const [data, setData] = useState<{ [key: string]: string }>(form);
+    const [data, setData] = useState<User>(form);
     const [formError, setformError] = useState<{ [key: string]: string }>(form); // State for error message
     const navigate=useNavigate();
-    const handleChange = (event: any) => {
+    const handleChange = (event: React.ChangeEvent<HTMLInputElement> | string) => {
         if (typeof (event) == "string") {
             setData({ ...data, role: event });
             return;
@@ -46,7 +47,7 @@ const SignUp = () => {
         const newFormErrror: { [key: string]: string } = {};
         for (const key in data) {
             if (key === "role") continue;
-            if (key !== "confirmPassword") newFormErrror[key] = signupValidation(key, data[key]);
+            if (key !== "confirmPassword") newFormErrror[key] = signupValidation(key, data[key as keyof User] || "");
             else if (data[key] !== data["password"]) newFormErrror[key] = "passwords do not match";
             if (newFormErrror[key] !== "" && newFormErrror[key] !== undefined) valid = false;
         }

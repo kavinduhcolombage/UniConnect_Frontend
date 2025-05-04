@@ -3,7 +3,7 @@ import {  MantineProvider } from '@mantine/core'
 import '@mantine/core/styles.css';
 import '@mantine/notifications/styles.css';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import React, { Suspense, lazy } from 'react';
+import { Suspense, lazy } from 'react';
 import { Notifications } from '@mantine/notifications';
 // import HomePage from './pages/HomePage';
 // import FindJob from './pages/FindJob';
