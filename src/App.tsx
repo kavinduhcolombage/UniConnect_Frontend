@@ -5,12 +5,13 @@ import '@mantine/notifications/styles.css';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { Suspense, lazy } from 'react';
 import { Notifications } from '@mantine/notifications';
+import FindTalentsPage from './pages/FIndTalentsPage';
 // import HomePage from './pages/HomePage';
 // import FindJob from './pages/FindJob';
 // import SignUpPage from './pages/SignUpPage';
 
 const HomePage = lazy(() => import('./pages/HomePage'));
-const FindJob = lazy(() => import('./pages/FindJob'));
+const FindJobPage = lazy(() => import('./pages/FindJobPage'));
 const SignUpPage = lazy(() => import('./pages/SignUpPage'));
 
 
@@ -39,7 +40,8 @@ function App() {
       <BrowserRouter>
       <Suspense fallback={<div>Loading...</div>}>
           <Routes>
-            <Route path="/find-job" element={<FindJob />} />
+            <Route path="/find-job" element={<FindJobPage />} />
+            <Route path="/find-talents" element={<FindTalentsPage />} />
             <Route path="/signup" element={<SignUpPage />} />
             <Route path="/login" element={<SignUpPage />} />
             <Route path="*" element={<HomePage />} />

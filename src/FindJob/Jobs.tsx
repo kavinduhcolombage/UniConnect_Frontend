@@ -1,5 +1,5 @@
 import { jobList } from "../Data/JobsData";
-import JobCard from "./JObCard";
+import JobCard from "./JobCard";
 import Sort from "./Sort";
 
 const Jobs = () => {
