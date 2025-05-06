@@ -6,6 +6,7 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { Suspense, lazy } from 'react';
 import { Notifications } from '@mantine/notifications';
 import FindTalentsPage from './pages/FIndTalentsPage';
+import TalentProfilePage from './pages/TalentProfilePage';
 // import HomePage from './pages/HomePage';
 // import FindJob from './pages/FindJob';
 // import SignUpPage from './pages/SignUpPage';
@@ -42,6 +43,7 @@ function App() {
           <Routes>
             <Route path="/find-job" element={<FindJobPage />} />
             <Route path="/find-talents" element={<FindTalentsPage />} />
+            <Route path="/talent-profile" element={<TalentProfilePage />} />
             <Route path="/signup" element={<SignUpPage />} />
             <Route path="/login" element={<SignUpPage />} />
             <Route path="*" element={<HomePage />} />
