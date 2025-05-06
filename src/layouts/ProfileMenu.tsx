@@ -16,13 +16,13 @@ const ProfileMenu = () => {
     const [checked, setChecked] = useState(false);
     const [opened, setOpened] = useState(false);
     return (
-        <Menu shadow="md" width={200} opened={opened} onChange={setOpened}>
+        <Menu trigger="hover" openDelay={100} closeDelay={100} shadow="md" width={200} opened={opened} onChange={setOpened}>
             <Menu.Target>
                 <div className='flex items-center gap-2 cursor-pointer'>
-                    <div>Kavindu Hansana</div>
+                    <div className='text-lg'>Kavindu Hansana</div>
                     <Indicator inline size={11} offset={4} position="bottom-end" color="green" withBorder>
                         <Avatar
-                            size={35}
+                            size={45}
                             src={avatarImage}
                             alt="profile photo"
                         />
@@ -30,20 +30,21 @@ const ProfileMenu = () => {
                 </div>
             </Menu.Target>
 
-            <Menu.Dropdown onChange={() => setOpened(true)}>
+            <Menu.Dropdown className='!border-blue-500 !rounded-2xl !shadow-2xl !shadow-blue-950' onChange={() => setOpened(true)}>
                 <Link to="/profile">
-                    <Menu.Item leftSection={<IconUserCircle size={14} />}>
+                    <Menu.Item className="hover:!text-blue-600" leftSection={<IconUserCircle size={14} />}>
                         Profile
                     </Menu.Item>
                 </Link>
 
-                <Menu.Item leftSection={<IconMessageCircle size={14} />}>
+                <Menu.Item className="hover:!text-blue-600" leftSection={<IconMessageCircle size={14} />}>
                     Messages
                 </Menu.Item>
-                <Menu.Item leftSection={<IconFileText size={14} />}>
+                <Menu.Item className="hover:!text-blue-600" leftSection={<IconFileText size={14} />}>
                     Resume
                 </Menu.Item>
                 <Menu.Item
+                    className="hover:!text-blue-600"
                     leftSection={<IconMoon size={14} />}
                     rightSection={
                         <Switch checked={checked}

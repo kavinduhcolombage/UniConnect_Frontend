@@ -15,10 +15,10 @@ const Header = () => {
 
         <div className='flex gap-5 items-center justify-around'>           
             <ProfileMenu/>
-            <div className='bg-gray-900 p-1.5 rounded-full'>
+            <div className='bg-gray-900 p-1.5 rounded-full cursor-pointer hover:text-blue-500'>
                 <Settings size={25}/>
             </div>
-            <div className='bg-gray-900 p-1.5 rounded-full flex items-center justify-center'>
+            <div className='bg-gray-900 p-1.5 rounded-full flex items-center justify-center cursor-pointer hover:text-blue-500'>
                 <Indicator inline processing color="blue">
                     <Bell
                         size={25}
