@@ -9,6 +9,7 @@ import FindTalentsPage from './pages/FIndTalentsPage';
 import TalentProfilePage from './pages/TalentProfilePage';
 import PostJobPage from './pages/PostJobPage';
 import ApplyJObPage from './pages/ApplyJobPage';
+import ProfilePage from './pages/ProfilePage';
 // import HomePage from './pages/HomePage';
 // import FindJob from './pages/FindJob';
 // import SignUpPage from './pages/SignUpPage';
@@ -51,6 +52,7 @@ function App() {
               <Route path="/apply-job" element={<ApplyJObPage />} />
               <Route path="/signup" element={<SignUpPage />} />
               <Route path="/login" element={<SignUpPage />} />
+              <Route path="/profile" element={<ProfilePage />} />
               <Route path="*" element={<HomePage />} />
             </Routes>
           </Suspense>
