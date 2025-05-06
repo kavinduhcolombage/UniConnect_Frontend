@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { jobList } from "../Data/JobsData";
 import JobCard from "./JobCard";
 import Sort from "./Sort";
@@ -10,7 +11,15 @@ const Jobs = () => {
         </div>
         <div className="mt-10 flex flex-wrap gap-5">
             {
-                jobList.map((job, index) => <JobCard key={index} {...job} />)
+                jobList.map((job, index) => (
+                    <Link
+                        key={index}
+                        to="/apply-job"
+                        className="no-underline text-inherit"
+                    >
+                        <JobCard {...job} />
+                    </Link>
+                ))
             }
         </div>
 
