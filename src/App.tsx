@@ -1,5 +1,5 @@
 import './App.css'
-import {  MantineProvider } from '@mantine/core'
+import { MantineProvider } from '@mantine/core'
 import '@mantine/core/styles.css';
 import '@mantine/notifications/styles.css';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
@@ -8,6 +8,7 @@ import { Notifications } from '@mantine/notifications';
 import FindTalentsPage from './pages/FIndTalentsPage';
 import TalentProfilePage from './pages/TalentProfilePage';
 import PostJobPage from './pages/PostJobPage';
+import ApplyJObPage from './pages/ApplyJobPage';
 // import HomePage from './pages/HomePage';
 // import FindJob from './pages/FindJob';
 // import SignUpPage from './pages/SignUpPage';
@@ -33,24 +34,27 @@ function App() {
   //       '#364379',
   //     ],
   //   }
-    
+
   // })
   return (
 
     <MantineProvider>
       <Notifications position="top-center" zIndex={1000} />
       <BrowserRouter>
-      <Suspense fallback={<div>Loading...</div>}>
-          <Routes>
-            <Route path="/find-job" element={<FindJobPage />} />
-            <Route path="/find-talents" element={<FindTalentsPage />} />
-            <Route path="/post-job" element={<PostJobPage />} />
-            <Route path="/talent-profile" element={<TalentProfilePage />} />
-            <Route path="/signup" element={<SignUpPage />} />
-            <Route path="/login" element={<SignUpPage />} />
-            <Route path="*" element={<HomePage />} />
-          </Routes>
-        </Suspense>
+        <div className='relative'>
+          <Suspense fallback={<div>Loading...</div>}>
+            <Routes>
+              <Route path="/find-job" element={<FindJobPage />} />
+              <Route path="/find-talents" element={<FindTalentsPage />} />
+              <Route path="/post-job" element={<PostJobPage />} />
+              <Route path="/talent-profile" element={<TalentProfilePage />} />
+              <Route path="/apply-job" element={<ApplyJObPage />} />
+              <Route path="/signup" element={<SignUpPage />} />
+              <Route path="/login" element={<SignUpPage />} />
+              <Route path="*" element={<HomePage />} />
+            </Routes>
+          </Suspense>
+        </div>
       </BrowserRouter>
     </MantineProvider>
 
