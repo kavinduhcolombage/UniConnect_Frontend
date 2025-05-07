@@ -55,7 +55,7 @@ const SignUp = () => {
         console.log(valid);
         if (valid === true) {
             registerUser(data).then((res) => {
-                console.log(res)
+                console.log(res);
                 setData(form);
                 notifications.show({
                     title: 'Registration Successful',
