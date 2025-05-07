@@ -6,6 +6,8 @@ import { loginUser } from '../Services/UserService';
 import { loginValidation } from '../Services/FormValidation';
 import { notifications } from '@mantine/notifications';
 import { User } from '../types/User';
+import { useDispatch } from 'react-redux';
+import { setUser } from '../Slices/UserSlice';
 
 const form = {
     email: "",
@@ -15,6 +17,7 @@ const form = {
 
 const Login = () => {
     // const [value, setValue] = useState('react');
+    const dispatch = useDispatch();
     const [formError, setformError] = useState<{ [key: string]: string }>(form);
     const [data, setData] = useState<Pick<User, "email" | "password">>({
         email: "",
@@ -51,6 +54,7 @@ const Login = () => {
                     className: "!border-blue-500 !bg-blue-50 !text-blue-800 !shadow-lg !rounded-lg !p-4 !w-[400px]",
                 })
                 setTimeout(() => {
+                    dispatch(setUser(res));
                     navigate("/");
                 }, 3000)
             }).catch((err) => {
