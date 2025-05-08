@@ -3,7 +3,6 @@ import { IconBriefcase, IconMapPin, IconPencil } from "@tabler/icons-react";
 import ExpCard from "./ExpCard";
 import CertiCard from "./CertiCard";
 import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
 import { getProfile } from "../Services/ProfileService";
 import { useLocation } from "react-router-dom";
 
