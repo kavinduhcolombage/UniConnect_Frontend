@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 import { getProfile } from "../Services/ProfileService";
 import { useLocation } from "react-router-dom";
 import SelectInput from "./SelectInput";
-import fields from "../Data/profile";
+import fields from "../Data/Profile";
 
 
 const Profile = () => {
