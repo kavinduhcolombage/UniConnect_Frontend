@@ -10,18 +10,25 @@ import {
     IconLogout2,
 } from '@tabler/icons-react';
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { removeUser } from '../Slices/UserSlice';
 
 const ProfileMenu = () => {
     const dispatch = useDispatch();
     const user = useSelector((state: any) => state.user);
+    const navigate = useNavigate();
     const [checked, setChecked] = useState(false);
     const [opened, setOpened] = useState(false);
     const handleLogout = () => {
         dispatch(removeUser());
     }
+
+    const handleProfileClick = () => {
+        if (user?.id) {
+            navigate(`/profile`, { state: { userId: user.id } }); // Navigate to profile page with user ID
+        }
+    };
     return (
         <Menu trigger="hover" openDelay={100} closeDelay={100} shadow="md" width={200} opened={opened} onChange={setOpened}>
             <Menu.Target>
@@ -39,7 +46,7 @@ const ProfileMenu = () => {
 
             <Menu.Dropdown className='!border-blue-500 !rounded-2xl !shadow-2xl !shadow-blue-950' onChange={() => setOpened(true)}>
                 <Link to="/profile">
-                    <Menu.Item className="hover:!text-blue-600" leftSection={<IconUserCircle size={14} />}>
+                    <Menu.Item onClick={handleProfileClick} className="hover:!text-blue-600" leftSection={<IconUserCircle size={14} />}>
                         Profile
                     </Menu.Item>
                 </Link>
