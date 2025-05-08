@@ -1,5 +1,8 @@
 import axios from 'axios';
-const base_URL = 'http://localhost:8080/api/v1/profile';
+import Host_Url from './HOstUrl';
+
+
+const base_URL = `${Host_Url}/api/v1/profile`;
 
 const getProfile = async (id:number)=>{
     return axios.get(`${base_URL}/get/${id}`)

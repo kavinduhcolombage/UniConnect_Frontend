@@ -6,6 +6,7 @@ import Footer from "../Footer/Footer";
 import ApplyJobComp from "../ApplyJob/ApplyJobComp";
 
 const ApplyJObPage = () => {
+    
     return <div className="bg-gray-100 min-h-[100vh] font-['poppins']">
     <Header />
     <Link className="my-4 inline-block" to="/find-job">
