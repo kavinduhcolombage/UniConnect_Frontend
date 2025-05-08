@@ -2,6 +2,7 @@ import './App.css'
 import { MantineProvider } from '@mantine/core'
 import '@mantine/core/styles.css';
 import '@mantine/notifications/styles.css';
+import { Provider } from 'react-redux';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { Suspense, lazy } from 'react';
 import { Notifications } from '@mantine/notifications';
@@ -10,6 +11,7 @@ import TalentProfilePage from './pages/TalentProfilePage';
 import PostJobPage from './pages/PostJobPage';
 import ApplyJObPage from './pages/ApplyJobPage';
 import ProfilePage from './pages/ProfilePage';
+import Store from './Store';
 // import HomePage from './pages/HomePage';
 // import FindJob from './pages/FindJob';
 // import SignUpPage from './pages/SignUpPage';
@@ -39,6 +41,7 @@ function App() {
   // })
   return (
 
+    <Provider store={Store}>
     <MantineProvider>
       <Notifications position="top-center" zIndex={1000} />
       <BrowserRouter>
@@ -59,6 +62,7 @@ function App() {
         </div>
       </BrowserRouter>
     </MantineProvider>
+    </Provider>
 
   )
 }
