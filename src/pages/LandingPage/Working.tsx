@@ -5,7 +5,7 @@ const Working = () => {
 
         <div className="flex px-16 justify-between items-center">
             <div className="">
-                <img className="w-[30rem]" src="/images/boy.jpg" alt="working photo" />
+                <img className="size-150 w-100 h-130" src="/images/boy.png" alt="working photo" />
             </div>
             <div className="flex flex-col gap-5 w-[60%]">
                 <div className="flex items-center gap-4">
