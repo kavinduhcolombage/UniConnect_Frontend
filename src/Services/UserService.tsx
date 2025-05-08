@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { User } from '../types/User';
-import Host_Url from './HOstUrl';
+import Host_Url from './HostUrl';
 const base_URL = `${Host_Url}/api/v1/usercontroller`;
 
 const registerUser = async (user:User)=>{
