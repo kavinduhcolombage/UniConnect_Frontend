@@ -3,7 +3,7 @@ import { Avatar, Button, Divider, Text } from '@mantine/core';
 import { Link } from "react-router-dom";
 
 const TalentCard = (props: any) => {
-    return <div className="flex flex-col gap-2 bg-gray-400 p-4 w-96 rounded-xl hover:shadow-[0_0_5px_1px_blue] !shadow-blue-400">
+    return <div className="flex flex-col gap-2 bg-gray-400 p-4 w-105 rounded-xl hover:shadow-[0_0_5px_1px_blue] !shadow-blue-400">
         <div className="flex justify-between">
             <div className="flex gap-3 items-center">
                 <div className="p-2 bg-gray-300 rounded-full">
@@ -18,9 +18,9 @@ const TalentCard = (props: any) => {
         </div>
         <div className="flex gap-2 [&>div]:py-1 [&>div]:px-2 [&>div]:bg-gray-200 [&>div]:text-blue-500 [&>div]:rounded-lg text-xs">
             {
-                props.topSkills?.map((skill:any, index:any) => {
+                props.topSkills?.map((skill:any, index:any) => 
                     <div key={index} className="p-2 py-1 text-blue-500 rounded-lg text-xs">{skill}</div>
-                })
+                )
             }
             
         </div>
