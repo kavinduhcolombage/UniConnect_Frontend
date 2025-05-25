@@ -1,5 +1,8 @@
 import { Avatar, Divider, Tabs } from "@mantine/core";
 import { IconMapPin } from "@tabler/icons-react";
+import AboutComp from "./AboutComp";
+import Companyjob from "./CompanyJob";
+import CompanyEmployees from "./CompanyEmployees";
 
 const Company = () => {
     return (
@@ -22,14 +25,15 @@ const Company = () => {
             <Divider mx="xs" my="xl" />
             <div>
                 <Tabs variant="outline" defaultValue="about">
-                    <Tabs.List className="[&_button]:!text-lg font-semibold [&_button[data-active='true']]:!text-blue-500">
+                    <Tabs.List className="[&_button]:!text-lg font-semibold mb-5 [&_button[data-active='true']]:!text-blue-500">
                         <Tabs.Tab value="about">About</Tabs.Tab>
                         <Tabs.Tab value="jobs">Jobs</Tabs.Tab>
                         <Tabs.Tab value="employees">Employees</Tabs.Tab>
                     </Tabs.List>
 
-                    <Tabs.Panel value="about">First panel</Tabs.Panel>
-                    <Tabs.Panel value="jobs">Second panel</Tabs.Panel>
+                    <Tabs.Panel value="about"><AboutComp /></Tabs.Panel>
+                    <Tabs.Panel value="jobs"><Companyjob /></Tabs.Panel>
+                    <Tabs.Panel value="employees"><CompanyEmployees /></Tabs.Panel>
                 </Tabs>
             </div>
         </div>
