@@ -66,7 +66,7 @@ const JobDescription = () => {
                     </div>
                 </div>
                 <div className="flex flex-col gap-2 items-center">
-                    <Link to="/">
+                    <Link to="/company">
                         <Button className="!text-blue-700 !bg-blue-200 hover:!border-blue-600" size="sm" variant="light">Company Page</Button>
                     </Link>
                 </div>
