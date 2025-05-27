@@ -1,5 +1,5 @@
 import { IconCalendarMonth, IconHeart, IconMapPin } from "@tabler/icons-react"
-import { Avatar, Button, Divider, Input, Modal, Text, Textarea } from '@mantine/core';
+import { Avatar, Button, Divider, Modal, Text, Textarea } from '@mantine/core';
 import { Link } from "react-router-dom";
 import { useDisclosure } from "@mantine/hooks";
 
