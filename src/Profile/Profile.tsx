@@ -29,8 +29,8 @@ const Profile = () => {
 
 
     const dispatch = useDispatch();
-    const user = useSelector((state:any)=>state.user);
-    const profile = useSelector((state:any)=>state.profile);
+    const user = useSelector((state: any) => state.user);
+    const profile = useSelector((state: any) => state.profile);
     //const [profile, setProfile] = useState<any>(null);
     //const [loading, setLoading] = useState(true);
 
@@ -51,12 +51,12 @@ const Profile = () => {
         //         });
         // }
         console.log("Profile:", profile);
-        getProfile(user.profileId).then((data:any)=>{
+        getProfile(user.profileId).then((data: any) => {
             dispatch(setProfile(data));
             console.log("Profile data:", data);
             console.log("skills : " + data.skills);
 
-        }).catch((error:any) => {
+        }).catch((error: any) => {
             console.error('Error fetching profile:', error);
         });
 
@@ -72,7 +72,7 @@ const Profile = () => {
     }
 
     return (
-        <div className="w-4/5 mx-auto">
+        <div className="w-4/5 mx-auto font-['poppins']">
             {/* Profile Banner and Avatar */}
             <div className="relative">
                 <img className="rounded-t-2xl" src="/Profile/banner.jpg" alt="Profile Banner" />
@@ -126,10 +126,8 @@ const Profile = () => {
                     </ActionIcon>
                 </div>
                 {
-                    edit[1] ? <Textarea value={about} placeholder="Enter about your self.." autosize minRows={3} onChange={(event) => setAbout(event.currentTarget.value)} /> : <div className="text-xs text-justify">{profile.about}</div>
+                    edit[1] ? <Textarea value={about} placeholder="Enter about your self.." autosize minRows={3} onChange={(event) => setAbout(event.currentTarget.value)} /> : <div className="text-base text-justify">{profile.about}</div>
                 }
-
-
             </div>
 
             <Divider mx="xs" my="xl" />
@@ -146,7 +144,7 @@ const Profile = () => {
                     {profile?.skills?.map((skill: any, index: number) => (
                         <div
                             key={index}
-                            className="bg-blue-400 text-sm font-medium bg-opacity-15 rounded-3xl text-gray-600 px-3 py-1"
+                            className="bg-blue-400 text-sm font-medium bg-opacity-15 rounded-3xl text-white px-3 py-1"
                         >
                             {skill}
                         </div>

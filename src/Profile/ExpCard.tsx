@@ -5,7 +5,7 @@ const ExpCard = (props: any) => {
         <div className="flex justify-between">
             <div className="flex gap-2 items-center">
                 <div className="p-2 bg-mine-shaft-800 rounded-md">
-                    <img className="h-7" src={`/CompanyLogo/${props.company}.png`} alt="" />
+                    <img className="h-10" src={`/CompanyLogo/${props.company}.png`} alt="" />
                 </div>
                 <div className="flex flex-col">
                     <div className="font-semibold"> {props.title} </div>
@@ -16,7 +16,7 @@ const ExpCard = (props: any) => {
                 {formatDate(props.startDate)} - {formatDate(props.endDate)}
             </div>
         </div>
-        <div className="text-sm text-justify">
+        <div className="text-base text-justify">
             {props.description}
         </div>
     </div>;
