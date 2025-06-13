@@ -4,10 +4,10 @@ import ExpCard from "./ExpCard";
 import CertiCard from "./CertiCard";
 import { useEffect, useState } from "react";
 import { getProfile } from "../Services/ProfileService";
-import { useLocation } from "react-router-dom";
 import SelectInput from "./SelectInput";
 import fields from "../Data/Profile";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { setProfile } from "../Slices/ProfileSlice";
 
 
 const Profile = () => {
@@ -28,11 +28,11 @@ const Profile = () => {
     // const profileId = JSON.parse(localStorage.getItem("user") || "{}").profileId;
 
 
-
+    const dispatch = useDispatch();
     const user = useSelector((state:any)=>state.user);
     const profile = useSelector((state:any)=>state.profile);
     //const [profile, setProfile] = useState<any>(null);
-    const [loading, setLoading] = useState(true);
+    //const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         // console.log("User ID from route state:", userId); // Debugging line
@@ -52,8 +52,10 @@ const Profile = () => {
         // }
         console.log("Profile:", profile);
         getProfile(user.profileId).then((data:any)=>{
-            
+            dispatch(setProfile(data));
             console.log("Profile data:", data);
+            console.log("skills : " + data.skills);
+
         }).catch((error:any) => {
             console.error('Error fetching profile:', error);
         });
@@ -61,11 +63,11 @@ const Profile = () => {
 
     }, []);
 
-    if (loading) {
-        return <div>Loading...</div>;
-    }
+    // if (loading) {
+    //     return <div>Loading...</div>;
+    // }
 
-    if (!profile) {
+    if (profile == null) {
         return <div>No profile data available.</div>;
     }
 
@@ -124,7 +126,7 @@ const Profile = () => {
                     </ActionIcon>
                 </div>
                 {
-                    edit[1] ? <Textarea value={about} placeholder="Enter about your self.." autosize minRows={3} onChange={(event) => setAbout(event.currentTarget.value)} /> : <div className="text-xs text-justify">{about}</div>
+                    edit[1] ? <Textarea value={about} placeholder="Enter about your self.." autosize minRows={3} onChange={(event) => setAbout(event.currentTarget.value)} /> : <div className="text-xs text-justify">{profile.about}</div>
                 }
 
 
@@ -141,7 +143,7 @@ const Profile = () => {
                     </ActionIcon>
                 </div>
                 <div className="flex flex-wrap gap-2">
-                    {profile.skills.map((skill: string, index: number) => (
+                    {profile?.skills?.map((skill: any, index: number) => (
                         <div
                             key={index}
                             className="bg-blue-400 text-sm font-medium bg-opacity-15 rounded-3xl text-gray-600 px-3 py-1"
@@ -163,7 +165,7 @@ const Profile = () => {
                     </ActionIcon>
                 </div>
                 <div className="flex flex-col gap-8">
-                    {profile.experience.map((exp: any, index: number) => (
+                    {profile?.experience?.map((exp: any, index: number) => (
                         <ExpCard key={index} {...exp} />
                     ))}
                 </div>
@@ -180,7 +182,7 @@ const Profile = () => {
                     </ActionIcon>
                 </div>
                 <div className="flex flex-col gap-8">
-                    {profile.certifications.map((certi: any, index: number) => (
+                    {profile?.certifications?.map((certi: any, index: number) => (
                         <CertiCard key={index} {...certi} />
                     ))}
                 </div>
