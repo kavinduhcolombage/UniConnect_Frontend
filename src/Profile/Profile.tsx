@@ -1,4 +1,4 @@
-import { ActionIcon, Button, Divider, Textarea } from "@mantine/core";
+import { ActionIcon, Button, Divider, TagsInput, Textarea } from "@mantine/core";
 import { IconBriefcase, IconDeviceFloppy, IconMapPin, IconPencil } from "@tabler/icons-react";
 import ExpCard from "./ExpCard";
 import CertiCard from "./CertiCard";
@@ -12,14 +12,19 @@ import { setProfile } from "../Slices/ProfileSlice";
 
 const Profile = () => {
     const select = fields;
-    const [edit, setEdit] = useState([false, false, false, false]);
+    const [edit, setEdit] = useState([false, false, false, false, false]);
+    const [about, setAbout] = useState('This is user profile. You can edit this section to add more details about yourself.');
+    const [skills, setSkills] = useState(['JavaScript', 'React', 'Node.js', 'CSS', 'HTML']);
+
+
     const handleEdit = (index: any) => {
         const newEdit = [...edit];
+        console.log("New edit state before toggle:", newEdit);
         newEdit[index] = !newEdit[index];
+        console.log("New edit state after toggle:", newEdit);
         setEdit(newEdit);
-        console.log(edit);
     };
-    const [about, setAbout] = useState('kbkjfdkjkjdkf');
+
 
     // const location = useLocation();
     // const userIdFromState = location.state?.userId; // Retrieve user ID from route state
@@ -54,7 +59,8 @@ const Profile = () => {
         getProfile(user.profileId).then((data: any) => {
             dispatch(setProfile(data));
             console.log("Profile data:", data);
-            console.log("skills : " + data.skills);
+            setAbout(data.about);
+            setSkills(data.skills);
 
         }).catch((error: any) => {
             console.error('Error fetching profile:', error);
@@ -90,9 +96,7 @@ const Profile = () => {
                     <ActionIcon onClick={() => handleEdit(0)} size="lg" color="blue" variant="subtle">
                         {edit[0] ? <IconDeviceFloppy /> : <IconPencil />}
                     </ActionIcon>
-
                 </div>
-
                 {
                     edit[0] ? <><div className="flex gap-10 [&>*]:w-1/2">
                         <SelectInput {...select[0]} />
@@ -110,9 +114,6 @@ const Profile = () => {
                         </div></>
 
                 }
-
-
-
             </div>
 
             <Divider mx="xs" my="xl" />
@@ -126,7 +127,7 @@ const Profile = () => {
                     </ActionIcon>
                 </div>
                 {
-                    edit[1] ? <Textarea value={about} placeholder="Enter about your self.." autosize minRows={3} onChange={(event) => setAbout(event.currentTarget.value)} /> : <div className="text-base text-justify">{profile.about}</div>
+                    edit[1] ? <Textarea size="md" value={about} placeholder="Enter about your self.." autosize minRows={3} onChange={(event) => setAbout(event.currentTarget.value)} /> : <div className="text-base text-justify">{about}</div>
                 }
             </div>
 
@@ -140,16 +141,18 @@ const Profile = () => {
                         {edit[2] ? <IconDeviceFloppy /> : <IconPencil />}
                     </ActionIcon>
                 </div>
-                <div className="flex flex-wrap gap-2">
-                    {profile?.skills?.map((skill: any, index: number) => (
-                        <div
-                            key={index}
-                            className="bg-blue-400 text-sm font-medium bg-opacity-15 rounded-3xl text-white px-3 py-1"
-                        >
-                            {skill}
-                        </div>
-                    ))}
-                </div>
+                {
+                    edit[2] ? <TagsInput value={skills} onChange={setSkills} placeholder="Add Skill" splitChars={[',', ' ', '|']} /> : <div className="flex flex-wrap gap-2">
+                        {skills?.map((skill: any, index: number) => (
+                            <div
+                                key={index}
+                                className="bg-blue-400 text-sm font-medium bg-opacity-15 rounded-3xl text-white px-3 py-1"
+                            >
+                                {skill}
+                            </div>
+                        ))}
+                    </div>
+                }
             </div>
 
             <Divider mx="xs" my="xl" />
@@ -164,7 +167,7 @@ const Profile = () => {
                 </div>
                 <div className="flex flex-col gap-8">
                     {profile?.experience?.map((exp: any, index: number) => (
-                        <ExpCard key={index} {...exp} />
+                        <ExpCard key={index} {...exp} edit={edit[3]}/>
                     ))}
                 </div>
             </div>
