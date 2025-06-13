@@ -6,12 +6,12 @@ const ProfileSlice = createSlice({
     initialState: {},
     reducers: {
         changeProfile: (state, action) => {
-            // Directly modify the state
-            Object.assign(state, updateProfile(action.payload));
+            state = updateProfile(action.payload);
+            return action.payload;
         },
         setProfile: (state, action) => {
-            // Directly modify the state
-            Object.assign(state, action.payload);
+            state = action.payload;
+            return state;
         }
     }
 });

@@ -7,6 +7,7 @@ import { getProfile } from "../Services/ProfileService";
 import { useLocation } from "react-router-dom";
 import SelectInput from "./SelectInput";
 import fields from "../Data/Profile";
+import { useSelector } from "react-redux";
 
 
 const Profile = () => {
@@ -18,34 +19,47 @@ const Profile = () => {
         setEdit(newEdit);
         console.log(edit);
     };
-
     const [about, setAbout] = useState('kbkjfdkjkjdkf');
 
-    const location = useLocation();
-    const userIdFromState = location.state?.userId; // Retrieve user ID from route state
-    const userIdFromStorage = JSON.parse(localStorage.getItem("user") || "{}").id; // Retrieve user ID from local storage
-    const userId = userIdFromState || userIdFromStorage; // Use state if available, otherwise fallback to local storage
-    const profileId = JSON.parse(localStorage.getItem("user") || "{}").profileId
-    const [profile, setProfile] = useState<any>(null);
+    // const location = useLocation();
+    // const userIdFromState = location.state?.userId; // Retrieve user ID from route state
+    // const userIdFromStorage = JSON.parse(localStorage.getItem("user") || "{}").id; // Retrieve user ID from local storage
+    // const userId = userIdFromState || userIdFromStorage; // Use state if available, otherwise fallback to local storage
+    // const profileId = JSON.parse(localStorage.getItem("user") || "{}").profileId;
+
+
+
+    const user = useSelector((state:any)=>state.user);
+    const profile = useSelector((state:any)=>state.profile);
+    //const [profile, setProfile] = useState<any>(null);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        console.log("User ID from route state:", userId); // Debugging line
-        console.log(JSON.parse(localStorage.getItem("user") || "{}").profileId); // Debugging line
-        if (profileId) {
-            getProfile(profileId)
-                .then((res) => {
-                    console.log("Profile data:", res); // Debugging line
-                    setProfile(res);
-                    setAbout(res.about || ''); // Initialize about with profile data or empty string
-                    setLoading(false);
-                })
-                .catch((err) => {
-                    console.error('Error fetching profile:', err);
-                    setLoading(false);
-                });
-        }
-    }, [userId]);
+        // console.log("User ID from route state:", userId); // Debugging line
+        // console.log(JSON.parse(localStorage.getItem("user") || "{}").profileId); // Debugging line
+        // if (profileId) {
+        //     getProfile(profileId)
+        //         .then((res) => {
+        //             console.log("Profile data:", res); // Debugging line
+        //             setProfile(res);
+        //             setAbout(res.about || ''); // Initialize about with profile data or empty string
+        //             setLoading(false);
+        //         })
+        //         .catch((err) => {
+        //             console.error('Error fetching profile:', err);
+        //             setLoading(false);
+        //         });
+        // }
+        console.log("Profile:", profile);
+        getProfile(user.profileId).then((data:any)=>{
+            
+            console.log("Profile data:", data);
+        }).catch((error:any) => {
+            console.error('Error fetching profile:', error);
+        });
+
+
+    }, []);
 
     if (loading) {
         return <div>Loading...</div>;
