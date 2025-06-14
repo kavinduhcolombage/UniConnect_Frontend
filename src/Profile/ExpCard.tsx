@@ -1,11 +1,16 @@
+import { Button } from "@mantine/core";
 import { formatDate } from "../Services/Utilities";
+import { useState } from "react";
+import ExpInput from "./ExpInput";
 
 const ExpCard = (props: any) => {
-    return <div className="flex flex-col gap-2">
+    const [edit, setEdit] = useState(false);
+    
+    return !edit?<div className="flex flex-col gap-2">
         <div className="flex justify-between">
             <div className="flex gap-2 items-center">
                 <div className="p-2 bg-mine-shaft-800 rounded-md">
-                    <img className="h-7" src={`/CompanyLogo/${props.company}.png`} alt="" />
+                    <img className="h-10" src={`/CompanyLogo/${props.company}.png`} alt="" />
                 </div>
                 <div className="flex flex-col">
                     <div className="font-semibold"> {props.title} </div>
@@ -16,10 +21,14 @@ const ExpCard = (props: any) => {
                 {formatDate(props.startDate)} - {formatDate(props.endDate)}
             </div>
         </div>
-        <div className="text-sm text-justify">
+        <div className="text-base text-justify">
             {props.description}
         </div>
-    </div>;
+        {props.edit && <div className="flex gap-5 justify-end">
+            <Button onClick={()=>setEdit(true)} color="blue" variant="outline">Edit</Button>
+            <Button color="red.8" variant="light">Delete</Button>
+        </div>}
+    </div>:<ExpInput setEdit={setEdit}/>
 }
 
 export default ExpCard;
