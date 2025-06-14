@@ -24,7 +24,7 @@ const ExpCard = (props: any) => {
         <div className="text-base text-justify">
             {props.description}
         </div>
-        {props.edit && <div className="flex gap-5">
+        {props.edit && <div className="flex gap-5 justify-end">
             <Button onClick={()=>setEdit(true)} color="blue" variant="outline">Edit</Button>
             <Button color="red.8" variant="light">Delete</Button>
         </div>}

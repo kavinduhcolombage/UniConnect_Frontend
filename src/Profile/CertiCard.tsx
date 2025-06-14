@@ -1,4 +1,6 @@
+import { ActionIcon } from "@mantine/core";
 import { formatDate } from "../Services/Utilities";
+import { IconTrash } from "@tabler/icons-react";
 
 const CertiCard = (props: any) => {
     return <div className="flex justify-between">
@@ -11,10 +13,16 @@ const CertiCard = (props: any) => {
                 <div className="text-sm text-mine-shaft-300">{props.issuer}</div>
             </div>
         </div>
-        <div className="flex flex-col items-end">
-            <div className="text-sm text-mine-shaft-300">{formatDate(props.issueDate)}</div>
-            <div className="text-sm text-mine-shaft-300">ID : {props.certificateId}</div>
+        <div className="flex items-center gap-3">
+            <div className="flex flex-col items-end">
+                <div className="text-sm text-mine-shaft-300">{formatDate(props.issueDate)}</div>
+                <div className="text-sm text-mine-shaft-300">ID : {props.certificateId}</div>
+            </div>
+            {props.edit && <ActionIcon onClick={() => { }} size="lg" color="red" variant="subtle">
+                <IconTrash stroke={1.5} />
+            </ActionIcon>}
         </div>
+
     </div>
 
 }
