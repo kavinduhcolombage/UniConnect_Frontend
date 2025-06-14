@@ -1,19 +1,17 @@
-import { ActionIcon, Button, Divider, TagsInput, Textarea } from "@mantine/core";
-import { IconBriefcase, IconDeviceFloppy, IconMapPin, IconPencil, IconPlus } from "@tabler/icons-react";
+import { ActionIcon, Divider, TagsInput, Textarea } from "@mantine/core";
+import { IconDeviceFloppy, IconPencil, IconPlus } from "@tabler/icons-react";
 import ExpCard from "./ExpCard";
 import CertiCard from "./CertiCard";
 import { useEffect, useState } from "react";
 import { getProfile } from "../Services/ProfileService";
-import SelectInput from "./SelectInput";
-import fields from "../Data/Profile";
 import { useDispatch, useSelector } from "react-redux";
 import { setProfile } from "../Slices/ProfileSlice";
 import ExpInput from "./ExpInput";
 import CertiInput from "./CertiInput";
+import Info from "./Info";
 
 
 const Profile = () => {
-    const select = fields;
     const [edit, setEdit] = useState([false, false, false, false, false]);
     const [about, setAbout] = useState('This is user profile. You can edit this section to add more details about yourself.');
     const [addExp, setAddExp] = useState(false);
@@ -100,28 +98,7 @@ const Profile = () => {
 
             {/* Profile Header */}
             <div className="px-3 mt-22">
-                <div className="text-3xl font-semibold flex justify-between">
-                    {profile.name}
-                    <ActionIcon onClick={() => handleEdit(0)} size="lg" color="blue" variant="subtle">
-                        {edit[0] ? <IconDeviceFloppy /> : <IconPencil />}
-                    </ActionIcon>
-                </div>
-                {
-                    edit[0] ? <><div className="flex gap-10 [&>*]:w-1/2">
-                        <SelectInput {...select[0]} />
-                        <SelectInput {...select[1]} />
-                    </div>
-                        <SelectInput {...select[2]} />
-                        <div className="p-2 flex gap-2 justify-end">
-                            <Button color="blue" variant="outline">Save</Button>
-                            <Button onClick={() => handleEdit(0)} color="red" variant="light">Cancel</Button>
-                        </div></> : <><div className="text-xl flex gap-1 items-center">
-                            <IconBriefcase className="h-5 w-5" stroke={1.5} /> {profile.role} &bull; {profile.company}
-                        </div>
-                        <div className="text-lg flex gap-1 items-center text-mine-shaft-300">
-                            <IconMapPin className="h-5 w-5" stroke={1.5} /> {profile.location}
-                        </div></>
-                }
+                <Info />
             </div>
 
             <Divider mx="xs" my="xl" />
