@@ -86,11 +86,16 @@ const Profile = () => {
             {/* Profile Banner and Avatar */}
             <div className="relative">
                 <img className="rounded-t-2xl" src="/Profile/banner.jpg" alt="Profile Banner" />
-                <img
-                    className="w-48 h-48 rounded-full -bottom-1/3 absolute left-3 border-mine-shaft-950"
-                    src="/Profile/avatar.jpg"
-                    alt="Profile Avatar"
-                />
+                <div className="absolute left-3 -bottom-24">
+                    <img
+                        className="w-48 h-48 rounded-full border-mine-shaft-950"
+                        src="/Profile/avatar.jpg"
+                        alt="Profile Avatar"
+                    />
+                    <ActionIcon className="absolute left-40 bottom-7 rounded-full" size="lg" color="blue" variant="subtle">
+                        <IconPencil />
+                    </ActionIcon>
+                </div>
             </div>
 
             {/* Profile Header */}
