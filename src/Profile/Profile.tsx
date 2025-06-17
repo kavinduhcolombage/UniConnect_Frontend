@@ -1,4 +1,4 @@
-import { ActionIcon, Divider, TagsInput, Textarea } from "@mantine/core";
+import { ActionIcon, Divider, TagsInput } from "@mantine/core";
 import { IconDeviceFloppy, IconPencil, IconPlus } from "@tabler/icons-react";
 import ExpCard from "./ExpCard";
 import CertiCard from "./CertiCard";
@@ -9,11 +9,11 @@ import { setProfile } from "../Slices/ProfileSlice";
 import ExpInput from "./ExpInput";
 import CertiInput from "./CertiInput";
 import Info from "./Info";
+import About from "./About";
 
 
 const Profile = () => {
     const [edit, setEdit] = useState([false, false, false, false, false]);
-    const [about, setAbout] = useState('This is user profile. You can edit this section to add more details about yourself.');
     const [addExp, setAddExp] = useState(false);
     const [addCerti, setAddCerti] = useState(false);
     const [skills, setSkills] = useState(['JavaScript', 'React', 'Node.js', 'CSS', 'HTML']);
@@ -61,7 +61,6 @@ const Profile = () => {
         getProfile(user.profileId).then((data: any) => {
             dispatch(setProfile(data));
             console.log("Profile data:", data);
-            setAbout(data.about);
             setSkills(data.skills);
 
         }).catch((error: any) => {
@@ -104,17 +103,7 @@ const Profile = () => {
             <Divider mx="xs" my="xl" />
 
             {/* About Section */}
-            <div className="px-3">
-                <div className="text-2xl font-semibold mb-3 flex justify-between">
-                    About
-                    <ActionIcon onClick={() => handleEdit(1)} size="lg" color="blue" variant="subtle">
-                        {edit[1] ? <IconDeviceFloppy /> : <IconPencil />}
-                    </ActionIcon>
-                </div>
-                {
-                    edit[1] ? <Textarea size="md" value={about} placeholder="Enter about your self.." autosize minRows={3} onChange={(event) => setAbout(event.currentTarget.value)} /> : <div className="text-base text-justify">{about}</div>
-                }
-            </div>
+            < About />
 
             <Divider mx="xs" my="xl" />
 

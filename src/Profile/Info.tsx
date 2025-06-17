@@ -1,7 +1,7 @@
 import { useState } from "react";
 import fields from "../Data/Profile";
-import { ActionIcon, Button } from "@mantine/core";
-import { IconBriefcase, IconCheck, IconDeviceFloppy, IconMapPin, IconPencil, IconX } from "@tabler/icons-react";
+import { ActionIcon } from "@mantine/core";
+import { IconBriefcase, IconCheck, IconMapPin, IconPencil, IconX } from "@tabler/icons-react";
 import SelectInput from "./SelectInput";
 import { useForm } from "@mantine/form";
 import { useDispatch, useSelector } from "react-redux";
@@ -47,7 +47,7 @@ const Info = () => {
         <div className="text-3xl font-semibold flex justify-between">
             {profile.name}
             <div className="flex gap-2">
-                {edit && <ActionIcon onClick={handleSave} size="lg" color="blue" variant="subtle">
+                {edit && <ActionIcon onClick={handleSave} size="lg" color="green.8" variant="subtle">
                     <IconCheck />
                 </ActionIcon>}
                 <ActionIcon onClick={handleClick} size="lg" color={edit ? "red.8" : "blue"} variant="subtle">
