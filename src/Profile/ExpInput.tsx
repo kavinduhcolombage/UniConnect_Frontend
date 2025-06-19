@@ -1,34 +1,100 @@
 import { Button, Checkbox, Textarea } from "@mantine/core";
 import SelectInput from "./SelectInput";
-import { useState } from "react";
+import { useEffect } from "react";
 import fields from "../Data/Profile";
 import { MonthPickerInput } from '@mantine/dates';
+import { isNotEmpty, useForm } from "@mantine/form";
+import { useDispatch, useSelector } from "react-redux";
+import { changeProfile } from "../Slices/ProfileSlice";
+import { IconCheck } from "@tabler/icons-react";
+import { notifications } from "@mantine/notifications";
 
 const ExpInput = (props: any) => {
     const select = fields;
-    const [startDate, setStartdate] = useState<Date | null>(new Date());
-    const [endDate, setEndDate] = useState<Date | null>(new Date());
-    const [description, setDescription] = useState('You can edit this section to add more details about your work experience.');
-    const [checked, setChecked] = useState(false);
+    const profile = useSelector((State: any) => State.profile);
+    const dispatch = useDispatch();
+
+    const form = useForm({
+        mode: 'controlled',
+        validateInputOnChange: true,
+        initialValues: {
+            title: '',
+            company: '',
+            location: '',
+            description: '',
+            startDate: new Date(),
+            endDate: new Date(),
+            working: false
+        },
+        validate: {
+            title: isNotEmpty("Title is required"),
+            company: isNotEmpty("Company is required"),
+            location: isNotEmpty("Location is required"),
+            description: isNotEmpty("Description is required"),
+        }
+    });
+
+    useEffect(() => {
+        if (!props.add) {
+            form.setValues({
+                title: props.title,
+                company: props.company,
+                location: props.location,
+                description: props.description,
+                startDate: new Date(props.startDate),
+                endDate: new Date(props.endDate),
+                working: props.working
+            });
+        }
+    }, []);
+
+    const handleSave = () => {
+        form.validate();
+        if (!form.isValid()) return;
+        let exp = [...profile.experience];
+        if (props.add) {
+            exp.push(form.getValues());
+            exp[exp.length - 1].startDate = exp[exp.length - 1].startDate.toISOString();
+            exp[exp.length - 1].endDate = exp[exp.length - 1].endDate.toISOString();
+        } else {
+            exp[props.index] = form.getValues();
+            exp[props.index].startDate = exp[props.index].startDate.toISOString();
+            exp[props.index].endDate = exp[props.index].endDate.toISOString();
+        }
+        let updatedProfile = { ...profile, experience: exp };
+        dispatch(changeProfile(updatedProfile));
+        props.setEdit(false);
+        notifications.show({
+            title: ` ${props.add ? "Added" : "Updated"} Succesfully.`,
+            message: `Experiance ${props.add ? "Added" : "Updated"}...`,
+            withCloseButton: true,
+            icon: <IconCheck />,
+            color: 'teal',
+            withBorder: true,
+            className: "!border-blue-500 !bg-blue-50 !text-blue-800 !shadow-lg !rounded-lg !p-4 !w-[400px]",
+        })
+    }
 
     return <div className="flex flex-col gap-3">
         <div className="text-lg font-semibold">{props.add ? "Add" : "Edit"} Experience</div>
         <div className="flex gap-10 [&>*]:w-1/2">
-            <SelectInput {...select[0]} />
-            <SelectInput {...select[1]} />
+            <SelectInput form={form} name="title" {...select[0]} />
+            <SelectInput form={form} name="company" {...select[1]} />
         </div>
-        <SelectInput {...select[2]} />
-        <Textarea withAsterisk label="Summary" size="md" value={description} placeholder="Tell about your Experiance..." autosize minRows={3} onChange={(event) => setDescription(event.currentTarget.value)} />
+        <SelectInput form={form} name="location" {...select[2]} />
+
+        <Textarea {...form.getInputProps('description')} withAsterisk label="Summary" size="md" placeholder="Tell about your Experiance..." autosize minRows={3} />
+
         <div className="flex gap-10 [&>*]:w-1/2">
-            <MonthPickerInput withAsterisk maxDate={endDate || undefined} label="Start date" placeholder="Pick date" value={startDate} onChange={setStartdate}
+            <MonthPickerInput {...form.getInputProps("startDate")} withAsterisk maxDate={form.getValues().endDate || undefined} label="Start date" placeholder="Pick date"
             />
-            <MonthPickerInput disabled={checked} withAsterisk minDate={startDate || undefined}
-                maxDate={new Date()} label="End date" placeholder="Pick date" value={endDate} onChange={setEndDate}
+            <MonthPickerInput {...form.getInputProps("endDate")} disabled={form.getValues().working} withAsterisk minDate={form.getValues().startDate || undefined}
+                maxDate={new Date()} label="End date" placeholder="Pick date"
             />
         </div>
-        <Checkbox checked={checked} onChange={(event) => setChecked(event.currentTarget.checked)} autoContrast label="Currently Working Here" />
+        <Checkbox checked={form.getValues().working} onChange={(e) => form.setFieldValue("working", e.currentTarget.checked)} autoContrast label="Currently Working Here" />
         <div className="flex gap-5 justify-end">
-            <Button onClick={() => props.setEdit(false)} color="blue" variant="outline">Save</Button>
+            <Button onClick={handleSave} color="green.8" variant="outline">Save</Button>
             <Button onClick={() => props.setEdit(false)} color="red.8" variant="light">Cancel</Button>
         </div>
     </div>
