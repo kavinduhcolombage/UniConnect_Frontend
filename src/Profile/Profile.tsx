@@ -10,6 +10,7 @@ import ExpInput from "./ExpInput";
 import CertiInput from "./CertiInput";
 import Info from "./Info";
 import About from "./About";
+import Experience from "./Experience";
 
 
 const Profile = () => {
@@ -132,27 +133,7 @@ const Profile = () => {
             <Divider mx="xs" my="xl" />
 
             {/* Experience Section */}
-            <div className="px-3">
-                <div className="text-2xl font-semibold mb-5 flex justify-between">
-                    Experience
-                    {!addExp && <div className="flex gap-2">
-                        {!edit[3] && <ActionIcon onClick={() => setAddExp(true)} size="lg" color="blue" variant="subtle">
-                            <IconPlus />
-                        </ActionIcon>}
-                        <ActionIcon onClick={() => handleEdit(3)} size="lg" color="blue" variant="subtle">
-                            {edit[3] ? <IconDeviceFloppy /> : <IconPencil />}
-                        </ActionIcon>
-                    </div>}
-                </div>
-                <div className="flex flex-col gap-8">
-                    {addExp && <ExpInput add setEdit={setAddExp} />}
-                    {
-                        profile?.experience?.map((exp: any, index: number) => (
-                            <ExpCard key={index} {...exp} edit={edit[3]} />
-                        ))
-                    }
-                </div>
-            </div>
+            < Experience />
 
             <Divider mx="xs" my="xl" />
 

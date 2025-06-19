@@ -28,7 +28,7 @@ const About = () => {
         console.log("Updated Profile:", updatedProfile);
         notifications.show({
             title: 'Updated Succesfully.',
-            message: 'profile updated...',
+            message: 'About updated...',
             withCloseButton: true,
             icon: <IconCheck />,
             color: 'teal',
