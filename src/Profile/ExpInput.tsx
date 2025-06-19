@@ -94,7 +94,7 @@ const ExpInput = (props: any) => {
         </div>
         <Checkbox checked={form.getValues().working} onChange={(e) => form.setFieldValue("working", e.currentTarget.checked)} autoContrast label="Currently Working Here" />
         <div className="flex gap-5 justify-end">
-            <Button onClick={handleSave} color="blue" variant="outline">Save</Button>
+            <Button onClick={handleSave} color="green.8" variant="outline">Save</Button>
             <Button onClick={() => props.setEdit(false)} color="red.8" variant="light">Cancel</Button>
         </div>
     </div>

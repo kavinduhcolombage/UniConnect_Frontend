@@ -1,12 +1,10 @@
 import { ActionIcon, Divider, TagsInput } from "@mantine/core";
 import { IconDeviceFloppy, IconPencil, IconPlus } from "@tabler/icons-react";
-import ExpCard from "./ExpCard";
 import CertiCard from "./CertiCard";
 import { useEffect, useState } from "react";
 import { getProfile } from "../Services/ProfileService";
 import { useDispatch, useSelector } from "react-redux";
 import { setProfile } from "../Slices/ProfileSlice";
-import ExpInput from "./ExpInput";
 import CertiInput from "./CertiInput";
 import Info from "./Info";
 import About from "./About";
@@ -15,7 +13,6 @@ import Experience from "./Experience";
 
 const Profile = () => {
     const [edit, setEdit] = useState([false, false, false, false, false]);
-    const [addExp, setAddExp] = useState(false);
     const [addCerti, setAddCerti] = useState(false);
     const [skills, setSkills] = useState(['JavaScript', 'React', 'Node.js', 'CSS', 'HTML']);
 
