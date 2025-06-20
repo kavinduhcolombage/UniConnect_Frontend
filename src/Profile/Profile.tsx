@@ -1,21 +1,18 @@
 import { ActionIcon, Divider, TagsInput } from "@mantine/core";
-import { IconDeviceFloppy, IconPencil, IconPlus } from "@tabler/icons-react";
-import CertiCard from "./CertiCard";
+import { IconDeviceFloppy, IconPencil } from "@tabler/icons-react";
 import { useEffect, useState } from "react";
 import { getProfile } from "../Services/ProfileService";
 import { useDispatch, useSelector } from "react-redux";
 import { setProfile } from "../Slices/ProfileSlice";
-import CertiInput from "./CertiInput";
 import Info from "./Info";
 import About from "./About";
 import Experience from "./Experience";
+import Certificate from "./Certificate";
 
 
 const Profile = () => {
     const [edit, setEdit] = useState([false, false, false, false, false]);
-    const [addCerti, setAddCerti] = useState(false);
     const [skills, setSkills] = useState(['JavaScript', 'React', 'Node.js', 'CSS', 'HTML']);
-
 
     const handleEdit = (index: any) => {
         const newEdit = [...edit];
@@ -99,10 +96,7 @@ const Profile = () => {
             </div>
 
             <Divider mx="xs" my="xl" />
-
-            {/* About Section */}
             < About />
-
             <Divider mx="xs" my="xl" />
 
             {/* Skills Section */}
@@ -131,31 +125,11 @@ const Profile = () => {
 
             {/* Experience Section */}
             < Experience />
-
             <Divider mx="xs" my="xl" />
 
             {/* Certifications Section */}
-            <div className="px-3">
-                <div className="text-2xl font-semibold mb-5 flex justify-between">
-                    Certifications
-                    {!addCerti && <div className="flex gap-2">
-                        {!edit[4] && <ActionIcon onClick={() => setAddCerti(true)} size="lg" color="blue" variant="subtle">
-                            <IconPlus />
-                        </ActionIcon>}
-                        <ActionIcon onClick={() => handleEdit(4)} size="lg" color="blue" variant="subtle">
-                            {edit[4] ? <IconDeviceFloppy /> : <IconPencil />}
-                        </ActionIcon>
-                    </div>}
-                </div>
-                <div className="flex flex-col gap-8">
-                    {addCerti && <CertiInput add setEdit={setAddCerti} />}
-                    {
-                        profile?.certifications?.map((certi: any, index: number) => (
-                            <CertiCard key={index} edit={edit[4]} {...certi} />
-                        ))
-                    }
-                </div>
-            </div>
+            <Certificate />
+
         </div>
     );
 };
