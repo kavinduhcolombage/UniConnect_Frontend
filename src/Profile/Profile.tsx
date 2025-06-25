@@ -1,18 +1,21 @@
-import { ActionIcon, Divider, TagsInput } from "@mantine/core";
-import { IconDeviceFloppy, IconPencil } from "@tabler/icons-react";
+import { ActionIcon, Avatar, Divider, FileInput, Overlay, TagsInput } from "@mantine/core";
+import { IconCheck, IconDeviceFloppy, IconEdit, IconPencil } from "@tabler/icons-react";
 import { useEffect, useState } from "react";
 import { getProfile } from "../Services/ProfileService";
 import { useDispatch, useSelector } from "react-redux";
-import { setProfile } from "../Slices/ProfileSlice";
+import { changeProfile, setProfile } from "../Slices/ProfileSlice";
 import Info from "./Info";
 import About from "./About";
 import Experience from "./Experience";
 import Certificate from "./Certificate";
+import { useHover } from "@mantine/hooks";
+import { notifications } from "@mantine/notifications";
 
 
 const Profile = () => {
     const [edit, setEdit] = useState([false, false, false, false, false]);
     const [skills, setSkills] = useState(['JavaScript', 'React', 'Node.js', 'CSS', 'HTML']);
+    const { hovered, ref } = useHover();
 
     const handleEdit = (index: any) => {
         const newEdit = [...edit];
@@ -22,36 +25,37 @@ const Profile = () => {
         setEdit(newEdit);
     };
 
+    const handleFileChnage = async (image: any) => {
+        let picture: any = await getBase64(image);
+        console.log("Picture in Profile:", picture);
+        let updatedProfile = { ...profile, picture: picture.split(',')[1] };
+        dispatch(changeProfile(updatedProfile));
+        notifications.show({
+            title: "Profile Picture Updated",
+            message: "Your profile picture has been updated successfully.",
+            withCloseButton: true,
+            icon: <IconCheck />,
+            color: 'teal',
+            withBorder: true,
+            className: "!border-blue-500 !bg-blue-50 !text-blue-800 !shadow-lg !rounded-lg !p-4 !w-[400px]",
+        })
+    }
 
-    // const location = useLocation();
-    // const userIdFromState = location.state?.userId; // Retrieve user ID from route state
-    // const userIdFromStorage = JSON.parse(localStorage.getItem("user") || "{}").id; // Retrieve user ID from local storage
-    // const userId = userIdFromState || userIdFromStorage; // Use state if available, otherwise fallback to local storage
-    // const profileId = JSON.parse(localStorage.getItem("user") || "{}").profileId;
-
+    const getBase64 = (file: any) => {
+        return new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.readAsDataURL(file);
+            reader.onload = () => resolve(reader.result);
+            reader.onerror = error => reject(error);
+        })
+    }
 
     const dispatch = useDispatch();
     const user = useSelector((state: any) => state.user);
     const profile = useSelector((state: any) => state.profile);
-    //const [profile, setProfile] = useState<any>(null);
     //const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        // console.log("User ID from route state:", userId); // Debugging line
-        // console.log(JSON.parse(localStorage.getItem("user") || "{}").profileId); // Debugging line
-        // if (profileId) {
-        //     getProfile(profileId)
-        //         .then((res) => {
-        //             console.log("Profile data:", res); // Debugging line
-        //             setProfile(res);
-        //             setAbout(res.about || ''); // Initialize about with profile data or empty string
-        //             setLoading(false);
-        //         })
-        //         .catch((err) => {
-        //             console.error('Error fetching profile:', err);
-        //             setLoading(false);
-        //         });
-        // }
         console.log("Profile:", profile);
         getProfile(user.profileId).then((data: any) => {
             dispatch(setProfile(data));
@@ -78,15 +82,11 @@ const Profile = () => {
             {/* Profile Banner and Avatar */}
             <div className="relative">
                 <img className="rounded-t-2xl" src="/Profile/banner.jpg" alt="Profile Banner" />
-                <div className="absolute left-3 -bottom-24">
-                    <img
-                        className="w-48 h-48 rounded-full border-mine-shaft-950"
-                        src="/Profile/avatar.jpg"
-                        alt="Profile Avatar"
-                    />
-                    <ActionIcon className="absolute left-40 bottom-7 rounded-full" size="lg" color="blue" variant="subtle">
-                        <IconPencil />
-                    </ActionIcon>
+                <div ref={ref} className="flex items-center justify-center absolute left-3 -bottom-24">
+                    <Avatar className="!w-48 !h-48 border-blue-400 border-8 rounded-full" src={profile.picture ? `data:image/jpeg;base64,${profile.picture}` : "/Profile/avatar.jpg"} alt="" />
+                    {hovered && <Overlay className="!rounded-full" backgroundOpacity={0.75} />}
+                    {hovered && <IconEdit className="absolute z-[300] w-16 h-16" />}
+                    {hovered && <FileInput onChange={handleFileChnage} className="absolute z-[301] [&_*]:!rounded-full [&_*]:!h-full h-full w-full" size="lg" radius="xl" variant="transparent" accept="image/png,image/jpeg" />}
                 </div>
             </div>
 

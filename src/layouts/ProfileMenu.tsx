@@ -1,5 +1,4 @@
 import { Menu, Avatar, Indicator, Switch } from '@mantine/core';
-import avatarImage from '../assets/avatar.png';
 import {
     IconMessageCircle,
     IconUserCircle,
@@ -20,6 +19,7 @@ const ProfileMenu = () => {
     const navigate = useNavigate();
     const [checked, setChecked] = useState(false);
     const [opened, setOpened] = useState(false);
+    const profile = useSelector((state: any) => state.profile);
     const handleLogout = () => {
         dispatch(removeUser());
     }
@@ -37,7 +37,7 @@ const ProfileMenu = () => {
                     <Indicator inline size={11} offset={4} position="bottom-end" color="green" withBorder>
                         <Avatar
                             size={45}
-                            src={avatarImage}
+                            src={profile.picture ? `data:image/jpeg;base64,${profile.picture}` : "/Profile/avatar.jpg"}
                             alt="profile photo"
                         />
                     </Indicator>
