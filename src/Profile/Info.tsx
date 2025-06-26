@@ -7,6 +7,7 @@ import { useForm } from "@mantine/form";
 import { useDispatch, useSelector } from "react-redux";
 import { changeProfile } from "../Slices/ProfileSlice";
 import { notifications } from "@mantine/notifications";
+import { updateProfile } from "../Services/ProfileService";
 
 const Info = () => {
     const select = fields;
@@ -22,20 +23,32 @@ const Info = () => {
             setEdit(false);
         }
     }
-    const handleSave = () => {
+    
+    const handleSave = async () => {
         setEdit(false);
         let updatedProfile = { ...profile, ...form.getValues() };
-        dispatch(changeProfile(updatedProfile));
-        console.log("Updated Profile:", updatedProfile);
-        notifications.show({
-            title: 'Updated Succesfully.',
-            message: 'profile updated...',
-            withCloseButton: true,
-            icon: <IconCheck />,
-            color: 'teal',
-            withBorder: true,
-            className: "!border-blue-500 !bg-blue-50 !text-blue-800 !shadow-lg !rounded-lg !p-4 !w-[400px]",
-        })
+        try {
+            await updateProfile(updatedProfile);
+            dispatch(changeProfile(updatedProfile));
+            console.log("Updated Profile:", updatedProfile);
+            notifications.show({
+                title: 'Updated Succesfully.',
+                message: 'profile updated...',
+                withCloseButton: true,
+                icon: <IconCheck />,
+                color: 'teal',
+                withBorder: true,
+                className: "!border-blue-500 !bg-blue-50 !text-blue-800 !shadow-lg !rounded-lg !p-4 !w-[400px]",
+            })
+        } catch (error) {
+            console.error("Error updating profile:", error);
+            notifications.show({
+                title: "Error",
+                message: "Failed to update profile.",
+                icon: <IconX />,
+                color: "red",
+            });
+        }
     }
 
     const form = useForm({

@@ -6,7 +6,8 @@ import { isNotEmpty, useForm } from "@mantine/form";
 import { useDispatch, useSelector } from "react-redux";
 import { changeProfile } from "../Slices/ProfileSlice";
 import { notifications } from "@mantine/notifications";
-import { IconCheck } from "@tabler/icons-react";
+import { IconCheck, IconX } from "@tabler/icons-react";
+import { updateProfile } from "../Services/ProfileService";
 
 const CertiInput = (props: any) => {
     const select = fields;
@@ -31,24 +32,36 @@ const CertiInput = (props: any) => {
 
     console.log("profile in certi input:", profile);
 
-    const handleSave = () => {
+    const handleSave = async () => {
         form.validate();
         if (!form.isValid()) return;
         let certi = [...profile.certifications];
-        certi.push(form.getValues());
+        certi.push({...form.getValues()});
         certi[certi.length - 1].issueDate = certi[certi.length - 1].issueDate.toISOString();
-        let updatedProfile = { ...profile, certifications: certi }
-        dispatch(changeProfile(updatedProfile));
-        props.setEdit(false);
-        notifications.show({
-            title: `Certificate ${props.add ? "Added" : "Updated"} Succesfully.`,
-            message: `Certificate ${props.add ? "Added" : "Updated"}...`,
-            withCloseButton: true,
-            icon: <IconCheck />,
-            color: 'teal',
-            withBorder: true,
-            className: "!border-blue-500 !bg-blue-50 !text-blue-800 !shadow-lg !rounded-lg !p-4 !w-[400px]",
-        })
+        let updatedProfile = { ...profile, certifications: certi };
+        try {
+            await updateProfile(updatedProfile);
+            dispatch(changeProfile(updatedProfile));
+            props.setEdit(false);
+            console.log("Updated Profile:", updatedProfile);
+            notifications.show({
+                title: `Certificate ${props.add ? "Added" : "Updated"} Succesfully.`,
+                message: `Certificate ${props.add ? "Added" : "Updated"}...`,
+                withCloseButton: true,
+                icon: <IconCheck />,
+                color: 'teal',
+                withBorder: true,
+                className: "!border-blue-500 !bg-blue-50 !text-blue-800 !shadow-lg !rounded-lg !p-4 !w-[400px]",
+            })
+        } catch (error) {
+            console.error("Error updating profile:", error);
+            notifications.show({
+                title: "Error",
+                message: "Failed to update profile.",
+                icon: <IconX />,
+                color: "red",
+            });
+        }
     }
 
     return <div className="flex flex-col gap-3">
