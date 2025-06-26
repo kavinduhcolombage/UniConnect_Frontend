@@ -6,8 +6,9 @@ import { MonthPickerInput } from '@mantine/dates';
 import { isNotEmpty, useForm } from "@mantine/form";
 import { useDispatch, useSelector } from "react-redux";
 import { changeProfile } from "../Slices/ProfileSlice";
-import { IconCheck } from "@tabler/icons-react";
+import { IconCheck, IconX } from "@tabler/icons-react";
 import { notifications } from "@mantine/notifications";
+import { updateProfile } from "../Services/ProfileService";
 
 const ExpInput = (props: any) => {
     const select = fields;
@@ -48,31 +49,44 @@ const ExpInput = (props: any) => {
         }
     }, []);
 
-    const handleSave = () => {
+    const handleSave = async () => {
         form.validate();
         if (!form.isValid()) return;
         let exp = [...profile.experience];
         if (props.add) {
-            exp.push(form.getValues());
+            exp.push({...form.getValues()});
             exp[exp.length - 1].startDate = exp[exp.length - 1].startDate.toISOString();
             exp[exp.length - 1].endDate = exp[exp.length - 1].endDate.toISOString();
         } else {
-            exp[props.index] = form.getValues();
+            exp[props.index] = { ...form.getValues() };
             exp[props.index].startDate = exp[props.index].startDate.toISOString();
             exp[props.index].endDate = exp[props.index].endDate.toISOString();
         }
         let updatedProfile = { ...profile, experience: exp };
-        dispatch(changeProfile(updatedProfile));
-        props.setEdit(false);
-        notifications.show({
-            title: ` ${props.add ? "Added" : "Updated"} Succesfully.`,
-            message: `Experiance ${props.add ? "Added" : "Updated"}...`,
-            withCloseButton: true,
-            icon: <IconCheck />,
-            color: 'teal',
-            withBorder: true,
-            className: "!border-blue-500 !bg-blue-50 !text-blue-800 !shadow-lg !rounded-lg !p-4 !w-[400px]",
-        })
+        console.log("Updated Profile in ExpInput:", updatedProfile);
+        try {
+            await updateProfile(updatedProfile);
+            dispatch(changeProfile(updatedProfile));
+            props.setEdit(false);
+            console.log("Updated Profile:", updatedProfile);
+            notifications.show({
+                title: `${props.add ? "Added" : "Updated"} Succesfully.`,
+                message: `Experiance ${props.add ? "Added" : "Updated"}...`,
+                withCloseButton: true,
+                icon: <IconCheck />,
+                color: 'teal',
+                withBorder: true,
+                className: "!border-blue-500 !bg-blue-50 !text-blue-800 !shadow-lg !rounded-lg !p-4 !w-[400px]",
+            })
+        } catch (error) {
+            console.error("Error updating profile:", error);
+            notifications.show({
+                title: "Error",
+                message: "Failed to update profile.",
+                icon: <IconX />,
+                color: "red",
+            });
+        }
     }
 
     return <div className="flex flex-col gap-3">
@@ -93,6 +107,7 @@ const ExpInput = (props: any) => {
             />
         </div>
         <Checkbox checked={form.getValues().working} onChange={(e) => form.setFieldValue("working", e.currentTarget.checked)} autoContrast label="Currently Working Here" />
+
         <div className="flex gap-5 justify-end">
             <Button onClick={handleSave} color="green.8" variant="outline">Save</Button>
             <Button onClick={() => props.setEdit(false)} color="red.8" variant="light">Cancel</Button>
