@@ -1,21 +1,23 @@
 import { ActionIcon, Avatar, Divider, FileInput, Overlay, TagsInput } from "@mantine/core";
-import { IconCheck, IconDeviceFloppy, IconEdit, IconPencil } from "@tabler/icons-react";
-import { useEffect, useState } from "react";
-import { getProfile } from "../Services/ProfileService";
+import { IconCheck, IconDeviceFloppy, IconEdit, IconPencil, IconX } from "@tabler/icons-react";
+import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { changeProfile, setProfile } from "../Slices/ProfileSlice";
+import { changeProfile } from "../Slices/ProfileSlice";
 import Info from "./Info";
 import About from "./About";
 import Experience from "./Experience";
 import Certificate from "./Certificate";
 import { useHover } from "@mantine/hooks";
 import { notifications } from "@mantine/notifications";
+import { updateProfile } from "../Services/ProfileService";
 
 
 const Profile = () => {
     const [edit, setEdit] = useState([false, false, false, false, false]);
     const [skills, setSkills] = useState(['JavaScript', 'React', 'Node.js', 'CSS', 'HTML']);
     const { hovered, ref } = useHover();
+    const dispatch = useDispatch();
+    const profile = useSelector((state: any) => state.profile);
 
     const handleEdit = (index: any) => {
         const newEdit = [...edit];
@@ -25,20 +27,31 @@ const Profile = () => {
         setEdit(newEdit);
     };
 
-    const handleFileChnage = async (image: any) => {
+    const handleFileChange = async (image: any) => {
         let picture: any = await getBase64(image);
         console.log("Picture in Profile:", picture);
         let updatedProfile = { ...profile, picture: picture.split(',')[1] };
-        dispatch(changeProfile(updatedProfile));
-        notifications.show({
-            title: "Profile Picture Updated",
-            message: "Your profile picture has been updated successfully.",
-            withCloseButton: true,
-            icon: <IconCheck />,
-            color: 'teal',
-            withBorder: true,
-            className: "!border-blue-500 !bg-blue-50 !text-blue-800 !shadow-lg !rounded-lg !p-4 !w-[400px]",
-        })
+        try {
+            await updateProfile(updatedProfile);
+            dispatch(changeProfile(updatedProfile));
+            notifications.show({
+                title: 'Profile Picture Updated',
+                message: 'Your profile picture has been updated successfully."',
+                withCloseButton: true,
+                icon: <IconCheck />,
+                color: 'teal',
+                withBorder: true,
+                className: "!border-blue-500 !bg-blue-50 !text-blue-800 !shadow-lg !rounded-lg !p-4 !w-[400px]",
+            })
+        } catch (error) {
+            console.error("Error updating profile:", error);
+            notifications.show({
+                title: "Error",
+                message: "Failed to update profile.",
+                icon: <IconX />,
+                color: "red",
+            });
+        }
     }
 
     const getBase64 = (file: any) => {
@@ -50,24 +63,8 @@ const Profile = () => {
         })
     }
 
-    const dispatch = useDispatch();
-    const user = useSelector((state: any) => state.user);
-    const profile = useSelector((state: any) => state.profile);
+    
     //const [loading, setLoading] = useState(true);
-
-    useEffect(() => {
-        console.log("Profile:", profile);
-        getProfile(user.profileId).then((data: any) => {
-            dispatch(setProfile(data));
-            console.log("Profile data:", data);
-            setSkills(data.skills);
-
-        }).catch((error: any) => {
-            console.error('Error fetching profile:', error);
-        });
-
-
-    }, []);
 
     // if (loading) {
     //     return <div>Loading...</div>;
@@ -86,7 +83,7 @@ const Profile = () => {
                     <Avatar className="!w-48 !h-48 border-blue-400 border-8 rounded-full" src={profile.picture ? `data:image/jpeg;base64,${profile.picture}` : "/Profile/avatar.jpg"} alt="" />
                     {hovered && <Overlay className="!rounded-full" backgroundOpacity={0.75} />}
                     {hovered && <IconEdit className="absolute z-[300] w-16 h-16" />}
-                    {hovered && <FileInput onChange={handleFileChnage} className="absolute z-[301] [&_*]:!rounded-full [&_*]:!h-full h-full w-full" size="lg" radius="xl" variant="transparent" accept="image/png,image/jpeg" />}
+                    {hovered && <FileInput onChange={handleFileChange} className="absolute z-[301] [&_*]:!rounded-full [&_*]:!h-full h-full w-full" size="lg" radius="xl" variant="transparent" accept="image/png,image/jpeg" />}
                 </div>
             </div>
 
@@ -109,7 +106,7 @@ const Profile = () => {
                 </div>
                 {
                     edit[2] ? <TagsInput value={skills} onChange={setSkills} placeholder="Add Skill" splitChars={[',', ' ', '|']} /> : <div className="flex flex-wrap gap-2">
-                        {skills?.map((skill: any, index: number) => (
+                        {profile.skills?.map((skill: any, index: number) => (
                             <div
                                 key={index}
                                 className="bg-blue-400 text-sm font-medium bg-opacity-15 rounded-3xl text-white px-3 py-1"
