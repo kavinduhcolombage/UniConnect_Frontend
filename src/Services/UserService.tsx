@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { User } from '../types/User';
-const base_URL = 'http://localhost:8080/api/v1/usercontroller';
+import Host_Url from './HostUrl';
+const base_URL = `${Host_Url}/api/v1/usercontroller`;
 
 const registerUser = async (user:User)=>{
     return axios.post(`${base_URL}/signup`, user)

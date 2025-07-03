@@ -8,7 +8,7 @@ const DreamJob = () => {
             <div>good life good company</div>
             <div className='flex items-end'>
                 <TextInput
-                    label="Input label"
+                    label="Search Your job"
                     placeholder="search job"
                 />
 
