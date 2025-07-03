@@ -3,8 +3,12 @@ import { fields } from "../Data/PostJob";
 import SelectInput from "./SelectInput";
 import { isNotEmpty, useForm } from "@mantine/form";
 import { postJob } from "../Services/JobService";
+import { useNavigate } from "react-router-dom";
+import { IconCheck, IconX } from "@tabler/icons-react";
+import { notifications } from "@mantine/notifications";
 
 const PostJob = () => {
+    const navigate = useNavigate();
     const select = fields;
     const form = useForm({
         mode: 'controlled',
@@ -38,13 +42,27 @@ const PostJob = () => {
         if (!form.isValid()) return;
         postJob(form.getValues()).then((res) => {
             console.log(res);
-            console.log('Succes notification');
-            //   successNotification("Success", "Job Posted Successfully");
-            // navigate("/jobs");
-        }).catch((err) => {
+            notifications.show({
+                title: "Success",
+                message: "Job Posted Successfully",
+                withCloseButton: true,
+                icon: <IconCheck />,
+                color: 'teal',
+                withBorder: true,
+                className: "!border-blue-500 !bg-blue-50 !text-blue-800 !shadow-lg !rounded-lg !p-4 !w-[400px]",
+            })
+            navigate("/posted-job");
+        }).catch((err) => { 
             console.log(err);
-            console.log('error notification');
-            //   errorNotification("Error", err.response.data.errorMessage);
+            notifications.show({
+                title: "Error Occurred",
+                message: err.code? "something went wrong, please try again later" : err.message,
+                withCloseButton: true,
+                icon: <IconX />,
+                color: 'red',
+                withBorder: true,
+                className: "!border-red-500 !bg-red-50 !text-red-800 !shadow-lg !rounded-lg !p-4 !w-[400px]",
+            })
         });
     }
     return <div className="w-4/5 mx-auto">
