@@ -1,4 +1,4 @@
-import { Button, NumberInput, TagsInput } from "@mantine/core";
+import { Button, NumberInput, TagsInput, Textarea } from "@mantine/core";
 import { fields } from "../Data/PostJob";
 import SelectInput from "./SelectInput";
 import { isNotEmpty, useForm } from "@mantine/form";
@@ -17,8 +17,8 @@ const PostJob = () => {
             location: '',
             pacakgeOffered: '',
             skillsRequired: [],
-            about: 'test',
-            description: 'test'
+            about: '',
+            description: ''
         },
         validate: {
             jobTitle: isNotEmpty('Title is required'),
@@ -28,18 +28,13 @@ const PostJob = () => {
             location: isNotEmpty('Location is required'),
             pacakgeOffered: isNotEmpty('Salary is required'),
             skillsRequired: isNotEmpty('Skills are required'),
-            // about: isNotEmpty('About is required'),
-            // description: isNotEmpty('Description is required')
+            about: isNotEmpty('About is required'),
+            description: isNotEmpty('Description is required')
         }
 
     })
     const handlePost = () => {
-        console.log('VALUES:', form.values);
-        console.log('ERRORS:', form.errors);
-        console.log('handlePost called');
-        console.log(form.isValid());
         form.validate();
-        console.log(form.isValid());
         if (!form.isValid()) return;
         postJob(form.getValues()).then((res) => {
             console.log(res);
@@ -65,17 +60,15 @@ const PostJob = () => {
             </div>
             <div className="flex gap-10 [&>*]:w-1/2">
                 <SelectInput form={form} name="location" {...select[4]} />
-                <NumberInput {...form.getInputProps('pacakgeOffered')} label="Salary" withAsterisk min={1} max={300} placeholder="Enter Salary"
+                <NumberInput {...form.getInputProps('pacakgeOffered')} label="Salary(in LKR)" withAsterisk min={1} max={100000} placeholder="Enter Salary"
                     hideControls />
             </div>
-            <TagsInput {...form.getInputProps('skillsRequired')} withAsterisk label="skillsRequired" placeholder="Enter skill" clearable splitChars={[',', ' ', '|']} acceptValueOnBlur />
-            <div>
-                <div>JOb Description</div>
-                <textarea
-                    className="w-full h-32 p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    placeholder="Enter job description here..."
-                />
-            </div>
+            <TagsInput {...form.getInputProps('skillsRequired')} withAsterisk label="Skills Required" placeholder="Enter skill" clearable splitChars={[',', ' ', '|']} acceptValueOnBlur />
+
+            <Textarea {...form.getInputProps('about')} withAsterisk autosize minRows={2} maxRows={3} label="About" placeholder="Enter about job here..." className="my-3" />
+
+            <Textarea {...form.getInputProps('description')} withAsterisk autosize minRows={3} label="Job Description" placeholder="Enter job description here..." />
+
             <div className="flex gap-5">
                 <Button className="!text-blue-700 !bg-blue-200 hover:!border-blue-600" onClick={handlePost} variant="light">Publish job </Button>
                 <Button className="!text-blue-700" variant="outline">Save as draft</Button>
