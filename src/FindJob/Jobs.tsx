@@ -1,12 +1,11 @@
 import { useEffect, useState } from "react";
-// import { jobList } from "../Data/JobsData";
 import JobCard from "./JobCard";
 import Sort from "./Sort";
 import { getAllJobs } from "../Services/JobService";
 
 const Jobs = () => {
     const [jobList, setJobList] = useState([{}]);
-    
+
     useEffect(()=>{
         getAllJobs().then((res)=>{
             console.log("Jobs fetched successfully:", res);
