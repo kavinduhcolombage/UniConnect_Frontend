@@ -3,7 +3,7 @@ import { IconBookmark } from "@tabler/icons-react";
 import { Link } from "react-router-dom";
 import { card, skills } from "../Data/JobDescriptionData";
 
-const JobDescription = () => {
+const JobDescription = (props:any) => {
     return <div className="w-2/3">
         <div className="flex justify-between">
             <div className="flex gap-3 items-center">
@@ -17,9 +17,9 @@ const JobDescription = () => {
             </div>
             <div className="flex flex-col gap-2 items-center">
                 <Link to="/apply-job">
-                    <Button className="!text-blue-700 !bg-blue-200 hover:!border-blue-600" size="sm" variant="light">Apply</Button>
+                    <Button className="!text-blue-700 !bg-blue-200 hover:!border-blue-600" size="sm" variant="light">{props.edit?"edit":"Apply"}</Button>
                 </Link>
-                <IconBookmark className="cursor-pointer" />
+                {props.edit?<Button color="red" className="!text-red-500 !bg-red-200 hover:!border-red-700" size="sm" variant="outline">Delete</Button>:<IconBookmark className="cursor-pointer" />}
             </div>
         </div>
         <Divider my="xl" />
@@ -66,7 +66,7 @@ const JobDescription = () => {
                     </div>
                 </div>
                 <div className="flex flex-col gap-2 items-center">
-                    <Link to="/">
+                    <Link to="/company">
                         <Button className="!text-blue-700 !bg-blue-200 hover:!border-blue-600" size="sm" variant="light">Company Page</Button>
                     </Link>
                 </div>

@@ -2,6 +2,7 @@ import './App.css'
 import { MantineProvider } from '@mantine/core'
 import '@mantine/core/styles.css';
 import '@mantine/notifications/styles.css';
+import '@mantine/dates/styles.css';
 import { Provider } from 'react-redux';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { Suspense, lazy } from 'react';
@@ -13,6 +14,9 @@ import ApplyJObPage from './pages/ApplyJobPage';
 import ProfilePage from './pages/ProfilePage';
 import Store from './Store';
 import JobDescriptionPage from './pages/JobDescriptionPage';
+import CompanyPage from './pages/CompanyPage';
+import PostedJobPage from './pages/PostedJobPage';
+import JobHistoryPage from './pages/JobHistoryPage';
 // import HomePage from './pages/HomePage';
 // import FindJob from './pages/FindJob';
 // import SignUpPage from './pages/SignUpPage';
@@ -58,6 +62,9 @@ function App() {
               <Route path="/login" element={<SignUpPage />} />
               <Route path="/profile" element={<ProfilePage />} />
               <Route path="/jobs" element={<JobDescriptionPage />} />
+              <Route path="/company" element={<CompanyPage />} />
+              <Route path="/posted-job" element={<PostedJobPage />} />
+              <Route path="/job-history" element={<JobHistoryPage />} />
               <Route path="*" element={<HomePage />} />
             </Routes>
           </Suspense>
