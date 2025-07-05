@@ -14,6 +14,7 @@ const JobDescriptionPage = () => {
     const [job, setjob] = useState<any>(null);
 
     useEffect(() => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
         getJob(id).then((res) => {
             setjob(res);
         }).catch((err) => {
