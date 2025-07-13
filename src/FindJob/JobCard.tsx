@@ -1,16 +1,18 @@
 import { IconBookmark, IconClockHour3 } from "@tabler/icons-react"
 import { Divider, Text } from '@mantine/core';
+import { Link } from "react-router-dom";
+import { timeAgo } from "../Services/Utilities";
 
-const JobCard = (props:any) => {
-    return <div className="flex flex-col gap-2 bg-gray-400 p-4 w-72 rounded-xl hover:shadow-[0_0_5px_1px_blue] !shadow-blue-400 cursor-pointer">
+const JobCard = (props: any) => {
+    return <Link to={`/jobs/${props.id}`} className="flex flex-col gap-2 bg-gray-400 p-4 w-72 rounded-xl hover:shadow-[0_0_5px_1px_blue] !shadow-blue-400 cursor-pointer">
         <div className="flex justify-between">
             <div className="flex gap-3 items-center">
                 <div className="p-2 bg-gray-300 rounded-md">
-                    <img className="h-7" src="/google.png" alt="" />
+                    <img className="h-7" src={`/CompanyLogo/${props.company}.png`} alt="Logo" />
                 </div>
                 <div>
                     <div className="font-semibold">{props.jobTitle}</div>
-                    <div className="text-sm">{props.company} &#x2022; {props.applicants} applicants</div>
+                    <div className="text-sm">{props.company} &#x2022; {props.applicants ? props.applicants.length : 0} applicants</div>
                 </div>
             </div>
             <IconBookmark className="cursor-pointer" />
@@ -21,19 +23,19 @@ const JobCard = (props:any) => {
             <div>{props.location}</div>
         </div>
         <Text className="text-xs text-justify" lineClamp={3}>
-            {props.description}
+            {props.about}
         </Text>
-        <Divider size="xs" mx="md"/>
+        <Divider size="xs" mx="md" />
         <div className="flex justify-between">
             <div className="font-semibold">
-                Rs.{props.package}
+                Rs.{props.packageOffered}
             </div>
             <div className="flex gap-2 text-sm items-center">
-                <IconClockHour3 className="h-5 w-5" stroke={1.5}/>
-                {props.postedDaysAgo} days ago
+                <IconClockHour3 className="h-5 w-5" stroke={1.5} />
+                {timeAgo(props.postTime)}
             </div>
         </div>
-    </div>
+    </Link>
 }
 
 export default JobCard;
