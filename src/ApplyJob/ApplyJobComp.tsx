@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import ApplicationForm from "./ApplicationForm";
 
 
-const ApplyJobComp = () => {
+const ApplyJobComp = (props:any) => {
 
     const [sec, setSec] = useState(5);
     const navigate = useNavigate();
@@ -13,11 +13,11 @@ const ApplyJobComp = () => {
         <div className="flex justify-between">
             <div className="flex gap-2 items-center">
                 <div className="p-3 rounded-xl">
-                    <img className="h-14" src={`CompanyLogo/Google.png`} alt="" />
+                    <img className="h-14" src={`/CompanyLogo/${props.company}.png`} alt="" />
                 </div>
                 <div className="flex flex-col gap-1">
-                    <div className="font-semibold text-2xl">Software Engineer</div>
-                    <div className="text-lg ">Google &bull; 3 days ago &bull; 48 applicants</div>
+                    <div className="font-semibold text-2xl">{props.jobTitle}</div>
+                    <div className="text-lg ">{props.company} &bull; 3 days ago &bull; 48 applicants</div>
                 </div>
             </div>
         </div>
