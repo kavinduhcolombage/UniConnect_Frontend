@@ -29,6 +29,7 @@ const ApplicationForm = () => {
     const handleSubmit = () => {
         form.validate();
         if(!form.isValid()) return;
+        setSubmit(false);  //test
     };
 
     return <div>

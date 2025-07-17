@@ -1,13 +1,13 @@
 import { Divider } from "@mantine/core";
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+// import { useState } from "react";
+// import { useNavigate } from "react-router-dom";
 import ApplicationForm from "./ApplicationForm";
 
 
 const ApplyJobComp = (props:any) => {
 
-    const [sec, setSec] = useState(5);
-    const navigate = useNavigate();
+    // const [sec, setSec] = useState(5);
+    // const navigate = useNavigate();
 
     return <div className="w-2/3 mx-auto">
         <div className="flex justify-between">
