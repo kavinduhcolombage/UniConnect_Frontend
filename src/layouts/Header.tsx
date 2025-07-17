@@ -27,7 +27,9 @@ const Header = () => {
             <div className='text-2xl font-semibold text-blue-500'>Uni Connect</div>
         </div>
 
-        {NavLinks()}
+        <div className='md:flex hidden'>
+            {NavLinks()}
+        </div>
 
         <div className='flex gap-5 items-center justify-around'>
             {user ? <ProfileMenu /> : <Link to="/login">
