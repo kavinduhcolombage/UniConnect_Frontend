@@ -32,9 +32,11 @@ const Header = () => {
         </div>
 
         <div className='flex gap-5 items-center justify-around'>
-            {user ? <ProfileMenu /> : <Link to="/login">
-                <Button variant='subtle' color='blue'>Login</Button>
-            </Link>}
+            <div className='md:flex hidden'>
+                {user ? <ProfileMenu /> : <Link to="/login">
+                    <Button variant='subtle' color='blue'>Login</Button>
+                </Link>}
+            </div>
             <div className='bg-gray-900 p-1.5 rounded-full cursor-pointer hover:text-blue-500'>
                 <Settings size={25} />
             </div>
