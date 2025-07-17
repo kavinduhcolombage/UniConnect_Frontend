@@ -14,9 +14,11 @@ const Header = () => {
     const user = useSelector((state: any) => state.user);
 
     useEffect(() => {
-        getProfile(user.profileId).then((res) => {
-            dispatch(setProfile(res));
-        }).catch((err)=> console.log(err));
+        if (user) {
+            getProfile(user.profileId).then((res) => {
+                dispatch(setProfile(res));
+            }).catch((err) => console.log(err));
+        }
     }, []);
 
     return <div className="w-full bg-gray-900 px-6 h-25 text-white p-4 flex justify-between items-center">
