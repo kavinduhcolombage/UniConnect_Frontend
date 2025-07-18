@@ -1,10 +1,15 @@
 import { TextInput, NumberInput, FileInput, Textarea, Button, LoadingOverlay } from "@mantine/core";
 import { isNotEmpty, useForm } from "@mantine/form";
-import { IconPaperclip } from "@tabler/icons-react";
+import { IconCheck, IconPaperclip } from "@tabler/icons-react";
 import { useState } from "react";
+import { getBase64 } from "../Services/Utilities";
+import { applyJob } from "../Services/JobService";
+import { useParams } from "react-router-dom";
+import { notifications } from "@mantine/notifications";
 
 const ApplicationForm = () => {
     const [submit, setSubmit] = useState(false);
+    const { id } = useParams();
 
     const form = useForm({
         mode: 'controlled',
@@ -26,9 +31,28 @@ const ApplicationForm = () => {
         }
     })
 
-    const handleSubmit = () => {
+    const handleSubmit = async () => {
         form.validate();
-        if(!form.isValid()) return;
+        if (!form.isValid()) return;
+        setSubmit(true);
+        let resume: any = await getBase64(form.getValues().resume);
+        let applicant = { ...form.getValues(), resume: resume.split(',')[1] };
+        applyJob(id, applicant).then((res) => {
+            console.log(res)
+            notifications.show({
+                title: 'Applied succesfully',
+                message: 'apply to job successfully."',
+                withCloseButton: true,
+                icon: <IconCheck />,
+                color: 'teal',
+                withBorder: true,
+                className: "!border-blue-500 !bg-blue-50 !text-blue-800 !shadow-lg !rounded-lg !p-4 !w-[400px]",
+            })
+            setSubmit(false);
+        }).catch((err) => {
+            console.log(err);
+        })
+
     };
 
     return <div>
