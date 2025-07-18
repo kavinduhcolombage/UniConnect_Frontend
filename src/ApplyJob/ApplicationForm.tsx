@@ -1,6 +1,6 @@
 import { TextInput, NumberInput, FileInput, Textarea, Button, LoadingOverlay } from "@mantine/core";
 import { isNotEmpty, useForm } from "@mantine/form";
-import { IconCheck, IconPaperclip } from "@tabler/icons-react";
+import { IconCheck, IconPaperclip, IconX } from "@tabler/icons-react";
 import { useState } from "react";
 import { getBase64 } from "../Services/Utilities";
 import { applyJob } from "../Services/JobService";
@@ -51,8 +51,25 @@ const ApplicationForm = () => {
             setSubmit(false);
         }).catch((err) => {
             console.log(err);
+            let errMsg;
+            if (err.code == "ERR_BAD_RESPONSE") {
+                errMsg = err.response.data.errorMessage;
+            } else if (err.code == "ERR_NETWORK") {
+                errMsg = "Network Error Occred";
+            } else {
+                errMsg = "Something went erong";
+            }
+            notifications.show({
+                title: "Error Occurred",
+                message: errMsg,
+                withCloseButton: true,
+                icon: <IconX />,
+                color: 'red',
+                withBorder: true,
+                className: "!border-red-500 !bg-red-50 !text-red-800 !shadow-lg !rounded-lg !p-4 !w-[400px]",
+            })
+            setSubmit(false);
         })
-
     };
 
     return <div>
