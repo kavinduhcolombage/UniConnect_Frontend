@@ -19,7 +19,7 @@ const PostJob = () => {
             experience: '',
             jobType: '',
             location: '',
-            pacakgeOffered: '',
+            packageOffered: '',
             skillsRequired: [],
             about: '',
             description: ''
@@ -30,7 +30,7 @@ const PostJob = () => {
             experience: isNotEmpty('Experience is required'),
             jobType: isNotEmpty('Job Type is required'),
             location: isNotEmpty('Location is required'),
-            pacakgeOffered: isNotEmpty('Salary is required'),
+            packageOffered: isNotEmpty('Salary is required'),
             skillsRequired: isNotEmpty('Skills are required'),
             about: isNotEmpty('About is required'),
             description: isNotEmpty('Description is required')
@@ -40,6 +40,7 @@ const PostJob = () => {
     const handlePost = () => {
         form.validate();
         if (!form.isValid()) return;
+        console.log("values frompost job form", form.getValues());
         postJob(form.getValues()).then((res) => {
             console.log(res);
             notifications.show({
@@ -78,7 +79,7 @@ const PostJob = () => {
             </div>
             <div className="flex gap-10 [&>*]:w-1/2">
                 <SelectInput form={form} name="location" {...select[4]} />
-                <NumberInput {...form.getInputProps('pacakgeOffered')} label="Salary(in LKR)" withAsterisk min={1} max={100000} placeholder="Enter Salary"
+                <NumberInput {...form.getInputProps('packageOffered')} label="Salary(in LKR)" withAsterisk min={1} max={100000} placeholder="Enter Salary"
                     hideControls />
             </div>
             <TagsInput {...form.getInputProps('skillsRequired')} withAsterisk label="Skills Required" placeholder="Enter skill" clearable splitChars={[',', ' ', '|']} acceptValueOnBlur />
