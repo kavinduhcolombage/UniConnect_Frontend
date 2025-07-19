@@ -1,8 +1,6 @@
 import { Divider } from "@mantine/core";
-
-
 import ApplicationForm from "./ApplicationForm";
-
+import { timeAgo } from "../Services/Utilities";
 
 const ApplyJobComp = (props:any) => {
 
@@ -14,7 +12,7 @@ const ApplyJobComp = (props:any) => {
                 </div>
                 <div className="flex flex-col gap-1">
                     <div className="font-semibold text-2xl">{props.jobTitle}</div>
-                    <div className="text-lg ">{props.company} &bull; 3 days ago &bull; 48 applicants</div>
+                    <div className="text-lg ">{props.company} &bull; {timeAgo(props.postTime)} &bull; {props.applicants ? props.applicants.length : 0} applicants</div>
                 </div>
             </div>
         </div>
@@ -23,8 +21,5 @@ const ApplyJobComp = (props:any) => {
     </div>
 
 }
-
-{/* <Notification className={`!border-blue-600 -translate-y-20 !fixed top-0 left-[35%] z-[1001] transition duration-300 ease-in-out ${submit ? "translate-y-0" : "-translate-y-20"}`} icon={<IconCheck />} color="teal" title="Application Submitted" mt="md" withCloseButton={false}>Redireting to find jobs in {sec} seconds...</Notification> */ }
-
 
 export default ApplyJobComp;
