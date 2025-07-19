@@ -4,12 +4,15 @@ import { IconCheck, IconPaperclip, IconX } from "@tabler/icons-react";
 import { useState } from "react";
 import { getBase64 } from "../Services/Utilities";
 import { applyJob } from "../Services/JobService";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { notifications } from "@mantine/notifications";
+import { useSelector } from "react-redux";
 
 const ApplicationForm = () => {
     const [submit, setSubmit] = useState(false);
     const { id } = useParams();
+    const user = useSelector((state: any) => state.user);
+    const navigate = useNavigate();
 
     const form = useForm({
         mode: 'controlled',
@@ -36,7 +39,7 @@ const ApplicationForm = () => {
         if (!form.isValid()) return;
         setSubmit(true);
         let resume: any = await getBase64(form.getValues().resume);
-        let applicant = { ...form.getValues(), resume: resume.split(',')[1] };
+        let applicant = { ...form.getValues(), applicationId: user.id, resume: resume.split(',')[1] };
         applyJob(id, applicant).then((res) => {
             console.log(res)
             notifications.show({
@@ -49,6 +52,7 @@ const ApplicationForm = () => {
                 className: "!border-blue-500 !bg-blue-50 !text-blue-800 !shadow-lg !rounded-lg !p-4 !w-[400px]",
             })
             setSubmit(false);
+            navigate("/job-history");
         }).catch((err) => {
             console.log(err);
             let errMsg;
@@ -57,10 +61,10 @@ const ApplicationForm = () => {
             } else if (err.code == "ERR_NETWORK") {
                 errMsg = "Network Error Occred";
             } else {
-                errMsg = "Something went erong";
+                errMsg = "Something went wrong";
             }
             notifications.show({
-                title: "Error Occurred",
+                title: "Error",
                 message: errMsg,
                 withCloseButton: true,
                 icon: <IconX />,
