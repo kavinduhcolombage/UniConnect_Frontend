@@ -2,9 +2,7 @@ import { Divider } from "@mantine/core";
 import ApplicationForm from "./ApplicationForm";
 import { timeAgo } from "../Services/Utilities";
 
-const ApplyJobComp = (props: any) => {
-
-    console.log("props in applyjob :", props);
+const ApplyJobComp = (props:any) => {
 
     return <div className="w-2/3 mx-auto">
         <div className="flex justify-between">

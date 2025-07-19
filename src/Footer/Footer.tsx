@@ -1,7 +1,7 @@
 import { IconBrandFacebook, IconBrandInstagram, IconBrandLinkedin, IconBrandTiktok, IconBrandX } from "@tabler/icons-react";
 
 const Footer = () => {
-    return <div className="mt-20 pb-5 flex gap-5 bg-blue-900 justify-around items-center">
+    return <div className="mt-20 pb-5 md:flex hidden gap-5 bg-blue-900 justify-around items-center">
         <div className="w-1/4 flex flex-col gap-2">
             <div className='flex items-center gap-2'>
                 <div className='text-3xl font-semibold text-blue-500 p-2'>Uni Connect</div>

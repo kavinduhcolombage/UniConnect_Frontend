@@ -1,5 +1,6 @@
 const Working = () => {
-    return <div className="mt-20 pb-5">
+    return <div className="md:flex hidden">
+        <div className="mt-20 pb-5">
         <div className="text-4xl text-center font-semibold mb-3">How to  <span className="text-blue-500">Apply</span></div>
         <div className="text-lg mx-auto text-center w-1/2">Explore diverse job opportunities tailored to your skills. Start your career journey today!</div>
 
@@ -39,6 +40,7 @@ const Working = () => {
         </div>
 
 
+    </div>
     </div>
 }
 
