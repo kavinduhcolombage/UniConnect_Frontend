@@ -6,10 +6,15 @@ import { timeAgo } from "../Services/Utilities";
 import { useDispatch, useSelector } from "react-redux";
 import { updateProfile } from "../Services/ProfileService";
 import { changeProfile } from "../Slices/ProfileSlice";
+import { useEffect, useState } from "react";
 
 const JobDescription = (props: any) => {
     const profile = useSelector((state: any) => state.profile);
+    const user = useSelector((state: any) => state.user);
     const dispatch = useDispatch();
+    const [applied, setApplied] = useState(false);
+
+    console.log("job description", props);
 
     const handleSaveJob = async () => {
         let savedJobs: any = [...(profile.savedJobs || [])];
@@ -27,6 +32,14 @@ const JobDescription = (props: any) => {
         }
     }
 
+    useEffect(() => {
+        if (props.applicants?.filter((applicant: any) => applicant.applicantId == user.id).length > 0) {
+            setApplied(true);
+        } else {
+            setApplied(false);
+        }
+    }, [props]);
+
     return <div className="w-2/3">
         <div className="flex justify-between">
             <div className="flex gap-3 items-center">
@@ -39,10 +52,17 @@ const JobDescription = (props: any) => {
                 </div>
             </div>
             <div className="flex flex-col gap-2 items-center">
-                <Link to={`/apply-job/${props.id}`}>
-                    <Button className="!text-blue-700 !bg-blue-200 hover:!border-blue-600" size="sm" variant="light">{props.edit ? "edit" : "Apply"}</Button>
-                </Link>
-                {props.edit ? <Button color="red" className="!text-red-500 !bg-red-200 hover:!border-red-700" size="sm" variant="outline">Delete</Button> : profile?.savedJobs?.includes(props.id) ? <IconBookmarkFilled onClick={handleSaveJob} className="cursor-pointer hover:text-blue-800 text-blue-600" stroke={1.5} /> : <IconBookmark onClick={handleSaveJob} className="cursor-pointer hover:text-blue-500" stroke={1.5} />}
+                {
+                    (props.edit || !applied) && <Link to={`/apply-job/${props.id}`}>
+                        <Button className="!text-blue-700 !bg-blue-200 hover:!border-blue-600" size="sm" variant="light">{props.edit ? "edit" : "Apply"}</Button>
+                    </Link>
+                }
+                {
+                    applied && <Button color="green.8" size="sm" variant="light">Applied</Button>
+                }
+                {
+                    props.edit ? <Button color="red" className="!text-red-500 !bg-red-200 hover:!border-red-700" size="sm" variant="outline">Delete</Button> : profile?.savedJobs?.includes(props.id) ? <IconBookmarkFilled onClick={handleSaveJob} className="cursor-pointer hover:text-blue-800 text-blue-600" stroke={1.5} /> : <IconBookmark onClick={handleSaveJob} className="cursor-pointer hover:text-blue-500" stroke={1.5} />
+                }
             </div>
         </div>
         <Divider my="xl" />
