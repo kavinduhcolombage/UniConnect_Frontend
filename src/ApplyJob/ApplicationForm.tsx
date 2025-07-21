@@ -39,7 +39,7 @@ const ApplicationForm = () => {
         if (!form.isValid()) return;
         setSubmit(true);
         let resume: any = await getBase64(form.getValues().resume);
-        let applicant = { ...form.getValues(), applicationId: user.id, resume: resume.split(',')[1] };
+        let applicant = { ...form.getValues(), applicantId: user.id, resume: resume.split(',')[1] };
         applyJob(id, applicant).then((res) => {
             console.log(res)
             notifications.show({

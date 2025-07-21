@@ -3,12 +3,14 @@ import { Button, Divider, Text } from '@mantine/core';
 import { Link } from "react-router-dom";
 import { timeAgo } from "../Services/Utilities";
 import { useDispatch, useSelector } from "react-redux";
+import { updateProfile } from "../Services/ProfileService";
+import { changeProfile } from "../Slices/ProfileSlice";
 
 const JobCard = (props: any) => {
     const profile = useSelector((state:any)=>state.profile);
     const dispatch = useDispatch();
 
-    const handleSaveJob = () => {
+    const handleSaveJob = async () => {
         console.log("profile in jobcard :", profile);
         let savedJobs: any = [...(profile.savedJobs || [])];
         if (savedJobs?.includes(props.id)) {
@@ -17,7 +19,12 @@ const JobCard = (props: any) => {
             savedJobs = [...savedJobs, props.id];
         }
         let updatedProfile = { ...profile, savedJobs:savedJobs };
-
+        try {
+            await updateProfile(updatedProfile);
+            dispatch(changeProfile(updatedProfile));            
+        } catch (error) {
+            console.error("Error saving job:", error);
+        }
     }
 
     return <div className="flex flex-col gap-2 bg-gray-400 p-4 w-72 rounded-xl hover:shadow-[0_0_5px_1px_blue] !shadow-blue-400 cursor-pointer">
@@ -28,11 +35,11 @@ const JobCard = (props: any) => {
                 </div>
                 <div>
                     <div className="font-semibold">{props.jobTitle}</div>
-                    <div className="text-sm"><Link className="hover:text-red-600" to={`/company/${props.company}`}>{props.company}</Link> &#x2022; {props.applicants ? props.applicants.length : 0} applicants</div>
+                    <div className="text-sm"><Link className="hover:text-blue-400" to={`/company/${props.company}`}>{props.company}</Link> &#x2022; {props.applicants ? props.applicants.length : 0} applicants</div>
                 </div>
             </div>
             {
-                profile?.savedJobs?.includes(props.id) ?<IconBookmarkFilled onClick={handleSaveJob} className="cursor-pointer hover:text-blue-500" stroke={1.5} />: <IconBookmark onClick={handleSaveJob}className="cursor-pointer hover:text-blue-500" stroke={1.5} />
+                profile?.savedJobs?.includes(props.id) ?<IconBookmarkFilled onClick={handleSaveJob} className="cursor-pointer hover:text-blue-800 text-blue-600" stroke={1.5} />: <IconBookmark onClick={handleSaveJob}className="cursor-pointer hover:text-blue-500" stroke={1.5} />
             }
             
         </div>
