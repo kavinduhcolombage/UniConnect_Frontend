@@ -1,121 +1,99 @@
-import { ActionIcon, Button, Divider, Textarea } from "@mantine/core";
-import { IconBriefcase, IconDeviceFloppy, IconMapPin, IconPencil } from "@tabler/icons-react";
-import ExpCard from "./ExpCard";
-import CertiCard from "./CertiCard";
-import { useEffect, useState } from "react";
-import { getProfile } from "../Services/ProfileService";
-import { useLocation } from "react-router-dom";
-import SelectInput from "./SelectInput";
-import fields from "../Data/Profile";
+import { ActionIcon, Avatar, Divider, FileInput, Overlay, TagsInput } from "@mantine/core";
+import { IconCheck, IconDeviceFloppy, IconEdit, IconPencil, IconX } from "@tabler/icons-react";
+import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { changeProfile } from "../Slices/ProfileSlice";
+import Info from "./Info";
+import About from "./About";
+import Experience from "./Experience";
+import Certificate from "./Certificate";
+import { useHover } from "@mantine/hooks";
+import { notifications } from "@mantine/notifications";
+import { updateProfile } from "../Services/ProfileService";
 
 
 const Profile = () => {
-    const select = fields;
-    const [edit, setEdit] = useState([false, false, false, false]);
+    const [edit, setEdit] = useState([false, false, false, false, false]);
+    const [skills, setSkills] = useState(['JavaScript', 'React', 'Node.js', 'CSS', 'HTML']);
+    const { hovered, ref } = useHover();
+    const dispatch = useDispatch();
+    const profile = useSelector((state: any) => state.profile);
+
     const handleEdit = (index: any) => {
         const newEdit = [...edit];
+        console.log("New edit state before toggle:", newEdit);
         newEdit[index] = !newEdit[index];
+        console.log("New edit state after toggle:", newEdit);
         setEdit(newEdit);
-        console.log(edit);
     };
 
-    const [about, setAbout] = useState('kbkjfdkjkjdkf');
-
-    const location = useLocation();
-    const userIdFromState = location.state?.userId; // Retrieve user ID from route state
-    const userIdFromStorage = JSON.parse(localStorage.getItem("user") || "{}").id; // Retrieve user ID from local storage
-    const userId = userIdFromState || userIdFromStorage; // Use state if available, otherwise fallback to local storage
-    const profileId = JSON.parse(localStorage.getItem("user") || "{}").profileId
-    const [profile, setProfile] = useState<any>(null);
-    const [loading, setLoading] = useState(true);
-
-    useEffect(() => {
-        console.log("User ID from route state:", userId); // Debugging line
-        console.log(JSON.parse(localStorage.getItem("user") || "{}").profileId); // Debugging line
-        if (profileId) {
-            getProfile(profileId)
-                .then((res) => {
-                    console.log("Profile data:", res); // Debugging line
-                    setProfile(res);
-                    setAbout(res.about || ''); // Initialize about with profile data or empty string
-                    setLoading(false);
-                })
-                .catch((err) => {
-                    console.error('Error fetching profile:', err);
-                    setLoading(false);
-                });
+    const handleFileChange = async (image: any) => {
+        let picture: any = await getBase64(image);
+        console.log("Picture in Profile:", picture);
+        let updatedProfile = { ...profile, picture: picture.split(',')[1] };
+        try {
+            await updateProfile(updatedProfile);
+            dispatch(changeProfile(updatedProfile));
+            notifications.show({
+                title: 'Profile Picture Updated',
+                message: 'Your profile picture has been updated successfully."',
+                withCloseButton: true,
+                icon: <IconCheck />,
+                color: 'teal',
+                withBorder: true,
+                className: "!border-blue-500 !bg-blue-50 !text-blue-800 !shadow-lg !rounded-lg !p-4 !w-[400px]",
+            })
+        } catch (error) {
+            console.error("Error updating profile:", error);
+            notifications.show({
+                title: "Error",
+                message: "Failed to update profile.",
+                icon: <IconX />,
+                color: "red",
+            });
         }
-    }, [userId]);
-
-    if (loading) {
-        return <div>Loading...</div>;
     }
 
-    if (!profile) {
+    const getBase64 = (file: any) => {
+        return new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.readAsDataURL(file);
+            reader.onload = () => resolve(reader.result);
+            reader.onerror = error => reject(error);
+        })
+    }
+
+    
+    //const [loading, setLoading] = useState(true);
+
+    // if (loading) {
+    //     return <div>Loading...</div>;
+    // }
+
+    if (profile == null) {
         return <div>No profile data available.</div>;
     }
 
     return (
-        <div className="w-4/5 mx-auto">
+        <div className="w-4/5 mx-auto font-['poppins']">
             {/* Profile Banner and Avatar */}
             <div className="relative">
                 <img className="rounded-t-2xl" src="/Profile/banner.jpg" alt="Profile Banner" />
-                <img
-                    className="w-48 h-48 rounded-full -bottom-1/3 absolute left-3 border-mine-shaft-950"
-                    src="/Profile/avatar.jpg"
-                    alt="Profile Avatar"
-                />
+                <div ref={ref} className="flex items-center justify-center absolute left-3 -bottom-24">
+                    <Avatar className="!w-48 !h-48 border-blue-400 border-8 rounded-full" src={profile.picture ? `data:image/jpeg;base64,${profile.picture}` : "/Profile/avatar.jpg"} alt="" />
+                    {hovered && <Overlay className="!rounded-full" backgroundOpacity={0.75} />}
+                    {hovered && <IconEdit className="absolute z-[300] w-16 h-16" />}
+                    {hovered && <FileInput onChange={handleFileChange} className="absolute z-[301] [&_*]:!rounded-full [&_*]:!h-full h-full w-full" size="lg" radius="xl" variant="transparent" accept="image/png,image/jpeg" />}
+                </div>
             </div>
 
             {/* Profile Header */}
             <div className="px-3 mt-22">
-                <div className="text-3xl font-semibold flex justify-between">
-                    {profile.name}
-                    <ActionIcon onClick={() => handleEdit(0)} size="lg" color="blue" variant="subtle">
-                        {edit[0] ? <IconDeviceFloppy /> : <IconPencil />}
-                    </ActionIcon>
-
-                </div>
-
-                {
-                    edit[0] ? <><div className="flex gap-10 [&>*]:w-1/2">
-                        <SelectInput {...select[0]} />
-                        <SelectInput {...select[1]} />
-                    </div>
-                        <SelectInput {...select[2]} />
-                        <div className="p-2 flex gap-2 justify-end">
-                            <Button color="blue" variant="outline">Save</Button>
-                            <Button onClick={() => handleEdit(0)} color="red" variant="light">Cancel</Button>
-                        </div></> : <><div className="text-xl flex gap-1 items-center">
-                            <IconBriefcase className="h-5 w-5" stroke={1.5} /> {profile.role} &bull; {profile.company}
-                        </div>
-                        <div className="text-lg flex gap-1 items-center text-mine-shaft-300">
-                            <IconMapPin className="h-5 w-5" stroke={1.5} /> {profile.location}
-                        </div></>
-
-                }
-
-
-
+                <Info />
             </div>
 
             <Divider mx="xs" my="xl" />
-
-            {/* About Section */}
-            <div className="px-3">
-                <div className="text-2xl font-semibold mb-3 flex justify-between">
-                    About
-                    <ActionIcon onClick={() => handleEdit(1)} size="lg" color="blue" variant="subtle">
-                        {edit[1] ? <IconDeviceFloppy /> : <IconPencil />}
-                    </ActionIcon>
-                </div>
-                {
-                    edit[1] ? <Textarea value={about} placeholder="Enter about your self.." autosize minRows={3} onChange={(event) => setAbout(event.currentTarget.value)} /> : <div className="text-xs text-justify">{about}</div>
-                }
-
-
-            </div>
-
+            < About />
             <Divider mx="xs" my="xl" />
 
             {/* Skills Section */}
@@ -126,51 +104,29 @@ const Profile = () => {
                         {edit[2] ? <IconDeviceFloppy /> : <IconPencil />}
                     </ActionIcon>
                 </div>
-                <div className="flex flex-wrap gap-2">
-                    {profile.skills.map((skill: string, index: number) => (
-                        <div
-                            key={index}
-                            className="bg-blue-400 text-sm font-medium bg-opacity-15 rounded-3xl text-gray-600 px-3 py-1"
-                        >
-                            {skill}
-                        </div>
-                    ))}
-                </div>
+                {
+                    edit[2] ? <TagsInput value={skills} onChange={setSkills} placeholder="Add Skill" splitChars={[',', ' ', '|']} /> : <div className="flex flex-wrap gap-2">
+                        {profile.skills?.map((skill: any, index: number) => (
+                            <div
+                                key={index}
+                                className="bg-blue-400 text-sm font-medium bg-opacity-15 rounded-3xl text-white px-3 py-1"
+                            >
+                                {skill}
+                            </div>
+                        ))}
+                    </div>
+                }
             </div>
 
             <Divider mx="xs" my="xl" />
 
             {/* Experience Section */}
-            <div className="px-3">
-                <div className="text-2xl font-semibold mb-5 flex justify-between">
-                    Experience
-                    <ActionIcon onClick={() => handleEdit(3)} size="lg" color="blue" variant="subtle">
-                        {edit[3] ? <IconDeviceFloppy /> : <IconPencil />}
-                    </ActionIcon>
-                </div>
-                <div className="flex flex-col gap-8">
-                    {profile.experience.map((exp: any, index: number) => (
-                        <ExpCard key={index} {...exp} />
-                    ))}
-                </div>
-            </div>
-
+            < Experience />
             <Divider mx="xs" my="xl" />
 
             {/* Certifications Section */}
-            <div className="px-3">
-                <div className="text-2xl font-semibold mb-5 flex justify-between">
-                    Certifications
-                    <ActionIcon onClick={() => handleEdit(4)} size="lg" color="blue" variant="subtle">
-                        {edit[4] ? <IconDeviceFloppy /> : <IconPencil />}
-                    </ActionIcon>
-                </div>
-                <div className="flex flex-col gap-8">
-                    {profile.certifications.map((certi: any, index: number) => (
-                        <CertiCard key={index} {...certi} />
-                    ))}
-                </div>
-            </div>
+            <Certificate />
+
         </div>
     );
 };

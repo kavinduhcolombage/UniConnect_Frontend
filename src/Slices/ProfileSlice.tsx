@@ -1,20 +1,17 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { updateProfile } from "../Services/ProfileService";
 
 const ProfileSlice = createSlice({
     name: 'profile',
     initialState: {},
     reducers: {
-        changeProfile: (state, action) => {
-            // Directly modify the state
-            Object.assign(state, updateProfile(action.payload));
+        changeProfile: (_state, action) => {
+            return action.payload;
         },
-        setProfile: (state, action) => {
-            // Directly modify the state
-            Object.assign(state, action.payload);
+        setProfile: (_state, action) => {
+            return action.payload;
         }
     }
 });
 
-export const { changeProfile, setProfile } = ProfileSlice.actions;
+export const { setProfile, changeProfile } = ProfileSlice.actions;
 export default ProfileSlice.reducer;
