@@ -7,7 +7,7 @@ import { updateProfile } from "../Services/ProfileService";
 import { changeProfile } from "../Slices/ProfileSlice";
 
 const JobCard = (props: any) => {
-    const profile = useSelector((state:any)=>state.profile);
+    const profile = useSelector((state: any) => state.profile);
     const dispatch = useDispatch();
 
     const handleSaveJob = async () => {
@@ -18,10 +18,10 @@ const JobCard = (props: any) => {
         } else {
             savedJobs = [...savedJobs, props.id];
         }
-        let updatedProfile = { ...profile, savedJobs:savedJobs };
+        let updatedProfile = { ...profile, savedJobs: savedJobs };
         try {
             await updateProfile(updatedProfile);
-            dispatch(changeProfile(updatedProfile));            
+            dispatch(changeProfile(updatedProfile));
         } catch (error) {
             console.error("Error saving job:", error);
         }
@@ -39,9 +39,9 @@ const JobCard = (props: any) => {
                 </div>
             </div>
             {
-                profile?.savedJobs?.includes(props.id) ?<IconBookmarkFilled onClick={handleSaveJob} className="cursor-pointer hover:text-blue-800 text-blue-600" stroke={1.5} />: <IconBookmark onClick={handleSaveJob}className="cursor-pointer hover:text-blue-500" stroke={1.5} />
+                profile?.savedJobs?.includes(props.id) ? <IconBookmarkFilled onClick={handleSaveJob} className="cursor-pointer hover:text-blue-800 text-blue-600" stroke={1.5} /> : <IconBookmark onClick={handleSaveJob} className="cursor-pointer hover:text-blue-500" stroke={1.5} />
             }
-            
+
         </div>
         <div className="flex gap-2 [&>div]:py-1 [&>div]:px-2 [&>div]:bg-gray-200 [&>div]:text-blue-500 [&>div]:rounded-lg text-xs">
             <div>{props.experience}</div>
