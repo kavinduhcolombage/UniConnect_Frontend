@@ -1,8 +1,20 @@
-import { jobList } from "../Data/JobsData";
+import { useEffect, useState } from "react";
 import JobCard from "./JobCard";
 import Sort from "./Sort";
+import { getAllJobs } from "../Services/JobService";
 
 const Jobs = () => {
+    const [jobList, setJobList] = useState([{}]);
+
+    useEffect(()=>{
+        getAllJobs().then((res)=>{
+            console.log("Jobs fetched successfully:", res);
+            setJobList(res);
+        }).catch((err)=>{
+            console.error("Error fetching jobs:", err);
+        })
+    },[]);
+
     return <div className="p-5">
         <div className="flex justify-between">
             <div className="text-2xl font-semibold">Recommended job</div>

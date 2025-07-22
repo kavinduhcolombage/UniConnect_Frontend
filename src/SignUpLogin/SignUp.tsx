@@ -33,6 +33,13 @@ const SignUp = () => {
         const value = event.target.value;
         setData({ ...data, [name]: value });
         setformError({ ...formError, [name]: signupValidation(name, value) }); // Reset error message for the field being changed
+        if (name == "password" && data.confirmPassword !== "") {
+            if (value !== data.confirmPassword) {
+                setformError({ ...formError, confirmPassword: "passwords do not match" });
+            } else {
+                setformError({ ...formError, confirmPassword: "" });
+            }
+        }
         if (name === "confirmPassword") {
             if (value !== data.password) {
                 setformError({ ...formError, [name]: "passwords do not match" });
