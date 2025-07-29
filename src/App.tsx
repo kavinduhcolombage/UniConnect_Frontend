@@ -63,7 +63,7 @@ function App() {
               <Route path="/profile" element={<ProfilePage />} />
               <Route path="/jobs/:id" element={<JobDescriptionPage />} />
               <Route path="/company/:name" element={<CompanyPage />} />
-              <Route path="/posted-job" element={<PostedJobPage />} />
+              <Route path="/posted-job/:id" element={<PostedJobPage />} />
               <Route path="/job-history" element={<JobHistoryPage />} />
               <Route path="*" element={<HomePage />} />
             </Routes>

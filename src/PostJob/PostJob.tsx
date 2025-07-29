@@ -6,10 +6,13 @@ import { postJob } from "../Services/JobService";
 import { useNavigate } from "react-router-dom";
 import { IconCheck, IconX } from "@tabler/icons-react";
 import { notifications } from "@mantine/notifications";
+import { useSelector } from "react-redux";
 
 const PostJob = () => {
     const navigate = useNavigate();
     const select = fields;
+    const user = useSelector((state: any) => state.user);
+
     const form = useForm({
         mode: 'controlled',
         validateInputOnChange: true,
@@ -41,7 +44,7 @@ const PostJob = () => {
         form.validate();
         if (!form.isValid()) return;
         console.log("values frompost job form", form.getValues());
-        postJob(form.getValues()).then((res) => {
+        postJob({ ...form.getValues(), postedBy: user.id, jobStatus: "ACTIVE" }).then((res) => {
             console.log(res);
             notifications.show({
                 title: "Success",
@@ -52,12 +55,12 @@ const PostJob = () => {
                 withBorder: true,
                 className: "!border-blue-500 !bg-blue-50 !text-blue-800 !shadow-lg !rounded-lg !p-4 !w-[400px]",
             })
-            navigate("/posted-job");
-        }).catch((err) => { 
+            navigate(`/posted-job/${res.id}`);
+        }).catch((err) => {
             console.log(err);
             notifications.show({
                 title: "Error Occurred",
-                message: err.code? "something went wrong, please try again later" : err.message,
+                message: err.code ? "something went wrong, please try again later" : err.message,
                 withCloseButton: true,
                 icon: <IconX />,
                 color: 'red',
@@ -66,6 +69,35 @@ const PostJob = () => {
             })
         });
     }
+
+    const handleDraft = () => {
+        postJob({ ...form.getValues(), postedBy: user.id, jobStatus: "DRAFT" }).then((res) => {
+            console.log(res);
+            notifications.show({
+                title: "Success",
+                message: "Job Saved Successfully",
+                withCloseButton: true,
+                icon: <IconCheck />,
+                color: 'teal',
+                withBorder: true,
+                className: "!border-blue-500 !bg-blue-50 !text-blue-800 !shadow-lg !rounded-lg !p-4 !w-[400px]",
+            })
+            navigate(`/posted-job/${res.id}`);
+        }).catch((err) => {
+            console.log(err);
+            notifications.show({
+                title: "Error Occurred",
+                message: err.code ? "something went wrong, please try again later" : err.message,
+                withCloseButton: true,
+                icon: <IconX />,
+                color: 'red',
+                withBorder: true,
+                className: "!border-red-500 !bg-red-50 !text-red-800 !shadow-lg !rounded-lg !p-4 !w-[400px]",
+            })
+        });
+    }
+
+
     return <div className="w-4/5 mx-auto">
         <div className="text-2xl font-semibold mb-5 mt-5">Post a job</div>
         <div className="flex flex-col gap-5">
@@ -90,7 +122,7 @@ const PostJob = () => {
 
             <div className="flex gap-5">
                 <Button className="!text-blue-700 !bg-blue-200 hover:!border-blue-600" onClick={handlePost} variant="light">Publish job </Button>
-                <Button className="!text-blue-700" variant="outline">Save as draft</Button>
+                <Button className="!text-blue-700" onClick={handleDraft} variant="outline">Save as draft</Button>
             </div>
         </div>
     </div>

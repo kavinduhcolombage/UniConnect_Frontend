@@ -14,7 +14,7 @@ const JobDescription = (props: any) => {
     const dispatch = useDispatch();
     const [applied, setApplied] = useState(false);
 
-    console.log("job description", props);
+    //console.log("job description", props);
 
     const handleSaveJob = async () => {
         let savedJobs: any = [...(profile.savedJobs || [])];
@@ -58,7 +58,7 @@ const JobDescription = (props: any) => {
                     </Link>
                 }
                 {
-                    applied && <Button color="green.8" size="sm" variant="light">Applied</Button>
+                    !props.edit && applied && <Button color="green.8" size="sm" variant="light">Applied</Button>
                 }
                 {
                     props.edit ? <Button color="red" className="!text-red-500 !bg-red-200 hover:!border-red-700" size="sm" variant="outline">Delete</Button> : profile?.savedJobs?.includes(props.id) ? <IconBookmarkFilled onClick={handleSaveJob} className="cursor-pointer hover:text-blue-800 text-blue-600" stroke={1.5} /> : <IconBookmark onClick={handleSaveJob} className="cursor-pointer hover:text-blue-500" stroke={1.5} />
