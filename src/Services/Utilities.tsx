@@ -31,12 +31,45 @@ const timeAgo = (time: string) => {
 }
 
 const getBase64 = (file: any) => {
-        return new Promise((resolve, reject) => {
-            const reader = new FileReader();
-            reader.readAsDataURL(file);
-            reader.onload = () => resolve(reader.result);
-            reader.onerror = error => reject(error);
-        })
-    }
+    return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = () => resolve(reader.result);
+        reader.onerror = error => reject(error);
+    })
+}
 
-export { formatDate, timeAgo, getBase64 };
+const formatInterviewTime = (dateStr: any) => {
+    const date = new Date(dateStr);
+    return date.toLocaleDateString('en-us', {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
+        hour: 'numeric',
+        minute: 'numeric',
+        hour12: true
+    });
+}
+
+function openBase64PDF(base64String: string) {
+    if (!base64String || typeof base64String !== "string") {
+        alert("No PDF data provided.");
+        return;
+    }
+    const base64 = base64String.includes(",")
+        ? base64String.split(",")[1]
+        : base64String;
+
+    const byteCharacters = atob(base64);
+    const byteNumbers = new Array(byteCharacters.length);
+    for (let i = 0; i < byteCharacters.length; i++) {
+        byteNumbers[i] = byteCharacters.charCodeAt(i);
+    }
+    const byteArray = new Uint8Array(byteNumbers);
+    const blob = new Blob([byteArray], { type: 'application/pdf' });
+
+    const blobURL = URL.createObjectURL(blob);
+    window.open(blobURL, '_blank');
+}
+
+export { formatDate, timeAgo, getBase64, formatInterviewTime, openBase64PDF };
