@@ -29,6 +29,7 @@ const TalentCard = (props: any) => {
             interview = { ...interview, interviewTime: date }
         }
         changeAppStatus(interview).then((res) => {
+            console.log("response",res);
             if (status == "INTERVIEWING") {
                 notifications.show({
                     title: 'Updated Succesfully.',
