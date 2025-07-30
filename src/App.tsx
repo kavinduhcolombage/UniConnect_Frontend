@@ -55,15 +55,15 @@ function App() {
             <Routes>
               <Route path="/find-job" element={<FindJobPage />} />
               <Route path="/find-talents" element={<FindTalentsPage />} />
-              <Route path="/post-job" element={<PostJobPage />} />
-              <Route path="/talent-profile" element={<TalentProfilePage />} />
-              <Route path="/apply-job" element={<ApplyJObPage />} />
+              <Route path="/post-job/:id" element={<PostJobPage />} />
+              <Route path="/talent-profile/:id" element={<TalentProfilePage />} />
+              <Route path="/apply-job/:id" element={<ApplyJObPage />} />
               <Route path="/signup" element={<SignUpPage />} />
               <Route path="/login" element={<SignUpPage />} />
               <Route path="/profile" element={<ProfilePage />} />
-              <Route path="/jobs" element={<JobDescriptionPage />} />
-              <Route path="/company" element={<CompanyPage />} />
-              <Route path="/posted-job" element={<PostedJobPage />} />
+              <Route path="/jobs/:id" element={<JobDescriptionPage />} />
+              <Route path="/company/:name" element={<CompanyPage />} />
+              <Route path="/posted-job/:id" element={<PostedJobPage />} />
               <Route path="/job-history" element={<JobHistoryPage />} />
               <Route path="*" element={<HomePage />} />
             </Routes>
