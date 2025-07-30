@@ -2,16 +2,18 @@ import { Button, NumberInput, TagsInput, Textarea } from "@mantine/core";
 import { fields } from "../Data/PostJob";
 import SelectInput from "./SelectInput";
 import { isNotEmpty, useForm } from "@mantine/form";
-import { postJob } from "../Services/JobService";
-import { useNavigate } from "react-router-dom";
+import { getJob, postJob } from "../Services/JobService";
+import { useNavigate, useParams } from "react-router-dom";
 import { IconCheck, IconX } from "@tabler/icons-react";
 import { notifications } from "@mantine/notifications";
 import { useSelector } from "react-redux";
+import { useEffect } from "react";
 
 const PostJob = () => {
     const navigate = useNavigate();
     const select = fields;
     const user = useSelector((state: any) => state.user);
+    const { id } = useParams();
 
     const form = useForm({
         mode: 'controlled',
@@ -44,7 +46,7 @@ const PostJob = () => {
         form.validate();
         if (!form.isValid()) return;
         console.log("values frompost job form", form.getValues());
-        postJob({ ...form.getValues(), postedBy: user.id, jobStatus: "ACTIVE" }).then((res) => {
+        postJob({ ...form.getValues(), id, postedBy: user.id, jobStatus: "ACTIVE" }).then((res) => {
             console.log(res);
             notifications.show({
                 title: "Success",
@@ -96,6 +98,20 @@ const PostJob = () => {
             })
         });
     }
+
+    useEffect(() => {
+        window.scrollTo(0, 0);
+        if (id !== "0") {
+            getJob(id).then((res) => {
+                console.log("backend response", res);
+                form.setValues(res);
+            }).catch((err) => {
+                console.log(err);
+            })
+        }else{
+            form.reset();
+        }
+    }, [id]);
 
 
     return <div className="w-4/5 mx-auto">

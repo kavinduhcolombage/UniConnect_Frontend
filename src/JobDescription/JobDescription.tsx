@@ -34,8 +34,8 @@ const JobDescription = (props: any) => {
         }
     }
 
-    const handleClose = ()=>{
-        postJob({...props, jobStatus:"CLOSED"}).then((res)=>{
+    const handleClose = () => {
+        postJob({ ...props, jobStatus: "CLOSED" }).then((res) => {
             console.log(res);
             notifications.show({
                 title: "Closed Succesfully",
@@ -47,7 +47,7 @@ const JobDescription = (props: any) => {
                 className: "!border-blue-500 !bg-blue-50 !text-blue-800 !shadow-lg !rounded-lg !p-4 !w-[400px]",
             })
 
-        }).catch((err)=>{
+        }).catch((err) => {
             console.log(err);
         })
 
@@ -74,7 +74,7 @@ const JobDescription = (props: any) => {
             </div>
             <div className="flex flex-col gap-2 items-center">
                 {
-                    (props.edit || !applied) && <Link to={`/apply-job/${props.id}`}>
+                    (props.edit || !applied) && <Link to={props.edit ? `/post-job/${props.id}` : `/apply-job/${props.id}`}>
                         <Button className="!text-blue-700 !bg-blue-200 hover:!border-blue-600" size="sm" variant="light">{props.closed ? "Reopen" : props.edit ? "edit" : "Apply"}</Button>
                     </Link>
                 }
