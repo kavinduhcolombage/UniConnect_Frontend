@@ -18,8 +18,6 @@ const TalentCard = (props: any) => {
     const [time, setTime] = useState<any>(null);
     const [profile, setProfile] = useState<any>({});
 
-    console.log("for talent card ", props)
-
     const handleOffer = (status: string) => {
 
         let interview: any = { id, applicantId: profile?.id, applicationStatus: status };
