@@ -9,6 +9,7 @@ import { resetFilter } from "../Slices/FilterSlice";
 const Talents = () => {
     const [talents, setTalents] = useState<any>([]);
     const filter = useSelector((state: any) => state.filter);
+    const sort = useSelector((state: any) => state.sort);
     const [filteredTalents, setFilteredTalents] = useState<any>([]);
     const dispatch = useDispatch();
 
@@ -20,6 +21,15 @@ const Talents = () => {
             console.log(err);
         })
     }, []);
+
+    useEffect(() => {
+        if (sort == "Experience(low to high)") {
+            setTalents([...talents].sort((a: any, b: any) => a.totalExp - b.totalExp));
+        }
+        else if (sort == "Experience(high to low)") {
+            setTalents([...talents].sort((a: any, b: any) => b.totalExp - a.totalExp));
+        }
+    }, [sort]);
 
     useEffect(() => {
         let filterTalent = talents;

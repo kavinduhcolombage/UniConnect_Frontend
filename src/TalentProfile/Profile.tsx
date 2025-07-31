@@ -36,6 +36,9 @@ const Profile = () => {
             <div className="text-lg flex gap-1 items-center text-mine-shaft-300">
                 <IconMapPin className="h-5 w-5" stroke={1.5} /> {profile?.location}
             </div>
+            <div className="text-lg flex gap-1 items-center text-mine-shaft-300">
+                <IconBriefcase className="h-5 w-5" stroke={1.5} />Experience {profile?.totalExp} Years
+            </div>
         </div>
         <Divider mx="lg" my="xl" />
         <div className="px-3">
