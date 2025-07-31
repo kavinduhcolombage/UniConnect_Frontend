@@ -4,7 +4,7 @@ import SelectInput from "./SelectInput";
 import { isNotEmpty, useForm } from "@mantine/form";
 import { getJob, postJob } from "../Services/JobService";
 import { useNavigate, useParams } from "react-router-dom";
-import { IconCheck, IconX } from "@tabler/icons-react";
+import { IconArrowLeft, IconCheck, IconX } from "@tabler/icons-react";
 import { notifications } from "@mantine/notifications";
 import { useSelector } from "react-redux";
 import { useEffect } from "react";
@@ -108,40 +108,47 @@ const PostJob = () => {
             }).catch((err) => {
                 console.log(err);
             })
-        }else{
+        } else {
             form.reset();
         }
     }, [id]);
 
 
-    return <div className="w-4/5 mx-auto">
-        <div className="text-2xl font-semibold mb-5 mt-5">Post a job</div>
-        <div className="flex flex-col gap-5">
-            <div className="flex gap-10 [&>*]:w-1/2">
-                <SelectInput form={form} name="jobTitle" {...select[0]} />
-                <SelectInput form={form} name="company" {...select[1]} />
-            </div>
-            <div className="flex gap-10 [&>*]:w-1/2">
-                <SelectInput form={form} name="experience" {...select[2]} />
-                <SelectInput form={form} name="jobType" {...select[3]} />
-            </div>
-            <div className="flex gap-10 [&>*]:w-1/2">
-                <SelectInput form={form} name="location" {...select[4]} />
-                <NumberInput {...form.getInputProps('packageOffered')} label="Salary(in LKR)" withAsterisk min={1} max={100000} placeholder="Enter Salary"
-                    hideControls />
-            </div>
-            <TagsInput {...form.getInputProps('skillsRequired')} withAsterisk label="Skills Required" placeholder="Enter skill" clearable splitChars={[',', ' ', '|']} acceptValueOnBlur />
+    return <div>
+        {id !== "0" && <Button leftSection={<IconArrowLeft size={20} />} className="!text-blue-700" my="md" variant="light" onClick={() => navigate(-1)}>Back</Button>}
+        <div className="w-4/5 mx-auto">
+            <div className="text-2xl font-semibold mb-5 mt-5">Post a job</div>
+            <div className="flex flex-col gap-5">
+                <div className="flex gap-10 [&>*]:w-1/2">
+                    <SelectInput form={form} name="jobTitle" {...select[0]} />
+                    <SelectInput form={form} name="company" {...select[1]} />
+                </div>
+                <div className="flex gap-10 [&>*]:w-1/2">
+                    <SelectInput form={form} name="experience" {...select[2]} />
+                    <SelectInput form={form} name="jobType" {...select[3]} />
+                </div>
+                <div className="flex gap-10 [&>*]:w-1/2">
+                    <SelectInput form={form} name="location" {...select[4]} />
+                    <NumberInput {...form.getInputProps('packageOffered')} label="Salary(in LKR)" withAsterisk min={1} max={100000} placeholder="Enter Salary"
+                        hideControls />
+                </div>
+                <TagsInput {...form.getInputProps('skillsRequired')} withAsterisk label="Skills Required" placeholder="Enter skill" clearable splitChars={[',', ' ', '|']} acceptValueOnBlur />
 
-            <Textarea {...form.getInputProps('about')} withAsterisk autosize minRows={2} maxRows={3} label="About" placeholder="Enter about job here..." className="my-3" />
+                <Textarea {...form.getInputProps('about')} withAsterisk autosize minRows={2} maxRows={3} label="About" placeholder="Enter about job here..." className="my-3" />
 
-            <Textarea {...form.getInputProps('description')} withAsterisk autosize minRows={3} label="Job Description" placeholder="Enter job description here..." />
+                <Textarea {...form.getInputProps('description')} withAsterisk autosize minRows={3} label="Job Description" placeholder="Enter job description here..." />
 
-            <div className="flex gap-5">
-                <Button className="!text-blue-700 !bg-blue-200 hover:!border-blue-600" onClick={handlePost} variant="light">Publish job </Button>
-                <Button className="!text-blue-700" onClick={handleDraft} variant="outline">Save as draft</Button>
+                <div className="flex gap-5">
+                    <Button className="!text-blue-700 !bg-blue-200 hover:!border-blue-600" onClick={handlePost} variant="light">Publish job </Button>
+                    <Button className="!text-blue-700" onClick={handleDraft} variant="outline">Save as draft</Button>
+                </div>
             </div>
         </div>
     </div>
+
+
+
+
 }
 
 export default PostJob;
