@@ -1,10 +1,18 @@
 import { TextInput, NumberInput, FileInput, Textarea, Button, LoadingOverlay } from "@mantine/core";
 import { isNotEmpty, useForm } from "@mantine/form";
-import { IconPaperclip } from "@tabler/icons-react";
+import { IconCheck, IconPaperclip, IconX } from "@tabler/icons-react";
 import { useState } from "react";
+import { getBase64 } from "../Services/Utilities";
+import { applyJob } from "../Services/JobService";
+import { useNavigate, useParams } from "react-router-dom";
+import { notifications } from "@mantine/notifications";
+import { useSelector } from "react-redux";
 
 const ApplicationForm = () => {
     const [submit, setSubmit] = useState(false);
+    const { id } = useParams();
+    const user = useSelector((state: any) => state.user);
+    const navigate = useNavigate();
 
     const form = useForm({
         mode: 'controlled',
@@ -26,10 +34,46 @@ const ApplicationForm = () => {
         }
     })
 
-    const handleSubmit = () => {
+    const handleSubmit = async () => {
         form.validate();
-        if(!form.isValid()) return;
-        setSubmit(false);  //test
+        if (!form.isValid()) return;
+        setSubmit(true);
+        let resume: any = await getBase64(form.getValues().resume);
+        let applicant = { ...form.getValues(), applicantId: user.id, resume: resume.split(',')[1] };
+        applyJob(id, applicant).then((res) => {
+            console.log(res)
+            notifications.show({
+                title: 'Applied succesfully',
+                message: 'apply to job successfully."',
+                withCloseButton: true,
+                icon: <IconCheck />,
+                color: 'teal',
+                withBorder: true,
+                className: "!border-blue-500 !bg-blue-50 !text-blue-800 !shadow-lg !rounded-lg !p-4 !w-[400px]",
+            })
+            setSubmit(false);
+            navigate("/job-history");
+        }).catch((err) => {
+            console.log(err);
+            let errMsg;
+            if (err.code == "ERR_BAD_RESPONSE") {
+                errMsg = err.response.data.errorMessage;
+            } else if (err.code == "ERR_NETWORK") {
+                errMsg = "Network Error Occred";
+            } else {
+                errMsg = "Something went wrong";
+            }
+            notifications.show({
+                title: "Error",
+                message: errMsg,
+                withCloseButton: true,
+                icon: <IconX />,
+                color: 'red',
+                withBorder: true,
+                className: "!border-red-500 !bg-red-50 !text-red-800 !shadow-lg !rounded-lg !p-4 !w-[400px]",
+            })
+            setSubmit(false);
+        })
     };
 
     return <div>

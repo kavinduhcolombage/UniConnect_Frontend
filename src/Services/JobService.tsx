@@ -1,5 +1,6 @@
 import axios from "axios";
-const base_url = "http://localhost:8080/api/v1/jobs/";
+import Host_Url from "./HostUrl";
+const base_url = `${Host_Url}/api/v1/jobs/`;
 
 const postJob = async (job: any) => {
     return axios.post(`${base_url}post`, job)
@@ -19,4 +20,21 @@ const getJob = async (id: any) => {
         .catch(error => { throw error; });
 }
 
-export { postJob, getAllJobs, getJob };
+const applyJob = async (id: any, applicant: any) => {
+    return axios.post(`${base_url}apply/${id}`, applicant)
+        .then(result => result.data)
+        .catch(error => { throw error });
+}
+
+const getJobPostedBy = async (id: any) => {
+    return axios.get(`${base_url}postedBy/${id}`)
+        .then(result => result.data)
+        .catch(error => { throw error; });
+}
+
+const changeAppStatus = async (application: any) => {
+    return axios.post(`${base_url}changeAppStatus`, application)
+        .then(result => result.data)
+        .catch(error => { throw error; });
+}
+export { postJob, getAllJobs, getJob, applyJob, getJobPostedBy, changeAppStatus };
