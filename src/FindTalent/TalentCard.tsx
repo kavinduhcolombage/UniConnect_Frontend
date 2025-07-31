@@ -18,8 +18,6 @@ const TalentCard = (props: any) => {
     const [time, setTime] = useState<any>(null);
     const [profile, setProfile] = useState<any>({});
 
-    console.log("for talent card ", props)
-
     const handleOffer = (status: string) => {
 
         let interview: any = { id, applicantId: profile?.id, applicationStatus: status };
@@ -29,7 +27,7 @@ const TalentCard = (props: any) => {
             interview = { ...interview, interviewTime: date }
         }
         changeAppStatus(interview).then((res) => {
-            console.log("response",res);
+            console.log("response", res);
             if (status == "INTERVIEWING") {
                 notifications.show({
                     title: 'Updated Succesfully.',
@@ -116,7 +114,7 @@ const TalentCard = (props: any) => {
                 <IconCalendarMonth stroke={1.5} />Interview : {formatInterviewTime(props.interviewTime)}
             </div> : <div className="flex justify-between">
                 <div className="font-semibold">
-                    RS.150000
+                    Exp: {profile?.totalExp ? profile?.totalExp : 0} Years
                 </div>
                 <div className="flex gap-2 text-sm items-center">
                     <IconMapPin className="h-5 w-5" stroke={1.5} />
