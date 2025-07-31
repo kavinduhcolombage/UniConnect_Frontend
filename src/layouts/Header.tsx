@@ -1,5 +1,5 @@
 
-import { Button } from '@mantine/core';
+import { Burger, Button, Drawer } from '@mantine/core';
 import { Settings } from 'tabler-icons-react';
 import NavLinks from './NavLinks';
 import ProfileMenu from './ProfileMenu';
@@ -9,10 +9,23 @@ import { useEffect } from 'react';
 import { getProfile } from '../Services/ProfileService';
 import { setProfile } from '../Slices/ProfileSlice';
 import NotiMenu from './NotiMenu';
+import { useDisclosure } from '@mantine/hooks';
+import { IconX } from '@tabler/icons-react';
+
+const links = [
+    { name: 'Home', url: '/' },
+    { name: 'Find Job', url: '/find-job' },
+    { name: 'Find Talents', url: '/find-talents' },
+    { name: 'Post Job', url: '/post-job/0' },
+    { name: 'Posted Job', url: '/posted-job/0' },
+    { name: 'Job History', url: '/job-history' },
+    { name: 'Signup', url: '/signup' },
+]
 
 const Header = () => {
     const dispatch = useDispatch();
     const user = useSelector((state: any) => state.user);
+    const [opened, { open, close }] = useDisclosure(false);
 
     useEffect(() => {
         if (user) {
@@ -44,6 +57,24 @@ const Header = () => {
             {
                 user ? <NotiMenu /> : <></>
             }
+            {
+
+            }
+            <div className='md:hidden flex'>
+                <Burger color='blue' opened={opened} onClick={open} aria-label="Toggle navigation" />
+            </div>
+
+            <Drawer size="xs" overlayProps={{ backgroundOpacity: 0.5, blur: 4 }} position='right' opened={opened} onClose={close} closeButtonProps={{ icon: <IconX size={30} />, }}>
+                <div className='flex flex-col gap-6 items-center'>
+                    {
+                        links.map((link, index) => (
+                            <div key={index} className={`${location.pathname === link.url ? 'border-blue-600 text-blue-500' : 'border-transparent'} border-b-[3px] h-full flex items-center`}>
+                                <Link className='hover:text-gray-600 text-xl' to={link.url}>{link.name}</Link>
+                            </div>
+                        ))
+                    }
+                </div>
+            </Drawer>
 
         </div>
 
