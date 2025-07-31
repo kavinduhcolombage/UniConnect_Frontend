@@ -4,21 +4,36 @@ import Sort from "./Sort";
 import { getAllJobs } from "../Services/JobService";
 import { useDispatch, useSelector } from "react-redux";
 import { resetFilter } from "../Slices/FilterSlice";
+import { resetSort } from "../Slices/SortSlice";
 
 const Jobs = () => {
     const [jobList, setJobList] = useState([{}]);
     const filter = useSelector((state: any) => state.filter);
     const [filteredJobs, setFilteredJobs] = useState<any>([]);
+    const sort = useSelector((state: any) => state.sort);
     const dispatch = useDispatch();
 
     useEffect(() => {
         dispatch(resetFilter());
+        dispatch(resetSort());
         getAllJobs().then((res) => {
             setJobList(res.filter((job: any) => job.jobStatus == "ACTIVE"));
         }).catch((err) => {
             console.error("Error fetching jobs:", err);
         })
     }, []);
+
+    useEffect(() => {
+        if (sort == "Most Recent") {
+            setJobList([...jobList].sort((a: any, b: any) => new Date(b.postTime).getTime() - new Date(a.postTime).getTime()));
+        }
+        else if (sort == "Salary(low to high)") {
+            setJobList([...jobList].sort((a: any, b: any) => a.packageOffered - b.packageOffered));
+        }
+        else if (sort == "Salary(high to low)") {
+            setJobList([...jobList].sort((a: any, b: any) => b.packageOffered - a.packageOffered));
+        }
+    }, [sort]);
 
     useEffect(() => {
         console.log("filter", filter);
@@ -54,7 +69,7 @@ const Jobs = () => {
     return <div className="p-5">
         <div className="flex justify-between">
             <div className="text-2xl font-semibold">Recommended job</div>
-            <Sort />
+            <Sort sort="job" />
         </div>
         <div className="mt-10 flex flex-wrap gap-5">
             {
