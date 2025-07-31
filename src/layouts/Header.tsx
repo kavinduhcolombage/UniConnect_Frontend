@@ -1,6 +1,6 @@
 
-import { Button, Indicator } from '@mantine/core';
-import { Settings, Bell } from 'tabler-icons-react';
+import { Button } from '@mantine/core';
+import { Settings } from 'tabler-icons-react';
 import NavLinks from './NavLinks';
 import ProfileMenu from './ProfileMenu';
 import { useDispatch, useSelector } from 'react-redux';
@@ -8,6 +8,7 @@ import { Link } from 'react-router-dom';
 import { useEffect } from 'react';
 import { getProfile } from '../Services/ProfileService';
 import { setProfile } from '../Slices/ProfileSlice';
+import NotiMenu from './NotiMenu';
 
 const Header = () => {
     const dispatch = useDispatch();
@@ -40,15 +41,9 @@ const Header = () => {
             <div className='bg-gray-900 p-1.5 rounded-full cursor-pointer hover:text-blue-500'>
                 <Settings size={25} />
             </div>
-            <div className='bg-gray-900 p-1.5 rounded-full flex items-center justify-center cursor-pointer hover:text-blue-500'>
-                <Indicator inline processing color="blue">
-                    <Bell
-                        size={25}
-                        strokeWidth={1.8}
-                    />
-                </Indicator>
-
-            </div>
+            {
+                user ? <NotiMenu /> : <></>
+            }
 
         </div>
 
