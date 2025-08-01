@@ -9,6 +9,7 @@ import { useDispatch } from 'react-redux';
 import { setUser } from '../Slices/UserSlice';
 import { setJwt } from '../Slices/JwtSlice';
 import { loginUser } from '../Services/AuthService';
+import { jwtDecode } from "jwt-decode";
 
 const form = {
     email: "",
@@ -29,7 +30,7 @@ const Login = () => {
 
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         console.log(event.target);
-        setformError({...formError,[event.target.name]:""})
+        setformError({ ...formError, [event.target.name]: "" })
         if (event.target.value === "") {
             setformError({ ...formError, [event.target.name]: `${event.target.name} is required` });
         }
@@ -37,7 +38,7 @@ const Login = () => {
     }
 
     const handleSubmit = () => {
-        
+
         let valid = true;
         const newFormErrror: { [key: string]: string } = {};
         for (const key in data) {
@@ -45,7 +46,7 @@ const Login = () => {
                 newFormErrror[key] = loginValidation(key, data[key]);
                 if (newFormErrror[key] !== "" && newFormErrror[key] !== undefined) valid = false
             }
-            
+
         }
         setformError(newFormErrror);
         if (valid === true) {
@@ -59,20 +60,23 @@ const Login = () => {
                     color: 'teal',
                     withBorder: true,
                     className: "!border-blue-500 !bg-blue-50 !text-blue-800 !shadow-lg !rounded-lg !p-4 !w-[400px]",
-                })
+                });
+                dispatch(setJwt(res.jwt));
+                const decode = jwtDecode(res.jwt);
+                console.log("decode:", decode);
                 setTimeout(() => {
                     setLoading(false);
                     //dispatch(setUser(res));
-                    dispatch(setJwt(res.jwt));
+
                     navigate("/");
                 }, 3000)
             }).catch((err) => {
                 setLoading(false);
-                console.log(err);       
+                console.log(err);
                 notifications.show({
                     title: 'Login Failed',
-                    message: err.code === "ERR_NETWORK" ? "An error occurred while logging in. Please try again.": err.response.data.errorMessage,
-                   // message: "some error occured",
+                    message: err.code === "ERR_NETWORK" ? "An error occurred while logging in. Please try again." : err.response.data.errorMessage,
+                    // message: "some error occured",
                     withCloseButton: true,
                     icon: <IconX />,
                     color: 'red',
