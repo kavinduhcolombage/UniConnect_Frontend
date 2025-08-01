@@ -1,11 +1,12 @@
 const Working = () => {
-    return <div className="mt-20 pb-5">
+    return <div className="md:flex hidden">
+        <div className="mt-20 pb-5">
         <div className="text-4xl text-center font-semibold mb-3">How to  <span className="text-blue-500">Apply</span></div>
         <div className="text-lg mx-auto text-center w-1/2">Explore diverse job opportunities tailored to your skills. Start your career journey today!</div>
 
         <div className="flex px-16 justify-between items-center">
             <div className="">
-                <img className="w-[30rem]" src="/images/boy.jpg" alt="working photo" />
+                <img className="size-150 w-100 h-130" src="/images/boy.png" alt="working photo" />
             </div>
             <div className="flex flex-col gap-5 w-[60%]">
                 <div className="flex items-center gap-4">
@@ -39,6 +40,7 @@ const Working = () => {
         </div>
 
 
+    </div>
     </div>
 }
 

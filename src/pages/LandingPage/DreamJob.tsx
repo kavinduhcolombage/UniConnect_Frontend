@@ -2,13 +2,13 @@ import { Avatar, TextInput } from '@mantine/core';
 
 
 const DreamJob = () => {
-    return (<div className="flex items-center p-20">
+    return (<div className="md:flex hidden items-center p-20">
         <div className="flex flex-col w-[45%] justify-center">
             <div className="text-6xl font-semibold">Find Your Internship</div>
             <div>good life good company</div>
             <div className='flex items-end'>
                 <TextInput
-                    label="Input label"
+                    label="Search Your job"
                     placeholder="search job"
                 />
 

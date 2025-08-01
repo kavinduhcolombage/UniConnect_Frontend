@@ -1,12 +1,17 @@
 import { useEffect, useState } from 'react';
 import { Checkbox, Combobox, Group, Input, Pill, PillsInput, useCombobox } from '@mantine/core';
+import { useDispatch } from 'react-redux';
+import { updateFilter } from '../Slices/FilterSlice';
 
 
 
-const MultiInput=(props:any)=> {
+const MultiInput = (props: any) => {
+  const dispatch = useDispatch();
+
   useEffect(() => {
     setData(props.options);
-  }, [])
+  }, [props]);
+
   const combobox = useCombobox({
     onDropdownClose: () => combobox.resetSelectedOption(),
     onDropdownOpen: () => combobox.updateSelectedOptionIndex('active'),
@@ -24,18 +29,22 @@ const MultiInput=(props:any)=> {
     if (val === '$create') {
       setData((current) => [...current, search]);
       setValue((current) => [...current, search]);
+      dispatch(updateFilter({ [props.title]: [...value, search] }))
     } else {
+      dispatch(updateFilter({ [props.title]: value.includes(val) ? value.filter((v) => v !== val) : [...value, val] }));
       setValue((current) =>
         current.includes(val) ? current.filter((v) => v !== val) : [...current, val]
-      );
+      )
     }
   };
 
-  const handleValueRemove = (val: string) =>
+  const handleValueRemove = (val: string) => {
     setValue((current) => current.filter((v) => v !== val));
+    setValue((current) => current.filter((v) => v !== val));
+  }
 
   const values = value
-    .slice(0,1)
+    .slice(0, 1)
     .map((item) => (
       <Pill key={item} withRemoveButton onRemove={() => handleValueRemove(item)}>
         {item}
@@ -47,7 +56,7 @@ const MultiInput=(props:any)=> {
       <Group gap="sm">
         <Checkbox size='xs'
           checked={value.includes(item)}
-          onChange={() => {}}
+          onChange={() => { }}
           aria-hidden
           tabIndex={-1}
           style={{ pointerEvents: 'none' }}
@@ -60,8 +69,8 @@ const MultiInput=(props:any)=> {
   return (
     <Combobox store={combobox} onOptionSubmit={handleValueSelect} withinPortal={false}>
       <Combobox.DropdownTarget>
-        <PillsInput variant='unstyle' rightSection={<Combobox.Chevron/>} onClick={() => combobox.toggleDropdown()} leftSection={
-            <div className='text-blue-500 p-1 bg-gray-300 rounded-full mr-4'><props.icon/></div>
+        <PillsInput variant='unstyle' rightSection={<Combobox.Chevron />} onClick={() => combobox.toggleDropdown()} leftSection={
+          <div className='text-blue-500 p-1 bg-gray-300 rounded-full mr-4'><props.icon /></div>
         }>
           <Pill.Group>
             {value.length > 0 ? (
@@ -75,17 +84,17 @@ const MultiInput=(props:any)=> {
               <Input.Placeholder className='!text-gray-500'>{props.title}</Input.Placeholder>
             )}
 
-            
+
           </Pill.Group>
         </PillsInput>
       </Combobox.DropdownTarget>
 
       <Combobox.Dropdown>
-      <Combobox.Search
-            value={search}
-            onChange={(event) => setSearch(event.currentTarget.value)}
-            placeholder="Search groceries"
-          />
+        <Combobox.Search
+          value={search}
+          onChange={(event) => setSearch(event.currentTarget.value)}
+          placeholder="Search groceries"
+        />
         <Combobox.Options>
           {options}
 

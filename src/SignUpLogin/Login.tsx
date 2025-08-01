@@ -28,11 +28,15 @@ const Login = () => {
 
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         console.log(event.target);
+        setformError({...formError,[event.target.name]:""})
+        if (event.target.value === "") {
+            setformError({ ...formError, [event.target.name]: `${event.target.name} is required` });
+        }
         setData({ ...data, [event.target.name]: event.target.value })
     }
 
     const handleSubmit = () => {
-        setLoading(true);
+        
         let valid = true;
         const newFormErrror: { [key: string]: string } = {};
         for (const key in data) {
@@ -40,12 +44,13 @@ const Login = () => {
                 newFormErrror[key] = loginValidation(key, data[key]);
                 if (newFormErrror[key] !== "" && newFormErrror[key] !== undefined) valid = false
             }
-            ;
+            
         }
         setformError(newFormErrror);
         if (valid === true) {
+            setLoading(true);
             loginUser(data).then((res) => {
-                console.log(res);
+                console.log("response : "+res);
                 notifications.show({
                     title: 'Login Succesfully.',
                     message: 'Redirecting to home page...',
@@ -62,10 +67,11 @@ const Login = () => {
                 }, 3000)
             }).catch((err) => {
                 setLoading(false);
-                console.log(err);
+                console.log(err);       
                 notifications.show({
                     title: 'Login Failed',
-                    message: err.response.data.errorMessage,
+                    message: err.code === "ERR_NETWORK" ? "An error occurred while logging in. Please try again.": err.response.data.errorMessage,
+                   // message: "some error occured",
                     withCloseButton: true,
                     icon: <IconX />,
                     color: 'red',
@@ -74,7 +80,6 @@ const Login = () => {
                 })
             });
         }
-
     }
 
 
