@@ -1,6 +1,4 @@
-import Host_Url from "./HostUrl";
 import axiosInstance from "../Interceptor/AxiosInterceptor";
-const base_url = `${Host_Url}/api/v1/jobs/`;
 const path_url = '/api/v1/jobs/';
 
 const postJob = async (job: any) => {

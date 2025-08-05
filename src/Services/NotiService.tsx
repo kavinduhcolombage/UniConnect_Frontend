@@ -1,8 +1,5 @@
-import axios from 'axios';
-import Host_Url from './HostUrl';
 import axiosInstance from '../Interceptor/AxiosInterceptor';
 
-const base_URL = `${Host_Url}/api/v1/notification`;
 const path_URL = "/api/v1/notification";
 
 const getNotifications = async (id: any) => {
