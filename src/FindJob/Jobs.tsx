@@ -5,6 +5,7 @@ import { getAllJobs } from "../Services/JobService";
 import { useDispatch, useSelector } from "react-redux";
 import { resetFilter } from "../Slices/FilterSlice";
 import { resetSort } from "../Slices/SortSlice";
+import { LoadingOverlay } from "@mantine/core";
 
 const Jobs = () => {
     const [jobList, setJobList] = useState([{}]);
@@ -12,15 +13,19 @@ const Jobs = () => {
     const [filteredJobs, setFilteredJobs] = useState<any>([]);
     const sort = useSelector((state: any) => state.sort);
     const dispatch = useDispatch();
+    const [loading, setLoading] = useState(false);
 
     useEffect(() => {
         dispatch(resetFilter());
         dispatch(resetSort());
+        setLoading(true);
         getAllJobs().then((res) => {
             setJobList(res.filter((job: any) => job.jobStatus == "ACTIVE"));
         }).catch((err) => {
             console.error("Error fetching jobs:", err);
-        })
+        }).finally(() => {
+            setLoading(false);
+        });
     }, []);
 
     useEffect(() => {
@@ -66,7 +71,8 @@ const Jobs = () => {
 
 
 
-    return <div className="p-5">
+    return <div className="relative p-5">
+        <LoadingOverlay visible={loading} zIndex={1000} overlayProps={{ radius: "sm", blur: 2 }} loaderProps={{ color: "blue", type: "bars" }} />
         <div className="flex justify-between">
             <div className="text-2xl font-semibold">Recommended job</div>
             <Sort sort="job" />
@@ -78,8 +84,6 @@ const Jobs = () => {
                 ))
             }
         </div>
-
-
     </div>
 }
 

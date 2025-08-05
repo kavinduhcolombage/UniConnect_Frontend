@@ -4,6 +4,7 @@ import TalentCard from "./TalentCard";
 import { getAllProfile } from "../Services/ProfileService";
 import { useDispatch, useSelector } from "react-redux";
 import { resetFilter } from "../Slices/FilterSlice";
+import { LoadingOverlay } from "@mantine/core";
 
 
 const Talents = () => {
@@ -12,14 +13,18 @@ const Talents = () => {
     const sort = useSelector((state: any) => state.sort);
     const [filteredTalents, setFilteredTalents] = useState<any>([]);
     const dispatch = useDispatch();
+    const [loading, setLoading] = useState(false);
 
     useEffect(() => {
         dispatch(resetFilter());
+        setLoading(true);
         getAllProfile().then((res) => {
             setTalents(res);
         }).catch((err) => {
             console.log(err);
-        })
+        }).finally(() => {
+            setLoading(false);
+        });
     }, []);
 
     useEffect(() => {
@@ -57,7 +62,8 @@ const Talents = () => {
         console.log("filteredTalent : ", filteredTalents);
     }, [filter, talents]);
 
-    return <div className="p-5">
+    return <div className="p-5 relative">
+        <LoadingOverlay visible={loading} zIndex={1000} overlayProps={{ radius: "sm", blur: 2 }} loaderProps={{ color: "blue", type: "bars" }} />
         <div className="flex justify-between">
             <div className="text-2xl font-semibold">Talents</div>
             <Sort />

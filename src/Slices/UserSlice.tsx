@@ -6,17 +6,14 @@ const UserSlice = createSlice({
   initialState: getItem("user"),
   reducers: {
     setUser: (state, action) => {
-      console.log("before set user : "+getItem("user"));
       setItem("user", action.payload);
       state = getItem("user");
-      console.log("after set user : "+getItem("user"));
-        return state;
+      return state;
     },
     removeUser: (state) => {
       removeItem("user");
-        state = null;
-        console.log("after remove user : "+getItem("user"));
-        return state;
+      state = null;
+      return state;
     },
   }
 });

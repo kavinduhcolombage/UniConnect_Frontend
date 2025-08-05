@@ -4,13 +4,16 @@ import { Settings } from 'tabler-icons-react';
 import NavLinks from './NavLinks';
 import ProfileMenu from './ProfileMenu';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
 import { getProfile } from '../Services/ProfileService';
 import { setProfile } from '../Slices/ProfileSlice';
 import NotiMenu from './NotiMenu';
 import { useDisclosure } from '@mantine/hooks';
 import { IconX } from '@tabler/icons-react';
+import { jwtDecode } from 'jwt-decode';
+import { setUser } from '../Slices/UserSlice';
+import { setupResponseInterceptor } from '../Interceptor/AxiosInterceptor';
 
 const links = [
     { name: 'Home', url: '/' },
@@ -26,14 +29,26 @@ const Header = () => {
     const dispatch = useDispatch();
     const user = useSelector((state: any) => state.user);
     const [opened, { open, close }] = useDisclosure(false);
+    const navigate = useNavigate();
+    const token = useSelector((state:any)=>state.jwt);
+
+    useEffect(()=>{
+        setupResponseInterceptor(navigate);
+        
+        
+    },[navigate])
 
     useEffect(() => {
+        if(token != ""){  
+            const decoded=jwtDecode(localStorage.getItem("token") || "");
+            dispatch(setUser({...decoded, email:decoded.sub}));
+        }
         if (user) {
             getProfile(user.profileId).then((res) => {
                 dispatch(setProfile(res));
             }).catch((err) => console.log(err));
         }
-    }, []);
+    }, [token, navigate]);
 
     return <div className="w-full bg-gray-900 px-6 h-25 text-white p-4 flex justify-between items-center">
 
