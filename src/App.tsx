@@ -49,30 +49,30 @@ function App() {
   return (
 
     <Provider store={Store}>
-    <MantineProvider>
-      <Notifications position="top-center" zIndex={1000} />
-      <BrowserRouter>
-        <div className='relative'>
-          <Suspense fallback={<div>Loading...</div>}>
-            <Routes>
-              <Route path="/find-job" element={<FindJobPage />} />
-              <Route path="/find-talents" element={<FindTalentsPage />} />
-              <Route path="/post-job/:id" element={<ProtectedRoute allowedRoles={['COMPANY']}>  <PostJobPage /> </ProtectedRoute>  } />
-              <Route path="/talent-profile/:id" element={<TalentProfilePage />} />
-              <Route path="/apply-job/:id" element={<ApplyJObPage />} />
-              <Route path="/signup" element={<SignUpPage />} />
-              <Route path="/login" element={<SignUpPage />} />
-              <Route path="/profile" element={<ProfilePage />} />
-              <Route path="/jobs/:id" element={<JobDescriptionPage />} />
-              <Route path="/company/:name" element={<CompanyPage />} />
-              <Route path="/posted-job/:id" element={<PostedJobPage />} />
-              <Route path="/job-history" element={<JobHistoryPage />} />
-              <Route path="*" element={<HomePage />} />
-            </Routes>
-          </Suspense>
-        </div>
-      </BrowserRouter>
-    </MantineProvider>
+      <MantineProvider>
+        <Notifications position="top-center" zIndex={1000} />
+        <BrowserRouter>
+          <div className='relative'>
+            <Suspense fallback={<div>Loading...</div>}>
+              <Routes>
+                <Route path="/find-job" element={<FindJobPage />} />
+                <Route path="/find-talents" element={<FindTalentsPage />} />
+                <Route path="/post-job/:id" element={<ProtectedRoute allowedRoles={['COMPANY']}>  <PostJobPage /> </ProtectedRoute>} />
+                <Route path="/talent-profile/:id" element={<TalentProfilePage />} />
+                <Route path="/apply-job/:id" element={<ApplyJObPage />} />
+                <Route path="/signup" element={<SignUpPage />} />
+                <Route path="/login" element={<SignUpPage />} />
+                <Route path="/profile" element={<ProfilePage />} />
+                <Route path="/jobs/:id" element={<JobDescriptionPage />} />
+                <Route path="/company/:name" element={<CompanyPage />} />
+                <Route path="/posted-job/:id" element={<ProtectedRoute allowedRoles={['COMPANY']}><PostedJobPage /></ProtectedRoute>} />
+                <Route path="/job-history" element={<ProtectedRoute allowedRoles={['STUDENT']}> <JobHistoryPage /> </ProtectedRoute>} />
+                <Route path="*" element={<HomePage />} />
+              </Routes>
+            </Suspense>
+          </div>
+        </BrowserRouter>
+      </MantineProvider>
     </Provider>
 
   )
