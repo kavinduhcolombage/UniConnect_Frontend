@@ -12,6 +12,7 @@ import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { removeUser } from '../Slices/UserSlice';
+import { removejwt } from '../Slices/JwtSlice';
 
 const ProfileMenu = () => {
     const dispatch = useDispatch();
@@ -22,8 +23,9 @@ const ProfileMenu = () => {
     const profile = useSelector((state: any) => state.profile);
     const handleLogout = () => {
         dispatch(removeUser());
+        dispatch(removejwt());
+        navigate('/');
     }
-
     const handleProfileClick = () => {
         if (user?.id) {
             navigate(`/profile`, { state: { userId: user.id } }); // Navigate to profile page with user ID
