@@ -62,11 +62,11 @@ const Login = () => {
                     className: "!border-blue-500 !bg-blue-50 !text-blue-800 !shadow-lg !rounded-lg !p-4 !w-[400px]",
                 });
                 dispatch(setJwt(res.jwt));
-                const decode = jwtDecode(res.jwt);
-                console.log("decode:", decode);
+                const decoded = jwtDecode(res.jwt);
+                dispatch(setUser({...decoded, emailL:decoded.sub}));
                 setTimeout(() => {
                     setLoading(false);
-                    //dispatch(setUser(res));
+                    
 
                     navigate("/");
                 }, 3000)

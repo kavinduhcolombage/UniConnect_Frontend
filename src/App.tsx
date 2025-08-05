@@ -17,6 +17,8 @@ import JobDescriptionPage from './pages/JobDescriptionPage';
 import CompanyPage from './pages/CompanyPage';
 import PostedJobPage from './pages/PostedJobPage';
 import JobHistoryPage from './pages/JobHistoryPage';
+import ProtectedRoute from './Services/ProtectedRoute';
+
 // import HomePage from './pages/HomePage';
 // import FindJob from './pages/FindJob';
 // import SignUpPage from './pages/SignUpPage';
@@ -55,7 +57,7 @@ function App() {
             <Routes>
               <Route path="/find-job" element={<FindJobPage />} />
               <Route path="/find-talents" element={<FindTalentsPage />} />
-              <Route path="/post-job/:id" element={<PostJobPage />} />
+              <Route path="/post-job/:id" element={<ProtectedRoute allowedRoles={['COMPANY']}>  <PostJobPage /> </ProtectedRoute>  } />
               <Route path="/talent-profile/:id" element={<TalentProfilePage />} />
               <Route path="/apply-job/:id" element={<ApplyJObPage />} />
               <Route path="/signup" element={<SignUpPage />} />
