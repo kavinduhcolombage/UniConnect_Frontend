@@ -1,39 +1,38 @@
-import axios from "axios";
-import Host_Url from "./HostUrl";
-const base_url = `${Host_Url}/api/v1/jobs/`;
+import axiosInstance from "../Interceptor/AxiosInterceptor";
+const path_url = '/api/v1/jobs/';
 
 const postJob = async (job: any) => {
-    return axios.post(`${base_url}post`, job)
+    return axiosInstance.post(`${path_url}post`, job)
         .then(result => result.data)
         .catch(error => { throw error; });
 }
 
 const getAllJobs = async () => {
-    return axios.get(`${base_url}getAll`)
+    return axiosInstance.get(`${path_url}getAll`)
         .then(result => result.data)
         .catch(error => { throw error; });
 }
 
 const getJob = async (id: any) => {
-    return axios.get(`${base_url}get/${id}`)
+    return axiosInstance.get(`${path_url}get/${id}`)
         .then(result => result.data)
         .catch(error => { throw error; });
 }
 
 const applyJob = async (id: any, applicant: any) => {
-    return axios.post(`${base_url}apply/${id}`, applicant)
+    return axiosInstance.post(`${path_url}apply/${id}`, applicant)
         .then(result => result.data)
         .catch(error => { throw error });
 }
 
 const getJobPostedBy = async (id: any) => {
-    return axios.get(`${base_url}postedBy/${id}`)
+    return axiosInstance.get(`${path_url}postedBy/${id}`)
         .then(result => result.data)
         .catch(error => { throw error; });
 }
 
 const changeAppStatus = async (application: any) => {
-    return axios.post(`${base_url}changeAppStatus`, application)
+    return axiosInstance.post(`${path_url}changeAppStatus`, application)
         .then(result => result.data)
         .catch(error => { throw error; });
 }

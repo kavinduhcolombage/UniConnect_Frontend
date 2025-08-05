@@ -2,12 +2,14 @@ import { TextInput, PasswordInput, Button, LoadingOverlay } from '@mantine/core'
 import { IconAt, IconCheck, IconLock, IconX } from '@tabler/icons-react';
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { loginUser } from '../Services/UserService';
 import { loginValidation } from '../Services/FormValidation';
 import { notifications } from '@mantine/notifications';
 import { User } from '../types/User';
 import { useDispatch } from 'react-redux';
 import { setUser } from '../Slices/UserSlice';
+import { setJwt } from '../Slices/JwtSlice';
+import { loginUser } from '../Services/AuthService';
+import { jwtDecode } from "jwt-decode";
 
 const form = {
     email: "",
@@ -28,7 +30,7 @@ const Login = () => {
 
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         console.log(event.target);
-        setformError({...formError,[event.target.name]:""})
+        setformError({ ...formError, [event.target.name]: "" })
         if (event.target.value === "") {
             setformError({ ...formError, [event.target.name]: `${event.target.name} is required` });
         }
@@ -36,7 +38,7 @@ const Login = () => {
     }
 
     const handleSubmit = () => {
-        
+
         let valid = true;
         const newFormErrror: { [key: string]: string } = {};
         for (const key in data) {
@@ -44,13 +46,12 @@ const Login = () => {
                 newFormErrror[key] = loginValidation(key, data[key]);
                 if (newFormErrror[key] !== "" && newFormErrror[key] !== undefined) valid = false
             }
-            
+
         }
         setformError(newFormErrror);
         if (valid === true) {
             setLoading(true);
             loginUser(data).then((res) => {
-                console.log("response : "+res);
                 notifications.show({
                     title: 'Login Succesfully.',
                     message: 'Redirecting to home page...',
@@ -59,19 +60,23 @@ const Login = () => {
                     color: 'teal',
                     withBorder: true,
                     className: "!border-blue-500 !bg-blue-50 !text-blue-800 !shadow-lg !rounded-lg !p-4 !w-[400px]",
-                })
+                });
+                dispatch(setJwt(res.jwt));
+                const decoded = jwtDecode(res.jwt);
+                dispatch(setUser({...decoded, emailL:decoded.sub}));
                 setTimeout(() => {
                     setLoading(false);
-                    dispatch(setUser(res));
+                    
+
                     navigate("/");
                 }, 3000)
             }).catch((err) => {
                 setLoading(false);
-                console.log(err);       
+                console.log(err);
                 notifications.show({
                     title: 'Login Failed',
-                    message: err.code === "ERR_NETWORK" ? "An error occurred while logging in. Please try again.": err.response.data.errorMessage,
-                   // message: "some error occured",
+                    message: err.code === "ERR_NETWORK" ? "An error occurred while logging in. Please try again." : err.response.data.errorMessage,
+                    // message: "some error occured",
                     withCloseButton: true,
                     icon: <IconX />,
                     color: 'red',

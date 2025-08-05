@@ -1,23 +1,27 @@
-import axios from 'axios';
-import Host_Url from './HostUrl';
+import axiosInstance from '../Interceptor/AxiosInterceptor';
 
-
-const base_URL = `${Host_Url}/api/v1/profile`;
+const path_URL = "/api/v1/profile";
 
 const getProfile = async (id: any) => {
-    return axios.get(`${base_URL}/get/${id}`)
-        .then(res => res.data)
-        .catch(error => { throw error; });
+    return axiosInstance.get(`${path_URL}/get/${id}`)
+        .then(res => {
+            console.log("executed getProfile successfully, response:", res);
+            return res.data;
+        })
+        .catch(error => {
+            console.error("Error in getProfile:", error);
+            throw error;
+        });
 }
 
 const updateProfile = async (profile: any) => {
-    return axios.put(`${base_URL}/update`, profile)
+    return axiosInstance.put(`${path_URL}/update`, profile)
         .then(res => res.data)
         .catch(error => { throw error; });
 }
 
 const getAllProfile = async () => {
-    return axios.get(`${base_URL}/getAll`)
+    return axiosInstance.get(`${path_URL}/getAll`)
         .then(result => result.data)
         .catch(error => { throw error })
 }
