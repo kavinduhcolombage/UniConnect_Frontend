@@ -22,7 +22,6 @@ const links = [
     { name: 'Post Job', url: '/post-job/0' },
     { name: 'Posted Job', url: '/posted-job/0' },
     { name: 'Job History', url: '/job-history' },
-    { name: 'Signup', url: '/signup' },
 ]
 
 const Header = () => {
@@ -30,18 +29,16 @@ const Header = () => {
     const user = useSelector((state: any) => state.user);
     const [opened, { open, close }] = useDisclosure(false);
     const navigate = useNavigate();
-    const token = useSelector((state:any)=>state.jwt);
-
-    useEffect(()=>{
-        setupResponseInterceptor(navigate);
-        
-        
-    },[navigate])
+    const token = useSelector((state: any) => state.jwt);
 
     useEffect(() => {
-        if(token != ""){  
-            const decoded=jwtDecode(localStorage.getItem("token") || "");
-            dispatch(setUser({...decoded, email:decoded.sub}));
+        setupResponseInterceptor(navigate);
+    }, [navigate])
+
+    useEffect(() => {
+        if (token != "") {
+            const decoded = jwtDecode(localStorage.getItem("token") || "");
+            dispatch(setUser({ ...decoded, email: decoded.sub }));
         }
         if (user) {
             getProfile(user.profileId).then((res) => {
@@ -61,25 +58,23 @@ const Header = () => {
         </div>
 
         <div className='flex gap-5 items-center justify-around'>
-            <div className='md:flex hidden'>
-                {user ? <ProfileMenu /> : <Link to="/login">
-                    <Button variant='subtle' color='blue'>Login</Button>
-                </Link>}
-            </div>
-            <div className='bg-gray-900 p-1.5 rounded-full cursor-pointer hover:text-blue-500'>
+            {user ? <ProfileMenu /> : <Link to="/login">
+                <Button variant='subtle' color='blue'>Login</Button>
+            </Link>}
+            <div className='bg-gray-900 p-1.5 rounded-full cursor-pointer hidden md:flex hover:text-blue-500'>
                 <Settings size={25} />
             </div>
-            {
-                user ? <NotiMenu /> : <></>
-            }
-            {
+            <div className='hidden md:flex'>
+                {
+                    user ? <NotiMenu /> : <></>
+                }
+            </div>
 
-            }
             <div className='md:hidden flex'>
                 <Burger color='blue' opened={opened} onClick={open} aria-label="Toggle navigation" />
             </div>
 
-            <Drawer size="xs" overlayProps={{ backgroundOpacity: 0.5, blur: 4 }} position='right' opened={opened} onClose={close} closeButtonProps={{ icon: <IconX size={30} />, }}>
+            <Drawer size="70%" overlayProps={{ backgroundOpacity: 0.5, blur: 4 }} position='right' opened={opened} onClose={close} closeButtonProps={{ icon: <IconX size={30} />, }}>
                 <div className='flex flex-col gap-6 items-center'>
                     {
                         links.map((link, index) => (

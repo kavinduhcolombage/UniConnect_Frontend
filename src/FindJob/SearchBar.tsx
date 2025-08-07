@@ -10,21 +10,18 @@ const SearchBar = () => {
     const dispatch = useDispatch();
 
     const handleChange = (event: any) => {
-        console.log("trigger");
-        console.log(event);
         dispatch(updateFilter({ salary: event }));
     }
 
-    return <div className="flex px-8 py-5">
-
+    return <div className="flex px-8 py-5 flex-wrap max-[1000px]:gap-y-4 justify-start">
         {
-            dropdownData.map((item, index) => <div key={index} className="w-1/5 mr-5">
+            dropdownData.map((item, index) => <div key={index} className="w-1/5 max-[1000px]:w-1/4 max-[900px]:w-1/3 max-[700px]:w-1/2">
                 <MultiInput {...item} />
             </div>)
         }
 
-        <div className="w-1/5">
-            <div className="flex justify-between text-gray-500 text-sm">
+        <div className="w-1/5 max-[1000px]:w-1/4 max-[900px]:w-1/3 max-[700px]:w-1/2 max-[500px]:!w-full">
+            <div className="flex justify-between text-gray-500 text-sm mb-1">
                 <div>Salary</div>
                 <div>Rs.{value[0]} - Rs.{value[1]}</div>
             </div>

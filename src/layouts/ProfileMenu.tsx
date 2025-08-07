@@ -35,7 +35,7 @@ const ProfileMenu = () => {
         <Menu trigger="hover" openDelay={100} closeDelay={100} shadow="md" width={200} opened={opened} onChange={setOpened}>
             <Menu.Target>
                 <div className='flex items-center gap-2 cursor-pointer'>
-                    <div className='text-lg'>{user.name}</div>
+                    <div className='text-lg hidden md:flex'>{user.name}</div>
                     <Indicator inline size={11} offset={4} position="bottom-end" color="green" withBorder>
                         <Avatar
                             size={45}
