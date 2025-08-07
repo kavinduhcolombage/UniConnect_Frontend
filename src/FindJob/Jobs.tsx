@@ -8,7 +8,7 @@ import { resetSort } from "../Slices/SortSlice";
 import { LoadingOverlay } from "@mantine/core";
 
 const Jobs = () => {
-    const [jobList, setJobList] = useState([{}]);
+    const [jobList, setJobList] = useState<any[]>([]);
     const filter = useSelector((state: any) => state.filter);
     const [filteredJobs, setFilteredJobs] = useState<any>([]);
     const sort = useSelector((state: any) => state.sort);
@@ -41,9 +41,7 @@ const Jobs = () => {
     }, [sort]);
 
     useEffect(() => {
-        console.log("filter", filter);
         let filtered = jobList;
-
 
         if (filter["Job Title"] && filter["Job Title"].length > 0) {
             filtered = filtered.filter((job: any) => filter["Job Title"]?.some((title: any) => job.jobTitle?.toLowerCase().includes(title.toLowerCase())));
@@ -70,18 +68,17 @@ const Jobs = () => {
     }, [filter, jobList]);
 
 
-
     return <div className="relative p-5">
         <LoadingOverlay visible={loading} zIndex={1000} overlayProps={{ radius: "sm", blur: 2 }} loaderProps={{ color: "blue", type: "bars" }} />
         <div className="flex justify-between">
-            <div className="text-2xl font-semibold">Recommended job</div>
+            <div className="text-2xl font-semibold max-[400px]:text-xl">Recommended job</div>
             <Sort sort="job" />
         </div>
         <div className="mt-10 flex flex-wrap gap-5">
             {
-                filteredJobs?.map((job: any, index: any) => (
+                filteredJobs && filteredJobs.length > 0 ? (filteredJobs?.map((job: any, index: any) => (
                     <JobCard key={index} {...job} />
-                ))
+                ))) : <div>No jobs found.</div>
             }
         </div>
     </div>

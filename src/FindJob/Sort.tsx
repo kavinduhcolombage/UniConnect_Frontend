@@ -15,7 +15,7 @@ const Sort = (props: any) => {
   });
 
   const options = props.sort == "job" ? opt.map((item) => (
-    <Combobox.Option className='!text-xs' value={item} key={item}>
+    <Combobox.Option className='!text-md' value={item} key={item}>
       {item}
     </Combobox.Option>
   )) : talentSort.map((item) => (
