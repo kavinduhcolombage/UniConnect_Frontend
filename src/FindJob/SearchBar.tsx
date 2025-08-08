@@ -23,7 +23,7 @@ const SearchBar = () => {
             })
         }
 
-        <div className="w-1/5 max-[1000px]:w-1/4 max-[900px]:w-1/3 max-[700px]:w-1/2 max-[500px]:!w-full">
+        <div className="w-1/5 max-[1000px]:w-1/4 max-[900px]:w-1/3 max-[700px]:w-full">
             <div className="flex justify-between text-gray-500 text-sm mb-1">
                 <div>Salary</div>
                 <div>Rs.{value[0]} - Rs.{value[1]}</div>
