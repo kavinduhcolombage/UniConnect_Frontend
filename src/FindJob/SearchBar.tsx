@@ -8,7 +8,7 @@ import React from "react";
 import { useDisclosure, useMediaQuery } from "@mantine/hooks";
 
 const SearchBar = () => {
-    const matches = useMediaQuery('(max-width: 475px)');
+    const matches = useMediaQuery('(max-width: 500px)');
     const [opened, { toggle }] = useDisclosure(false);
     const [value, setValue] = useState<[number, number]>([0, 1000000]);
     const dispatch = useDispatch();

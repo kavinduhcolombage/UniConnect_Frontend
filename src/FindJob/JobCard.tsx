@@ -27,7 +27,7 @@ const JobCard = (props: any) => {
         }
     }
 
-    return <div className="flex flex-col gap-2 bg-gray-400 p-4 w-72 rounded-xl hover:shadow-[0_0_5px_1px_blue] !shadow-blue-400 cursor-pointer">
+    return <div className="flex flex-col gap-2 bg-gray-400 p-4 max-[600px]:!w-full rounded-xl hover:shadow-[0_0_5px_1px_blue] !shadow-blue-400 cursor-pointer justify-start">
         <div className="flex justify-between">
             <div className="flex gap-3 items-center">
                 <div className="p-2 bg-gray-300 rounded-md">
@@ -66,6 +66,9 @@ const JobCard = (props: any) => {
         </Link>
 
     </div>
+    
+    
+    
 }
 
 export default JobCard;

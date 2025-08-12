@@ -74,7 +74,7 @@ const Jobs = () => {
             <div className="text-2xl font-semibold max-[400px]:text-xl">Recommended job</div>
             <Sort sort="job" />
         </div>
-        <div className="mt-10 flex flex-wrap gap-5">
+        <div className="mt-10 grid gap-5 grid-cols-4 max-[1000px]:grid-cols-3 max-[800px]:grid-cols-2 max-[600px]:grid-cols-1">
             {
                 filteredJobs && filteredJobs.length > 0 ? (filteredJobs?.map((job: any, index: any) => (
                     <JobCard key={index} {...job} />
