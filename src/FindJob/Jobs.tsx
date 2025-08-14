@@ -71,7 +71,7 @@ const Jobs = () => {
     return <div className="relative p-5">
         <LoadingOverlay visible={loading} zIndex={1000} overlayProps={{ radius: "sm", blur: 2 }} loaderProps={{ color: "blue", type: "bars" }} />
         <div className="flex justify-between">
-            <div className="text-2xl font-semibold max-[400px]:text-xl">Recommended job</div>
+            <div className="text-2xl font-semibold max-[500px]:text-xl">Recommended job</div>
             <Sort sort="job" />
         </div>
         <div className="mt-10 grid gap-5 grid-cols-4 max-[1000px]:grid-cols-3 max-[800px]:grid-cols-2 max-[600px]:grid-cols-1">
