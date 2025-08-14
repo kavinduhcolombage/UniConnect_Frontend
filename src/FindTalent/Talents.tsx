@@ -59,7 +59,6 @@ const Talents = () => {
         }
 
         setFilteredTalents(filterTalent);
-        console.log("filteredTalent : ", filteredTalents);
     }, [filter, talents]);
 
     return <div className="p-5 relative">
@@ -68,7 +67,7 @@ const Talents = () => {
             <div className="text-2xl font-semibold">Talents</div>
             <Sort />
         </div>
-        <div className="mt-10 flex flex-wrap gap-5 justify-between">
+        <div className="mt-10 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
             {
                 filteredTalents?.length ? filteredTalents.map((talent: any, index: any) => <TalentCard key={index} {...talent} />) : <div className="text-2xl font-semibold">No Talent Found</div>
             }
