@@ -14,6 +14,7 @@ import { IconX } from '@tabler/icons-react';
 import { jwtDecode } from 'jwt-decode';
 import { setUser } from '../Slices/UserSlice';
 import { setupResponseInterceptor } from '../Interceptor/AxiosInterceptor';
+import { removejwt } from '../Slices/JwtSlice';
 
 const links = [
     { name: 'Home', url: '/' },
@@ -32,13 +33,19 @@ const Header = () => {
     const token = useSelector((state: any) => state.jwt);
 
     useEffect(() => {
-        setupResponseInterceptor(navigate);
+        setupResponseInterceptor(navigate, dispatch);
     }, [navigate])
 
     useEffect(() => {
         if (token != "") {
-            const decoded = jwtDecode(localStorage.getItem("token") || "");
-            dispatch(setUser({ ...decoded, email: decoded.sub }));
+            try {
+                const decoded = jwtDecode(localStorage.getItem("token") || "");
+                dispatch(setUser({ ...decoded, email: decoded.sub }));
+            } catch (error) {
+                console.log(error);
+                dispatch(removejwt());
+            }
+
         }
         if (user) {
             getProfile(user.profileId).then((res) => {

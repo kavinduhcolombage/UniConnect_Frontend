@@ -1,10 +1,12 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Sort from "../FindJob/Sort";
 import TalentCard from "./TalentCard";
 import { getAllProfile } from "../Services/ProfileService";
 import { useDispatch, useSelector } from "react-redux";
 import { resetFilter } from "../Slices/FilterSlice";
 import { LoadingOverlay } from "@mantine/core";
+import { notifications } from "@mantine/notifications";
+import { IconX } from "@tabler/icons-react";
 
 
 const Talents = () => {
@@ -14,17 +16,38 @@ const Talents = () => {
     const [filteredTalents, setFilteredTalents] = useState<any>([]);
     const dispatch = useDispatch();
     const [loading, setLoading] = useState(false);
+    const user = useSelector((state: any) => state.user);
+    const notificationShown = useRef(false);
 
     useEffect(() => {
         dispatch(resetFilter());
         setLoading(true);
-        getAllProfile().then((res) => {
-            setTalents(res);
-        }).catch((err) => {
-            console.log(err);
-        }).finally(() => {
+        if (user) {
+            getAllProfile().then((res) => {
+                setTalents(res);
+            }).catch((err) => {
+                console.log(err);
+            }).finally(() => {
+                setLoading(false);
+            });
+        }else {
             setLoading(false);
-        });
+            if (!notificationShown.current) {
+                notifications.show({
+                    position: 'top-center',
+                    withCloseButton: true,
+                    autoClose: 5000,
+                    title: "Need to Login",
+                    message: 'Please log in to access this feature.',
+                    color: 'blue',
+                    icon: <IconX />,
+                    className: 'my-notification-class',
+                    loading: false,
+                });
+                notificationShown.current = true;
+            }
+        }
+
     }, []);
 
     useEffect(() => {

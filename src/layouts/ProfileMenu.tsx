@@ -39,7 +39,7 @@ const ProfileMenu = () => {
                     <Indicator inline size={11} offset={4} position="bottom-end" color="green" withBorder>
                         <Avatar
                             size={45}
-                            src={profile.picture ? `data:image/jpeg;base64,${profile.picture}` : "/Profile/avatar.jpg"}
+                            src={profile.picture ? `data:image/jpeg;base64,${profile.picture}` : ""}
                             alt="profile photo"
                         />
                     </Indicator>
