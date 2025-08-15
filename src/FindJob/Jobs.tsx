@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import JobCard from "./JobCard";
 import Sort from "./Sort";
 import { getAllJobs } from "../Services/JobService";
@@ -6,6 +6,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { resetFilter } from "../Slices/FilterSlice";
 import { resetSort } from "../Slices/SortSlice";
 import { LoadingOverlay } from "@mantine/core";
+import { notifications } from "@mantine/notifications";
+import { IconX } from "@tabler/icons-react";
 
 const Jobs = () => {
     const [jobList, setJobList] = useState<any[]>([]);
@@ -14,18 +16,39 @@ const Jobs = () => {
     const sort = useSelector((state: any) => state.sort);
     const dispatch = useDispatch();
     const [loading, setLoading] = useState(false);
+    const user = useSelector((state: any) => state.user);
+    const notificationShown = useRef(false);
 
     useEffect(() => {
         dispatch(resetFilter());
         dispatch(resetSort());
         setLoading(true);
-        getAllJobs().then((res) => {
-            setJobList(res.filter((job: any) => job.jobStatus == "ACTIVE"));
-        }).catch((err) => {
-            console.error("Error fetching jobs:", err);
-        }).finally(() => {
+        if (user) {
+            getAllJobs().then((res) => {
+                setJobList(res.filter((job: any) => job.jobStatus == "ACTIVE"));
+            }).catch((err) => {
+                console.error("Error fetching jobs:", err);
+            }).finally(() => {
+                setLoading(false);
+            });
+        } else {
             setLoading(false);
-        });
+            if (!notificationShown.current) {
+                notifications.show({
+                    position: 'top-center',
+                    withCloseButton: true,
+                    autoClose: 5000,
+                    title: "Need to Login",
+                    message: 'Please log in to access this feature.',
+                    color: 'blue',
+                    icon: <IconX />,
+                    className: 'my-notification-class',
+                    loading: false,
+                });
+                notificationShown.current = true;
+            }
+        }
+
     }, []);
 
     useEffect(() => {
