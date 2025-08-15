@@ -23,7 +23,7 @@ const SignUpPage = () => {
                     <div className='flex items-cente garp-2'>
                         <div className='text-5xl font-semibold text-white'>Uni Connect</div>
                     </div>
-                    <div className="text-2xl font-semibold">Find job to Start Your jerney</div>
+                    <div className="text-2xl font-semibold">Find job to Start Your Journey</div>
                 </div>
                 {/* <SignUp /> */}
                 
