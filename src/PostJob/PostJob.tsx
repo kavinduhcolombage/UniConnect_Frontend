@@ -114,27 +114,27 @@ const PostJob = () => {
     }, [id]);
 
 
-    return <div>
+    return <>
         {id !== "0" && <Button leftSection={<IconArrowLeft size={20} />} className="!text-blue-700" my="md" variant="light" onClick={() => navigate(-1)}>Back</Button>}
         <div className="w-4/5 mx-auto">
             <div className="text-2xl font-semibold mb-5 mt-5">Post a job</div>
-            <div className="flex flex-col gap-5">
-                <div className="flex gap-10 [&>*]:w-1/2">
+            <div className="flex flex-col gap-5 max-[500px]:gap-3">
+                <div className="flex max-[500px]:flex-wrap max-[500px]:[&>*]:w-full gap-10 max-[600px]:gap-5 max-[500px]:gap-3 [&>*]:w-1/2">
                     <SelectInput form={form} name="jobTitle" {...select[0]} />
                     <SelectInput form={form} name="company" {...select[1]} />
                 </div>
-                <div className="flex gap-10 [&>*]:w-1/2">
+                <div className="flex max-[500px]:flex-wrap max-[500px]:[&>*]:w-full gap-10 max-[600px]:gap-5 max-[500px]:gap-3 [&>*]:w-1/2">
                     <SelectInput form={form} name="experience" {...select[2]} />
                     <SelectInput form={form} name="jobType" {...select[3]} />
                 </div>
-                <div className="flex gap-10 [&>*]:w-1/2">
+                <div className="flex max-[500px]:flex-wrap max-[500px]:[&>*]:w-full gap-10 max-[600px]:gap-5 max-[500px]:gap-3 [&>*]:w-1/2">
                     <SelectInput form={form} name="location" {...select[4]} />
                     <NumberInput {...form.getInputProps('packageOffered')} label="Salary(in LKR)" withAsterisk min={1} max={100000} placeholder="Enter Salary"
                         hideControls />
                 </div>
                 <TagsInput {...form.getInputProps('skillsRequired')} withAsterisk label="Skills Required" placeholder="Enter skill" clearable splitChars={[',', ' ', '|']} acceptValueOnBlur />
 
-                <Textarea {...form.getInputProps('about')} withAsterisk autosize minRows={2} maxRows={3} label="About" placeholder="Enter about job here..." className="my-3" />
+                <Textarea {...form.getInputProps('about')} withAsterisk autosize minRows={2} maxRows={3} label="About" placeholder="Enter about job here..." />
 
                 <Textarea {...form.getInputProps('description')} withAsterisk autosize minRows={3} label="Job Description" placeholder="Enter job description here..." />
 
@@ -144,7 +144,7 @@ const PostJob = () => {
                 </div>
             </div>
         </div>
-    </div>
+    </>
 
 
 
