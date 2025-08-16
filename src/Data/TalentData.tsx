@@ -3,7 +3,7 @@ import { IconMapPin, IconRecharging, IconSearch } from "@tabler/icons-react";
 const searchFields = [
   { title: 'Job Title', icon: IconSearch, options: ['Designer', 'Developer', 'Product Manager', 'Marketing Specialist', 'Data Analyst', 'Sales Executive', 'Content Writer', 'Customer Support'] },
   { title: 'Location', icon: IconMapPin, options: ['Colombo', 'Kandy', 'Galle', 'Jaffna', 'Negombo', 'Anuradhapura', 'Matara', 'Trincomalee'] },
-  { title: 'Skills', icon: IconRecharging, options: ['HTML', 'CSS', 'JavaScript', 'React', 'Angular', 'Node.js', 'Python', 'Java', 'Ruby', 'PHP', 'SQL', 'MongoDB', 'PostgreSQL', 'Git', 'API Development', 'Testing and Debugging', 'Agile Methodologies', 'DevOps', 'AWS', 'Azure', 'Google Cloud'] },
+  { title: 'Skills', icon: IconRecharging, options: ['HTML', 'CSS', 'JavaScript', 'React', 'Angular', 'Node.js', 'Python', 'Java', 'Ruby', 'PHP', 'SQL', 'MongoDB', 'PostgreSQL', 'Git', 'API Development', 'Testing', 'Agile Methodologies', 'DevOps', 'AWS', 'Azure', 'Google Cloud'] },
 ]
 
 const talents = [
