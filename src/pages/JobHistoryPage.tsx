@@ -7,7 +7,7 @@ const JobHistoryPage = () => {
         <div>
             <Header />
             <div className="bg-gray-100 min-h-[100vh] font-['poppins']">
-                <div className="my-5">
+                <div className="p-5">
                     <JobHistory />
                 </div>
             </div>
