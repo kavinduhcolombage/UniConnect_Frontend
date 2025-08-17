@@ -86,7 +86,7 @@ const Profile = () => {
 
             {/* Experience Section */}
             < Experience />
-            <Divider mx="xs" my="xl" />
+            <Divider className="mx-2 my-6 max-[500px]:my-3" />
 
             {/* Certifications Section */}
             <Certificate />
