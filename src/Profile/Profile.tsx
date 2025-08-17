@@ -1,6 +1,5 @@
-import { ActionIcon, Avatar, Divider, FileInput, Overlay, TagsInput } from "@mantine/core";
-import { IconCheck, IconDeviceFloppy, IconEdit, IconPencil, IconX } from "@tabler/icons-react";
-import { useState } from "react";
+import { Avatar, Divider, FileInput, Overlay } from "@mantine/core";
+import { IconCheck, IconEdit, IconX } from "@tabler/icons-react";
 import { useDispatch, useSelector } from "react-redux";
 import { changeProfile } from "../Slices/ProfileSlice";
 import Info from "./Info";
@@ -10,22 +9,12 @@ import Certificate from "./Certificate";
 import { useHover } from "@mantine/hooks";
 import { notifications } from "@mantine/notifications";
 import { updateProfile } from "../Services/ProfileService";
-
+import Skills from "./Skills";
 
 const Profile = () => {
-    const [edit, setEdit] = useState([false, false, false, false, false]);
-    const [skills, setSkills] = useState(['JavaScript', 'React', 'Node.js', 'CSS', 'HTML']);
     const { hovered, ref } = useHover();
     const dispatch = useDispatch();
     const profile = useSelector((state: any) => state.profile);
-
-    const handleEdit = (index: any) => {
-        const newEdit = [...edit];
-        console.log("New edit state before toggle:", newEdit);
-        newEdit[index] = !newEdit[index];
-        console.log("New edit state after toggle:", newEdit);
-        setEdit(newEdit);
-    };
 
     const handleFileChange = async (image: any) => {
         let picture: any = await getBase64(image);
@@ -87,31 +76,13 @@ const Profile = () => {
 
             <Divider className="mx-2 my-6 max-[500px]:my-3" />
             < About />
+
             <Divider className="mx-2 my-6 max-[500px]:my-3" />
 
             {/* Skills Section */}
-            <div className="px-3">
-                <div className="text-2xl font-semibold mb-3 flex justify-between">
-                    Skills
-                    <ActionIcon onClick={() => handleEdit(2)} size="lg" color="blue" variant="subtle">
-                        {edit[2] ? <IconDeviceFloppy /> : <IconPencil />}
-                    </ActionIcon>
-                </div>
-                {
-                    edit[2] ? <TagsInput value={skills} onChange={setSkills} placeholder="Add Skill" splitChars={[',', ' ', '|']} /> : <div className="flex flex-wrap gap-2">
-                        {profile.skills?.map((skill: any, index: number) => (
-                            <div
-                                key={index}
-                                className="bg-blue-400 text-sm font-medium bg-opacity-15 rounded-3xl text-white px-3 py-1"
-                            >
-                                {skill}
-                            </div>
-                        ))}
-                    </div>
-                }
-            </div>
+            <Skills />
 
-            <Divider mx="xs" my="xl" />
+            <Divider className="mx-2 my-6 max-[500px]:my-3" />
 
             {/* Experience Section */}
             < Experience />
