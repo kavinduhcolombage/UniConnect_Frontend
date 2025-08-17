@@ -30,7 +30,7 @@ const Talents = () => {
             }).finally(() => {
                 setLoading(false);
             });
-        }else {
+        } else {
             setLoading(false);
             if (!notificationShown.current) {
                 notifications.show({
@@ -60,6 +60,7 @@ const Talents = () => {
     }, [sort]);
 
     useEffect(() => {
+        console.log("talents", talents);
         let filterTalent = talents;
 
         if (filter.name) filterTalent = filterTalent.filter((talent: any) => talent.name.toLowerCase().includes(filter.name.toLowerCase()));
@@ -87,10 +88,10 @@ const Talents = () => {
     return <div className="p-5 relative">
         <LoadingOverlay visible={loading} zIndex={1000} overlayProps={{ radius: "sm", blur: 2 }} loaderProps={{ color: "blue", type: "bars" }} />
         <div className="flex justify-between">
-            <div className="text-2xl font-semibold">Talents</div>
+            <div className="text-2xl font-semibold max-[500px]:text-xl">Talents</div>
             <Sort />
         </div>
-        <div className="mt-10 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+        <div className="mt-10 grid gap-5 grid-cols-4 max-[1000px]:grid-cols-3 max-[800px]:grid-cols-2 max-[600px]:grid-cols-1">
             {
                 filteredTalents?.length ? filteredTalents.map((talent: any, index: any) => <TalentCard key={index} {...talent} />) : <div className="text-2xl font-semibold">No Talent Found</div>
             }

@@ -84,7 +84,7 @@ const TalentCard = (props: any) => {
         }
     }, [props]);
 
-    return <div className="flex flex-col gap-2 bg-gray-400 p-4 w-105 rounded-xl hover:shadow-[0_0_5px_1px_blue] !shadow-blue-400">
+    return <div className="flex flex-col gap-2 bg-gray-400 p-4 rounded-xl hover:shadow-[0_0_5px_1px_blue] !shadow-blue-400">
         <div className="flex justify-between">
             <div className="flex gap-3 items-center">
                 <div className="p-2 bg-gray-300 rounded-full">
