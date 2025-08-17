@@ -1,5 +1,5 @@
 
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import Footer from "../Footer/Footer"
 import Header from "../layouts/Header"
 import { Button } from "@mantine/core";
@@ -23,14 +23,10 @@ const JobDescriptionPage = () => {
         })
     }, [id]);
 
-
-    console.log("Job ID from params:", id);
     return (
         <div className="bg-gray-100 min-h-[100vh] font-['poppins']">
             <Header />
-
             <Button leftSection={<IconArrowLeft size={20} />} className="!text-blue-700" my="md" variant="light" onClick={() => navigate(-1)}>Back</Button>
-
             <div className="flex gap-5 p-4 justify-around max-[900px]:flex-wrap max-[900px]:justify-start">
                 <JobDescription {...job} />
                 <RecommendedJobs />
