@@ -31,7 +31,7 @@ const JobDescriptionPage = () => {
                 <Button leftSection={<IconArrowLeft size={20} />} className="!text-blue-700" variant="light">Back</Button>
             </Link>
 
-            <div className="flex gap-5 p-4 justify-around">
+            <div className="flex gap-5 p-4 justify-around max-[900px]:flex-wrap max-[900px]:justify-start">
                 <JobDescription {...job}/>
                 <RecommendedJobs />
             </div>
