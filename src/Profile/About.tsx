@@ -5,12 +5,15 @@ import { useDispatch, useSelector } from "react-redux";
 import { changeProfile } from "../Slices/ProfileSlice";
 import { notifications } from "@mantine/notifications";
 import { updateProfile } from "../Services/ProfileService";
+import { useMediaQuery } from "@mantine/hooks";
 
 const About = () => {
     const dispatch = useDispatch();
     const [edit, setEdit] = useState(false);
     const profile = useSelector((state: any) => state.profile);
     const [about, setAbout] = useState("");
+    const isTab = useMediaQuery('(max-width: 550px)');
+    const isMobile = useMediaQuery('(max-width: 400px)');
 
     const handleClick = () => {
         if (!edit) {
@@ -51,19 +54,19 @@ const About = () => {
 
     return (
         <div className="px-3">
-            <div className="text-2xl font-semibold mb-3 flex justify-between">
+            <div className="text-2xl max-[600px]:text-xl max-[500px]:text-lg max-[400px]:text-base font-semibold mb-3 max-[500px]:mb-1 flex justify-between">
                 About
                 <div className="flex gap-2">
                     {edit && <ActionIcon onClick={handleSave} size="lg" color="green.8" variant="subtle">
                         <IconCheck />
                     </ActionIcon>}
-                    <ActionIcon onClick={handleClick} size="lg" color={edit ? "red.8" : "blue"} variant="subtle">
+                    <ActionIcon onClick={handleClick} size={isMobile ? "sm" : isTab ? "md" : "lg"} color={edit ? "red.8" : "blue"} variant="subtle">
                         {edit ? <IconX /> : <IconPencil />}
                     </ActionIcon>
                 </div>
             </div>
             {
-                edit ? <Textarea size="md" value={about} placeholder="Enter about your self.." autosize minRows={3} onChange={(event) => setAbout(event.currentTarget.value)} /> : <div className="text-base text-justify">{profile?.about}</div>
+                edit ? <Textarea size="md" value={about} placeholder="Enter about your self.." autosize minRows={3} onChange={(event) => setAbout(event.currentTarget.value)} /> : <div className="text-base max-[400px]:text-sm text-justify">{profile?.about}</div>
             }
         </div>
     )

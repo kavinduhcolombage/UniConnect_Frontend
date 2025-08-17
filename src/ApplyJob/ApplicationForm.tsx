@@ -76,15 +76,15 @@ const ApplicationForm = () => {
         })
     };
 
-    return <div>
+    return <div className="max-[500px]:p-5">
         <LoadingOverlay className="!fixed" visible={submit} zIndex={1000} overlayProps={{ radius: "sm", blur: 2 }} loaderProps={{ color: "blue", type: "bars" }} />
-        <div className="text-xl font-semibold mb-5">Submit Your Application</div>
-        <div className="flex flex-col gap-5">
-            <div className="flex gap-10 [&>*]:w-1/2">
+        <div className="text-xl max-[500px]:text-lg font-semibold mb-5">Submit Your Application</div>
+        <div className="flex flex-col gap-5 p-2 max-[450px]:gap-2">
+            <div className="flex [&>*]:w-1/2 gap-10 max-[500px]:gap-5 max-[450px]:gap-2  max-[450px]:flex-col max-[450px]:[&>*]:w-full">
                 <TextInput {...form.getInputProps("name")} label="Full Name" withAsterisk placeholder="Enter Name" />
                 <TextInput {...form.getInputProps("email")} label="Email" withAsterisk placeholder="Enter email" />
             </div>
-            <div className="flex gap-10 [&>*]:w-1/2">
+            <div className="flex gap-10 [&>*]:w-1/2 max-[500px]:gap-5 max-[450px]:gap-2  max-[450px]:flex-col max-[450px]:[&>*]:w-full">
                 <NumberInput {...form.getInputProps("phone")} hideControls label="Contact Number" withAsterisk placeholder="Enter Phone Number" />
                 <TextInput {...form.getInputProps("website")} label="Personal Website" withAsterisk placeholder="Enter URL" />
             </div>

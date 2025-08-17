@@ -67,7 +67,7 @@ const MultiInput = (props: any) => {
   ));
 
   return (
-    <Combobox store={combobox} onOptionSubmit={handleValueSelect} withinPortal={false}>
+    <Combobox store={combobox} onOptionSubmit={handleValueSelect} withinPortal={false} width={200}>
       <Combobox.DropdownTarget>
         <PillsInput variant='unstyle' rightSection={<Combobox.Chevron />} onClick={() => combobox.toggleDropdown()} leftSection={
           <div className='text-blue-500 p-1 bg-gray-300 rounded-full mr-4'><props.icon /></div>
@@ -83,8 +83,6 @@ const MultiInput = (props: any) => {
             ) : (
               <Input.Placeholder className='!text-gray-500'>{props.title}</Input.Placeholder>
             )}
-
-
           </Pill.Group>
         </PillsInput>
       </Combobox.DropdownTarget>
@@ -93,9 +91,9 @@ const MultiInput = (props: any) => {
         <Combobox.Search
           value={search}
           onChange={(event) => setSearch(event.currentTarget.value)}
-          placeholder="Search groceries"
+          placeholder="Search Here"
         />
-        <Combobox.Options>
+        <Combobox.Options className='max-h-60 overflow-y-auto'>
           {options}
 
           {!exactOptionMatch && search.trim().length > 0 && (
