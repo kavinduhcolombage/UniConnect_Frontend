@@ -5,13 +5,16 @@ import Header from "../layouts/Header";
 
 const FindJob = () => {
     return (
-        <div className="bg-gray-100 min-h-[100vh] font-['poppins']">
+        <div>
             <Header />
-            <SearchBar />            
-            <Jobs />
+            <div className="bg-gray-100 min-h-[100vh] font-['poppins']">
+                <SearchBar />
+                <Jobs />
+            </div>
             <Footer />
         </div>
-        
+
+
     )
 }
 

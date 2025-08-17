@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { Text } from '@mantine/core';
 
 const Footer = () => {
-    return <div className="mt-20 pb-5 pt-5 flex gap-5 max-[400px]:gap-0 bg-blue-950 justify-around items-center flex-wrap">
+    return <div className="pb-5 pt-5 flex gap-5 max-[400px]:gap-0 bg-blue-950 justify-around items-center flex-wrap">
         <div className="w-1/4 max-[845px]:w-1/3 max-[450px]:w-full flex flex-col gap-2">
             <div className="max-[450px]:text-center gap-2">
                 <Text
