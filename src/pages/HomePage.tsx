@@ -9,17 +9,18 @@ import Working from "./LandingPage/Working";
 
 const HomePage = () => {
     return (
-        <div className="bg-gray-100 min-h-[100vh] font-['poppins']">
+        <div>
             <Header />
-            <DreamJob />
-            <Companies />
-            <JobCategory />
-            <Working/>
-            <UserIdeas/>
-            <Subscribe/>
-            <Footer/>
+            <div className="bg-gray-100 min-h-[100vh] font-['poppins']">
+                <DreamJob />
+                <Companies />
+                <JobCategory />
+                <Working />
+                <UserIdeas />
+                <Subscribe />
+            </div>
+            <Footer />
         </div>
-        
     )
 }
 
