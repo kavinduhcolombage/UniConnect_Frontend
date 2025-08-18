@@ -91,7 +91,7 @@ const ExpInput = (props: any) => {
 
     return <div className="flex flex-col gap-3">
         <div className="text-lg font-semibold">{props.add ? "Add" : "Edit"} Experience</div>
-        <div className="flex gap-10 [&>*]:w-1/2">
+        <div className="flex gap-10 max-[600px]:gap-5 [&>*]:w-1/2 max-[450px]:[&>*]:w-full max-[450px]:flex-wrap max-[450px]:gap-2">
             <SelectInput form={form} name="title" {...select[0]} />
             <SelectInput form={form} name="company" {...select[1]} />
         </div>
@@ -99,7 +99,7 @@ const ExpInput = (props: any) => {
 
         <Textarea {...form.getInputProps('description')} withAsterisk label="Summary" size="md" placeholder="Tell about your Experiance..." autosize minRows={3} />
 
-        <div className="flex gap-10 [&>*]:w-1/2">
+        <div className="flex gap-10 max-[600px]:gap-5 [&>*]:w-1/2 max-[450px]:[&>*]:w-full max-[450px]:flex-wrap max-[450px]:gap-2">
             <MonthPickerInput {...form.getInputProps("startDate")} withAsterisk maxDate={form.getValues().endDate || undefined} label="Start date" placeholder="Pick date"
             />
             <MonthPickerInput {...form.getInputProps("endDate")} disabled={form.getValues().working} withAsterisk minDate={form.getValues().startDate || undefined}

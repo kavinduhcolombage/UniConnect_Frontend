@@ -15,7 +15,7 @@ const Certificate = () => {
     }
 
     return (
-        <div className="px-3">
+        <div className="px-3 pb-5">
             <div className="text-2xl max-[600px]:text-xl max-[500px]:text-lg max-[400px]:text-base font-semibold mb-3 max-[500px]:mb-1 flex justify-between">
                 Certifications
                 {!addCerti && <div className="flex gap-2">

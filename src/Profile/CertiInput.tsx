@@ -66,11 +66,11 @@ const CertiInput = (props: any) => {
 
     return <div className="flex flex-col gap-3">
         <div className="text-lg font-semibold">Add Certificate</div>
-        <div className="flex gap-10 [&>*]:w-1/2">
+        <div className="flex gap-10 max-[600px]:gap-5 [&>*]:w-1/2 max-[450px]:[&>*]:w-full max-[450px]:flex-wrap max-[450px]:gap-2">
             <TextInput {...form.getInputProps("title")} label="Title" placeholder="Enter Title" withAsterisk />
             <SelectInput form={form} name="issuer" {...select[1]} />
         </div>
-        <div className="flex gap-10 [&>*]:w-1/2">
+        <div className="flex gap-10 max-[600px]:gap-5 [&>*]:w-1/2 max-[450px]:[&>*]:w-full max-[450px]:flex-wrap max-[450px]:gap-2">
             <MonthPickerInput {...form.getInputProps("issueDate")} withAsterisk maxDate={new Date()} label="Issuer Date" placeholder="Pick date" />
             <TextInput {...form.getInputProps("certificateId")} label="Certificate ID" placeholder="Enter ID" withAsterisk />
         </div>
