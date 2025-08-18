@@ -25,12 +25,13 @@ const PostedJobDesc = (props: any) => {
     }, [props]);
 
     return (
-        <div className="mt-5 w-3/4 px-5">
-            {(Object.keys(props).length > 0) ? <><div className="text-2xl font-semibold flex items-center">{props.jobTitle}<Badge size="sm" variant="light" color="blue" ml="sm">{props.jobStatus}</Badge></div>
-                <div className="font-medium mb-5">{props.location || "No Location"}</div>
+        <div className="mt-5 max-[600px]:mt-2 w-3/4 max-[1000px]:w-full min-[600px]:px-5">
+            {(Object.keys(props).length > 0) ? <>
+                <div className="text-2xl max-[600px]:text-xl font-semibold flex items-center">{props.jobTitle}<Badge size="sm" variant="light" color="blue" ml="sm">{props.jobStatus}</Badge></div>
+                <div className="text-lg max-[600px]:text-base font-medium mb-5">{props.location || "No Location"}</div>
                 <div>
                     <Tabs variant="outline" value={tab} onChange={handleTabChnage}>
-                        <Tabs.List className="[&_button]:!text-lg font-semibold mb-5 [&_button[data-active='true']]:!text-blue-500">
+                        <Tabs.List className="[&_button]:!text-lg max-[600px]:[&_button]:!text-base max-[500px]:[&_button]:!font-medium font-semibold mb-5 [&_button[data-active='true']]:!text-blue-500 max-[500px]:[&_button]:!px-1.5 max-[500px]:[&_button]:!py-2">
                             <Tabs.Tab value="overview">Overview</Tabs.Tab>
                             <Tabs.Tab value="applicants">Applicants</Tabs.Tab>
                             <Tabs.Tab value="invited">Invited</Tabs.Tab>
@@ -38,7 +39,7 @@ const PostedJobDesc = (props: any) => {
                             <Tabs.Tab value="rejected">Rejected</Tabs.Tab>
                         </Tabs.List>
 
-                        <Tabs.Panel value="overview" className="[&>div]:w-full">
+                        <Tabs.Panel value="overview" className="[&>div]:w-full [&>div]:pb-5">
                             <JobDescription {...props} edit={true} closed={props.jobStatus == "CLOSED"} />
                         </Tabs.Panel>
 
