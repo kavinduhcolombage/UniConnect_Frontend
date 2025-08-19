@@ -10,7 +10,7 @@ const PostedJob = (props:any) => {
     },[props.job]);
 
     return (
-        <div className="w-1.5/6 mt-5">
+        <div className="w-full mt-5">
             <div className="text-2xl font-semibold mb-5">Jobs</div>
             <div>
                 <Tabs variant="pills" autoContrast value={activeTab} onChange={setActiveTab}>
