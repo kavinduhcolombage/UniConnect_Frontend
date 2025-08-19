@@ -4,7 +4,7 @@ import { Text } from '@mantine/core';
 
 const Footer = () => {
     return <div className="pb-5 pt-5 flex flex-col bg-blue-950">
-        <div className="flex flex-wrap gap-5 justify-around items-center w-full">
+        <div className="flex flex-wrap gap-5 max-[400px]:gap-3 justify-around items-center w-full">
             <div className="w-1/3 max-[600px]:w-[80%] flex flex-col gap-2">
                 <div className="max-[600px]:text-center gap-5">
                     <Text
