@@ -21,33 +21,32 @@ const Profile = () => {
     }, [id]);
 
 
-    return <div className="w-2/3">
+    return <div className="w-4/6 max-[900px]:w-full">
         <div className="relative">
             <img className="rounded-t-2xl" src="/Profile/banner.jpg" alt="" />
-            {/* <img className="w-48 h-48 rounded-full -bottom-1/3 absolute left-3 border-mine-shaft-950" src={profile.picture ? `data:image/jpeg;base64,${profile.picture}` : "/Profile/avatar.jpg"} alt="" /> */}
-            <div className="flex items-center justify-center absolute left-6 -bottom-18">
-                <Avatar className="!w-48 !h-48 border-blue-400 border-8 rounded-full" src={profile.picture ? `data:image/jpeg;base64,${profile.picture}` : "/Profile/avatar.jpg"} alt="" />
+            <div className="flex items-center justify-center absolute left-1/20 -bottom-1/4">
+                <Avatar className="!w-48 !h-48 max-[700px]:!w-40 max-[700px]:!h-40 max-[600px]:!w-30 max-[600px]:!h-30 max-[500px]:!w-26 max-[500px]:!h-26 border-white border-8 max-[700px]:border-5 max-[500px]:border-3 rounded-full" src={profile.picture ? `data:image/jpeg;base64,${profile.picture}` : "/Profile/avatar.jpg"} alt="" />
             </div>
         </div>
-        <div className="px-3 mt-22">
-            <div className="text-3xl font-semibold flex justify-between">{profile?.name}<Button
+        <div className="px-3 mt-22 max-[700px]:mt-18 max-[600px]:mt-15 max-[500px]:mt-12">
+            <div className="text-3xl max-[600px]:text-2xl max-[500px]:text-xl font-semibold flex justify-between">{profile?.name}<Button
                 color="blue" variant="light">Message</Button></div>
-            <div className="text-xl flex gap-1 items-center"><IconBriefcase className="h-5 w-5" stroke={1.5} /> {profile?.jobTitle} &bull; {profile?.company}</div>
-            <div className="text-lg flex gap-1 items-center text-mine-shaft-300">
-                <IconMapPin className="h-5 w-5" stroke={1.5} /> {profile?.location}
+            <div className="text-xl max-[600px]:text-lg max-[500px]:text-base flex gap-1 items-center"><IconBriefcase className="h-5 w-5 max-[500px]:h-4 max-[500px]:w-4" stroke={1.5} /> {profile?.jobTitle} &bull; {profile?.company}</div>
+            <div className="text-lg max-[600px]:text-base max-[500px]:text-sm flex gap-1 items-center text-mine-shaft-300">
+                <IconMapPin className="h-5 w-5 max-[500px]:h-4 max-[500px]:w-4" stroke={1.5} /> {profile?.location}
             </div>
-            <div className="text-lg flex gap-1 items-center text-mine-shaft-300">
-                <IconBriefcase className="h-5 w-5" stroke={1.5} />Experience {profile?.totalExp} Years
+            <div className="text-lg max-[600px]:text-base max-[500px]:text-sm flex gap-1 items-center text-mine-shaft-300">
+                <IconBriefcase className="h-5 w-5 max-[500px]:h-4 max-[500px]:w-4" stroke={1.5} />Experience {profile?.totalExp} Years
             </div>
         </div>
-        <Divider mx="lg" my="xl" />
+        <Divider className="mx-2 my-6 max-[500px]:my-3" />
         <div className="px-3">
-            <div className="text-2xl font-semibold mb-3">About</div>
-            <div className="text-base text-justify">{profile?.about}</div>
+            <div className="text-2xl max-[600px]:text-xl max-[500px]:text-lg max-[400px]:text-base font-semibold mb-3 max-[500px]:mb-1 flex justify-between">About</div>
+            <div className="text-base max-[400px]:text-sm text-justify">{profile?.about}</div>
         </div>
-        <Divider mx="xs" my="xl" />
+        <Divider className="mx-2 my-6 max-[500px]:my-3" />
         <div className="px-3">
-            <div className="text-2xl font-semibold mb-3">Skills</div>
+            <div className="text-2xl max-[600px]:text-xl max-[500px]:text-lg max-[400px]:text-base font-semibold mb-3 max-[500px]:mb-1 flex justify-between">Skills</div>
             <div className="flex flex-wrap gap-2">
 
                 {
@@ -56,9 +55,9 @@ const Profile = () => {
 
             </div>
         </div>
-        <Divider mx="xs" my="xl" />
+        <Divider className="mx-2 my-6 max-[500px]:my-3" />
         <div className="px-3">
-            <div className="text-2xl font-semibold mb-5">Experience</div>
+            <div className="text-2xl max-[600px]:text-xl max-[500px]:text-lg max-[400px]:text-base font-semibold mb-3 max-[500px]:mb-1 flex justify-between">Experience</div>
             <div className="flex flex-col gap-8">
                 {
                     profile?.experience?.map((exp: any, index: any) => <ExpCard key={index} {...exp} />)
@@ -66,9 +65,9 @@ const Profile = () => {
             </div>
 
         </div>
-        <Divider mx="xs" my="xl" />
+        <Divider className="mx-2 my-6 max-[500px]:my-3" />
         <div className="px-3">
-            <div className="text-2xl font-semibold mb-5">Certifications</div>
+            <div className="text-2xl max-[600px]:text-xl max-[500px]:text-lg max-[400px]:text-base font-semibold mb-3 max-[500px]:mb-1 flex justify-between">Certifications</div>
             <div className="flex flex-col gap-8">
                 {
                     profile?.certifications?.map((certi: any, index: any) => <CertiCard key={index} {...certi} />)

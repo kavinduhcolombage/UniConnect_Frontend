@@ -23,15 +23,17 @@ const TalentProfilePage = () => {
     }, []);
 
     return (
-        <div className="bg-gray-100 min-h-[100vh] font-['poppins']">
+        <>
             <Header />
-            <Button onClick={() => navigate(-1)} leftSection={<IconArrowLeft size={20} />} my="sm" className="!text-blue-700" variant="light">Back</Button>
-            <div className="flex gap-5 p-4">
-                <Profile />
-                <RecommendTalent talents={talents} />
+            <div className="bg-gray-100 min-h-[100vh] font-['poppins']">
+                <Button onClick={() => navigate(-1)} leftSection={<IconArrowLeft size={20} />} my="sm" className="!text-blue-700" variant="light">Back</Button>
+                <div className="flex gap-5 p-4 max-[900px]:flex-wrap">
+                    <Profile />
+                    <RecommendTalent talents={talents} />
+                </div>
             </div>
             <Footer />
-        </div>
+        </>
 
     )
 }
