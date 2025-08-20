@@ -19,8 +19,8 @@ const logos = [
 ];
 
 const Companies = () => {
-    return <div className="mt-20 pb-5">
-        <div className="text-4xl text-center font-semibold mb-10">Trusted by <span className="text-blue-500">1000+</span> Companies</div>
+    return <div className="mt-5 pb-5">
+        <div className="text-4xl max-[600px]:text-3xl text-center font-semibold mb-10">Trusted by <span className="text-blue-500">1000+</span> Companies</div>
 
         <Box
                 w="100%" // Full width of the marquee container
