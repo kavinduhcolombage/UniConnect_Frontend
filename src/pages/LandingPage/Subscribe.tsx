@@ -1,19 +1,24 @@
 import { Button, TextInput } from "@mantine/core";
+import { useMediaQuery } from "@mantine/hooks";
 
 const Subscribe = () => {
-  return <div className="mt-20 md:flex hidden items-center bg-blue-500 mx-20 py-3 rounded-xl justify-around">
-    <div className="text-4xl w-2/5 text-center font-semibold text-mine-shaft-100">Never Wants
-      Miss Any <span className="text-bright-sun-400">Job News?</span></div>
-    <div className="flex gap-4 rounded-xl bg-mine-shaft-700 px-3 py-2 items-center">
-      <TextInput
-        className="[&_input]:text-mine-shaft-100 font-semibold bg-blue-100 rounded-lg"
-        variant="unstyled"
-        placeholder="Your@email.com"
-        size="xl"
-      />
-      <Button className="!rounded-lg" size="lg" color="dark" variant="filled" >Subscribe</Button>
+  const isTab = useMediaQuery('(max-width: 700px)');
+  const isMob = useMediaQuery('(max-width: 450px)');
+  return (
+    <div className="my-10 flex items-center bg-blue-500 mx-20 max-[700px]:mx-10 max-[650px]:mx-5 max-[700px]:my-6 rounded-xl justify-around max-[570px]:flex-wrap">
+      <div className="text-4xl max-[1000px]:text-3xl max-[750px]:text-2xl max-[700px]:text-xl max-[450px]:text-lg w-2/5 max-[570px]:w-full text-center font-semibold pt-2 pb-2 px-2 max-[450px]:pb-0">Never Wants
+        Miss Any <span className="text-white">Job News?</span>
+      </div>
+      <div className="flex gap-4 rounded-xl px-3 py-2 max-[450px]:pb-3 items-center max-[570px]:w-full max-[570px]:justify-center">
+        <TextInput
+          size={isTab ? isMob ? "xs" : "sm" : "lg"}
+          radius="md"
+          placeholder="Your@email.com"
+        />
+        <Button className="!rounded-lg" size={isTab ? isMob ? "xs" : "sm" : "lg"} color="dark" variant="filled" >Subscribe</Button>
+      </div>
     </div>
-  </div>;
+  )
 };
 
 export default Subscribe;

@@ -3,7 +3,7 @@ import { useMediaQuery } from "@mantine/hooks";
 
 const UserIdeas = () => {
     const matches = useMediaQuery('(max-width: 450px)');
-    return <div className="mt-15 max-[450px]:mt-10 pb-5">
+    return <div className="mt-15 max-[450px]:mt-10 pb-5 max-[450px]:pb-0">
         <div className="text-4xl max-[850px]:text-3xl text-center font-semibold mt-3 text-mine-shaft-100">What <span
             className="text-blue-500">User</span> says about us?</div>
 
