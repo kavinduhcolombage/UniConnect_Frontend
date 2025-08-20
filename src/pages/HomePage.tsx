@@ -11,7 +11,7 @@ const HomePage = () => {
     return (
         <div>
             <Header />
-            <div className="bg-gray-100 min-h-[100vh] font-['poppins']">
+            <div className="font-['poppins']">
                 <DreamJob />
                 <Companies />
                 <JobCategory />
