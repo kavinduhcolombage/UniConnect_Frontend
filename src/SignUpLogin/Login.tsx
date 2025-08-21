@@ -93,7 +93,7 @@ const Login = () => {
         zIndex={1000}
         overlayProps={{ radius: 'sm', blur: 2 }}
         loaderProps={{ color: 'blue', type: 'bars' }}
-    /><div className="w-1/2 px-15 flex flex-col items-center justify-center gap-5">
+    /><div className="w-1/2 max-[650px]:w-full px-15 max-[800px]:px-6 flex flex-col items-center justify-center gap-5">
             <div className="text-2xl font-semibold ">Log in to your Account</div>
             <div className='flex flex-col gap-2.5'>
                 <div>
