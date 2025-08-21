@@ -18,8 +18,6 @@ const form = {
 
 const SignUp = () => {
 
-    // const [value, setValue] = useState('react');
-
     const [data, setData] = useState<User>(form);
     const [formError, setformError] = useState<{ [key: string]: string }>(form); // State for error message
     const navigate = useNavigate();
@@ -97,17 +95,15 @@ const SignUp = () => {
 
     }
 
-
-
     return <><LoadingOverlay
         visible={loading}
         zIndex={1000}
         className='translate-x-1/2'
         overlayProps={{ radius: 'sm', blur: 2 }}
         loaderProps={{ color: 'blue', type: 'bars' }}
-    /><div className="w-1/2 px-15 flex flex-col items-center justify-center gap-5">
+    /><div className="w-1/2 max-[650px]:w-full px-15 max-[800px]:px-10 max-[650px]:py-10 max-[650px]:mt-5 flex flex-col items-center justify-center gap-5">
             <div className="text-2xl font-semibold ">Create Account</div>
-            <div className='flex flex-col gap-2.5'>
+            <div className='flex flex-col gap-2.5 w-full'>
                 <div>
                     <TextInput
                         value={data.name}
@@ -144,9 +140,9 @@ const SignUp = () => {
                     label="Select your Type"
                     withAsterisk
                 >
-                    <Group mt="xs">
-                        <Radio className='py-4 px-6' value="STUDENT" label="Student" />
-                        <Radio className='py-4 px-6' value="COMPANY" label="Company" />
+                    <Group className='!flex !justify-evenly max-[650px]:!justify-around !py-4'>
+                        <Radio className='' value="STUDENT" label="Student" />
+                        <Radio className='' value="COMPANY" label="Company" />
                     </Group>
                 </Radio.Group>
                 <div>

@@ -16,7 +16,7 @@ const UserIdeas = () => {
                         <Rating value={3.5} fractions={2} readOnly />
                     </div>
                 </div>
-                <div className="text-sm max-[600px]:text-xs p-2">This app made it so much easier to find the right internship as a university student. The recommendations were accurate, and the application process was very smooth. I truly appreciate how it connects us with real opportunities that match our skills.</div>
+                <div className="text-sm max-[600px]:text-xs p-2 text-justify">This app made it so much easier to find the right internship as a university student. The recommendations were accurate, and the application process was very smooth. I truly appreciate how it connects us with real opportunities that match our skills.</div>
             </div>
 
             {!matches && <div className="flex flex-col gap-2 max-[600px]:gap-0 border border-blue-500 rounded-xl mx-auto">
@@ -27,7 +27,7 @@ const UserIdeas = () => {
                         <Rating value={3.5} fractions={2} readOnly />
                     </div>
                 </div>
-                <div className="text-sm max-[600px]:text-xs p-2">Finding internships used to be difficult before I started using this app. It offers a wide range of opportunities for students like me and even gives useful insights about the companies. I’m grateful I found this platform on time.
+                <div className="text-sm max-[600px]:text-xs p-2 text-justify">Finding internships used to be difficult before I started using this app. It offers a wide range of opportunities for students like me and even gives useful insights about the companies. I’m grateful I found this platform on time.
 
                 </div>
 
@@ -40,7 +40,7 @@ const UserIdeas = () => {
                         <Rating value={5} fractions={2} readOnly />
                     </div>
                 </div>
-                <div className="text-sm max-[600px]:text-xs p-2">As an undergraduate, I struggled to find job openings relevant to my field. But with this app, I was able to discover internships easily. It guided me through the whole process and made everything more manageable and clear.
+                <div className="text-sm max-[600px]:text-xs p-2 text-justify">As an undergraduate, I struggled to find job openings relevant to my field. But with this app, I was able to discover internships easily. It guided me through the whole process and made everything more manageable and clear.
 
                 </div>
 
@@ -53,7 +53,7 @@ const UserIdeas = () => {
                         <Rating value={4.5} fractions={2} readOnly />
                     </div>
                 </div>
-                <div className="text-sm max-[600px]:text-xs p-2">This app is the perfect solution for students who are actively looking for internships or part-time roles. It helped me connect with great employers, and I now have valuable experience to add to my resume. Highly recommend it!</div>
+                <div className="text-sm max-[600px]:text-xs p-2 text-justify">This app is the perfect solution for students who are actively looking for internships or part-time roles. It helped me connect with great employers, and I now have valuable experience to add to my resume. Highly recommend it!</div>
 
             </div>}
         </div>

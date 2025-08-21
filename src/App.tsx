@@ -62,7 +62,7 @@ function App() {
                 <Route path="/talent-profile/:id" element={<TalentProfilePage />} />
                 <Route path="/apply-job/:id" element={<ApplyJObPage />} />
                 <Route path="/signup" element={<PublicRoute><SignUpPage /></PublicRoute>} />
-                <Route path="/login" element={<SignUpPage />} />
+                <Route path="/login" element={<PublicRoute><SignUpPage /></PublicRoute>} />
                 <Route path="/profile" element={<ProfilePage />} />
                 <Route path="/jobs/:id" element={<JobDescriptionPage />} />
                 <Route path="/company/:name" element={<CompanyPage />} />
